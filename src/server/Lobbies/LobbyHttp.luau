@@ -4,7 +4,7 @@
 -- signing (a server's clock can be minutes out; the service tells a correctly signed request with a
 -- stale timestamp its time, and the request is sent once more).
 --
--- It is reached at https://rofront.snick.co (Cloudflare, then easy-1's Caddy; 2026-10-12: the
+-- (Upstream reached its own service on its own domain; BloxFront runs none, see ENABLED; the
 -- studio's services live under the snick.co domain). While the domain fails (no answer, or an answer
 -- that isn't the service's: a Cloudflare block or error page) a server uses the service's own port
 -- instead, and tries the domain again after RETRY_PRIMARY_S.
