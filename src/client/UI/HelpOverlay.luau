@@ -272,6 +272,8 @@ HelpOverlay.SOURCE_TIP = {
 	body = "Source available on the github website under " .. HelpOverlay.SOURCE_REPO,
 }
 HelpOverlay.SOURCE_TIP_S = 4.0
+--- BloxFront: width of the desktop chapter list.
+HelpOverlay.NAV_W = 240.0
 
 -- Roblox: Esc opens Roblox's own menu (games never receive it), so cancel is X or right-click;
 -- Backspace (retreat) and WASD / +- are Roblox-port keys the original's list didn't show (review P2-4).
@@ -410,7 +412,30 @@ function HelpOverlay._build(self)
 	local scroll = Scroll.new()
 	scroll.size_flags_vertical = W.EXPAND_FILL
 	self._scroll = scroll
-	v:add_child(scroll)
+	-- BloxFront (2026-10-25): desktop chapter list on the left, a press jumps to that card
+	local nav = nil
+	if not compact then
+		local split = UITheme.hbox(0)
+		split.size_flags_vertical = W.EXPAND_FILL
+		v:add_child(split)
+		local nm = W.Margin.new()
+		nm:set_mouse_filter(W.MOUSE_IGNORE)
+		for _, side in ipairs({ "left", "right", "top", "bottom" }) do
+			nm:add_theme_constant_override("margin_" .. side, 16)
+		end
+		nm:set_min_size(Vector2.new(HelpOverlay.NAV_W, 0))
+		nav = UITheme.vbox(4)
+		nm:add_child(nav)
+		split:add_child(nm)
+		local line = UITheme.vdivider(10.0)
+		line.size_flags_vertical = W.EXPAND_FILL
+		split:add_child(line)
+		scroll.size_flags_horizontal = W.EXPAND_FILL
+		split:add_child(scroll)
+	else
+		v:add_child(scroll)
+	end
+	local targets = {}
 	local body_m = W.Margin.new()
 	body_m:set_mouse_filter(W.MOUSE_IGNORE)
 	body_m.size_flags_horizontal = W.EXPAND_FILL
@@ -427,6 +452,7 @@ function HelpOverlay._build(self)
 	local row = nil
 	for i, d in ipairs(HelpOverlay.SECTIONS) do
 		local card = self:_section(i, d)
+		table.insert(targets, { string.format("%d  ·  %s", i, d.title), card })
 		if compact or d.wide then
 			body:add_child(card)
 			row = nil
@@ -442,9 +468,37 @@ function HelpOverlay._build(self)
 			row = nil
 		end
 	end
-	body:add_child(self:_controls())
-	body:add_child(self:_legal())
+	local controls = self:_controls()
+	body:add_child(controls)
+	local legal = self:_legal()
+	body:add_child(legal)
 	body:add_child(self:_source())
+	table.insert(targets, { "Controls", controls })
+	table.insert(targets, { "Credits & licence", legal })
+	if nav ~= nil then
+		for i, t in ipairs(targets) do
+			if i == #HelpOverlay.SECTIONS + 1 then
+				nav:add_child(UITheme.hdivider())
+			end
+			local b = UITheme.button(t[1], "GhostButton", nil, 36.0)
+			b:set_font_size(13)
+			b.alignment = W.ALIGN_LEFT
+			b.pressed:Connect(function()
+				self:_jump_to(t[2])
+			end)
+			nav:add_child(b)
+		end
+	end
+end
+
+--- BloxFront: scrolls the help so `card` sits at the top of the visible area.
+function HelpOverlay._jump_to(self, card)
+	local sc = self._scroll
+	if sc == nil or card == nil then
+		return
+	end
+	local dy = card:get_global_rect().Min.Y - sc:get_global_rect().Min.Y - 12.0
+	sc:scroll_by(dy)
 end
 
 local function card_panel(mh: number, mv: number)

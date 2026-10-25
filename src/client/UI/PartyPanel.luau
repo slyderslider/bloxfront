@@ -436,10 +436,19 @@ function PartyPanel.apply_layout(self)
 	self._note:set_visible(not compact)
 	self._roblox_btn:set_min_size(Vector2.new(0, if compact then 36 else 42))
 	lp:set_min_size(Vector2.new(if compact then math.min(360, ctx.vp.X - 24) else 380, 0))
-	lp.anchor_left, lp.anchor_right, lp.anchor_top, lp.anchor_bottom = 0.5, 0.5, 0, 0
-	lp.grow_horizontal = W.GROW_BOTH
-	lp.grow_vertical = W.GROW_END
-	lp.offset_left, lp.offset_right, lp.offset_top, lp.offset_bottom = 0, 0, top, top
+	if compact then
+		lp.anchor_left, lp.anchor_right, lp.anchor_top, lp.anchor_bottom = 0.5, 0.5, 0, 0
+		lp.grow_horizontal = W.GROW_BOTH
+		lp.grow_vertical = W.GROW_END
+		lp.offset_left, lp.offset_right, lp.offset_top, lp.offset_bottom = 0, 0, top, top
+	else
+		-- BloxFront (2026-10-25): the invite list is a side drawer on the right
+		local xr = 16.0 + ctx.insets.z
+		lp.anchor_left, lp.anchor_right, lp.anchor_top, lp.anchor_bottom = 1, 1, 0, 0
+		lp.grow_horizontal = W.GROW_BEGIN
+		lp.grow_vertical = W.GROW_END
+		lp.offset_left, lp.offset_right, lp.offset_top, lp.offset_bottom = -xr, -xr, top, top
+	end
 	lp:reset_size()
 	if lp.visible then
 		-- (the screen changed: the rows' room too)
