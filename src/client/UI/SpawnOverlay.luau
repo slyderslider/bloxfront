@@ -289,7 +289,7 @@ function SpawnOverlay._refresh_players(self)
 	self._heads:set_visible(#shown > 0)
 	for _, h in ipairs(shown) do
 		local img = Instance.new("ImageLabel")
-		img.BackgroundColor3 = Color3.fromRGB(40, 52, 82)
+		img.BackgroundColor3 = Color3.fromRGB(38, 44, 53)
 		img.BorderSizePixel = 0
 		img.Image = UICtx.data("Cosmetics").face_image(cosmetics[h.id].face)
 		img.ImageTransparency = if h.spawned then 0 else 0.55
@@ -299,7 +299,7 @@ function SpawnOverlay._refresh_players(self)
 		-- (a rim of the panel's colour parts it from the head under it; green once they have placed)
 		local rim = Instance.new("UIStroke")
 		rim.Thickness = 1.5
-		rim.Color = UITheme.color3(if h.spawned then UITheme.GREEN else Color3.fromRGB(16, 22, 40))
+		rim.Color = UITheme.color3(if h.spawned then UITheme.GREEN else Color3.fromRGB(19, 22, 27))
 		rim.Parent = img
 		local head = W.wrap(img)
 		head:set_min_size(Vector2.new(SpawnOverlay.HEAD_PX, SpawnOverlay.HEAD_PX))

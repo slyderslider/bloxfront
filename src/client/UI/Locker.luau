@@ -721,7 +721,7 @@ function Locker._card(self, it: any, order: number, slot: string): TextButton
 	sub.TextColor3 = if equipped
 		then UITheme.color3(UITheme.to_rgba(UITheme.AMBER))
 		elseif rar and owned then c3(rar.color)
-		else Color3.fromRGB(150, 158, 180)
+		else Color3.fromRGB(150, 158, 170)
 	sub.Text = if equipped then "WEARING" elseif not owned then "LOCKED" elseif rar then string.upper(rar.name) else ""
 	sub.Position = UDim2.new(0, math.floor(8 * s), 1, -math.floor(18 * s))
 	sub.Size = UDim2.new(1, -math.floor(16 * s), 0, math.floor(12 * s))

@@ -194,7 +194,7 @@ function MapPicker._card(self, e: any, order: number): TextButton
 	sub.BackgroundTransparency = 1
 	sub.FontFace = Font.fromId(12187365977, Enum.FontWeight.Medium)
 	sub.TextSize = math.floor(11 * s)
-	sub.TextColor3 = Color3.fromRGB(170, 180, 205)
+	sub.TextColor3 = Color3.fromRGB(179, 188, 198)
 	sub.Text = if e.width and e.height then string.format("%d × %d", e.width, e.height) else ""
 	sub.Position = UDim2.new(0, math.floor(8 * s), 1, -math.floor(18 * s))
 	sub.Size = UDim2.new(1, -math.floor(16 * s), 0, math.floor(14 * s))

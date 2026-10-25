@@ -198,7 +198,7 @@ function GameOver.new(c: any)
 	local tag = Instance.new("Frame")
 	tag.Name = "Price"
 	tag.AnchorPoint = Vector2.new(1, 0.5)
-	tag.BackgroundColor3 = Color3.fromRGB(60, 34, 4)
+	tag.BackgroundColor3 = Color3.fromRGB(40, 36, 90)
 	tag.AutomaticSize = Enum.AutomaticSize.X
 	tag.ZIndex = 40
 	UICtx.make("UICorner", { CornerRadius = UDim.new(0.5, 0) }, tag)

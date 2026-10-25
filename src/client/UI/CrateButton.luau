@@ -119,13 +119,13 @@ function CrateButton._build(self)
 	}, body)
 	new("UICorner", { CornerRadius = UDim.new(0.5, 0) }, pill)
 	self._pill_grad = new("UIGradient", {
-		Color = ColorSequence.new(Color3.fromRGB(255, 214, 110), Color3.fromRGB(242, 160, 40)),
+		Color = ColorSequence.new(Color3.fromRGB(165, 159, 255), Color3.fromRGB(74, 66, 214)),
 		Rotation = 90,
 	}, pill)
 	new(
 		"UIStroke",
 		{
-			Color = Color3.fromRGB(70, 40, 6),
+			Color = Color3.fromRGB(30, 26, 90),
 			Thickness = 2,
 			Transparency = 0.2,
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
@@ -138,7 +138,7 @@ function CrateButton._build(self)
 		Size = UDim2.fromScale(1, 1),
 		Text = "CRATES",
 		FontFace = FONT_B,
-		TextColor3 = Color3.fromRGB(46, 26, 4),
+		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextScaled = true,
 		ZIndex = 7,
 	}, pill)

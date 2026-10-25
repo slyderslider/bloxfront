@@ -201,7 +201,7 @@ function VolumeRow.new(text: string, icon_name: string)
 	self._knob.AnchorPoint = Vector2.new(0.5, 0.5)
 	self._knob.BackgroundColor3 = Color3.new(1, 1, 1)
 	local ks = Instance.new("UIStroke")
-	ks.Color = Color3.fromRGB(120, 72, 8)
+	ks.Color = Color3.fromRGB(74, 66, 214)
 	ks.Thickness = 2
 	ks.Parent = self._knob
 	self:_part(self._knob, "BackgroundTransparency", 1.0)

@@ -84,11 +84,11 @@ function ArsenalButton._build(self)
 	self._glow = img("Glow", art.glow, 2, { ImageColor3 = GOLD, ImageTransparency = 0.5 })
 	-- the shield: a dark copy under it for depth
 	self._shade =
-		img("Shade", UITheme.icon("arsenal"), 3, { ImageColor3 = Color3.fromRGB(60, 34, 0), ImageTransparency = 0.25 })
+		img("Shade", UITheme.icon("arsenal"), 3, { ImageColor3 = Color3.fromRGB(20, 16, 60), ImageTransparency = 0.25 })
 	self._shield = img("Shield", UITheme.icon("arsenal"), 4, { ImageColor3 = GOLD })
 	new(
 		"UIGradient",
-		{ Color = ColorSequence.new(GOLD_LIGHT, Color3.fromRGB(240, 150, 30)), Rotation = 90 },
+		{ Color = ColorSequence.new(Color3.fromRGB(200, 196, 255), Color3.fromRGB(74, 66, 214)), Rotation = 90 },
 		self._shield
 	)
 	self._shield.ImageColor3 = Color3.new(1, 1, 1)
@@ -101,13 +101,13 @@ function ArsenalButton._build(self)
 	new("UICorner", { CornerRadius = UDim.new(0.5, 0) }, pill)
 	new(
 		"UIGradient",
-		{ Color = ColorSequence.new(Color3.fromRGB(255, 214, 110), Color3.fromRGB(242, 160, 40)), Rotation = 90 },
+		{ Color = ColorSequence.new(Color3.fromRGB(165, 159, 255), Color3.fromRGB(74, 66, 214)), Rotation = 90 },
 		pill
 	)
 	new(
 		"UIStroke",
 		{
-			Color = Color3.fromRGB(70, 40, 6),
+			Color = Color3.fromRGB(30, 26, 90),
 			Thickness = 2,
 			Transparency = 0.2,
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
@@ -120,7 +120,7 @@ function ArsenalButton._build(self)
 		Size = UDim2.fromScale(1, 1),
 		Text = "ARSENAL",
 		FontFace = FONT_B,
-		TextColor3 = Color3.fromRGB(46, 26, 4),
+		TextColor3 = Color3.fromRGB(255, 255, 255),
 		TextScaled = true,
 		ZIndex = 7,
 	}, pill)
@@ -133,7 +133,7 @@ function ArsenalButton._build(self)
 	-- the Stars badge (top right of the shield)
 	local badge = new("Frame", {
 		Name = "Stars",
-		BackgroundColor3 = Color3.fromRGB(20, 28, 52),
+		BackgroundColor3 = Color3.fromRGB(19, 22, 27),
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Visible = false,
 		ZIndex = 8,

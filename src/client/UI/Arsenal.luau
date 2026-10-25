@@ -83,22 +83,22 @@ local FONT_M = Font.fromId(12187365977, Enum.FontWeight.Medium)
 local GOLD = Color3.fromRGB(255, 200, 61)
 local GOLD_DARK = Color3.fromRGB(64, 40, 4)
 -- BUY NOW: its face's gradient (top, bottom; brighter under the pointer), its lip, the ink of its price
-local GREEN_TOP = Color3.fromRGB(86, 216, 130)
-local GREEN_BOTTOM = Color3.fromRGB(34, 166, 90)
-local GREEN_TOP_HI = Color3.fromRGB(108, 234, 150)
-local GREEN_BOTTOM_HI = Color3.fromRGB(46, 186, 106)
-local GREEN_LIP = Color3.fromRGB(18, 108, 56)
-local GREEN_INK = Color3.fromRGB(12, 82, 42)
+local GREEN_TOP = Color3.fromRGB(140, 132, 255)
+local GREEN_BOTTOM = Color3.fromRGB(74, 66, 214)
+local GREEN_TOP_HI = Color3.fromRGB(165, 159, 255)
+local GREEN_BOTTOM_HI = Color3.fromRGB(108, 99, 255)
+local GREEN_LIP = Color3.fromRGB(30, 26, 90)
+local GREEN_INK = Color3.fromRGB(255, 255, 255)
 local OWNED_GREEN = Color3.fromRGB(110, 230, 155)
 local WHITE = Color3.new(1, 1, 1)
-local MUTED = Color3.fromRGB(170, 182, 211)
-local ROW = Color3.fromRGB(24, 33, 58)
-local ROW_ON = Color3.fromRGB(38, 53, 90)
-local CHIP = Color3.fromRGB(38, 53, 90)
-local BAR_OFF = Color3.fromRGB(44, 58, 94)
-local BAR_LIP = Color3.fromRGB(28, 38, 64)
+local MUTED = Color3.fromRGB(179, 188, 198)
+local ROW = Color3.fromRGB(31, 36, 43)
+local ROW_ON = Color3.fromRGB(42, 48, 58)
+local CHIP = Color3.fromRGB(42, 48, 58)
+local BAR_OFF = Color3.fromRGB(44, 50, 60)
+local BAR_LIP = Color3.fromRGB(28, 32, 38)
 --- the dark a preview's ground fades into
-local NIGHT = Color3.fromRGB(8, 12, 26)
+local NIGHT = Color3.fromRGB(12, 14, 18)
 local ROBUX = "rbxasset://textures/ui/common/robux@3x.png"
 
 local function c3(hex: number): Color3
@@ -378,7 +378,7 @@ function Arsenal._row(self, it: any, order: number, rh: number, u: number): any
 	new("UICorner", { CornerRadius = UDim.new(0, 10 * u) }, b)
 	local stroke = new("UIStroke", {
 		ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
-		Color = GOLD,
+		Color = UITheme.AMBER, -- BloxFront: the selected row is outlined in the primary colour
 		Thickness = 1.5,
 		Transparency = 1,
 	}, b)
@@ -657,7 +657,7 @@ function Arsenal._build_detail(self)
 		Text = it.plain or it.tagline,
 		FontFace = FONT_M,
 		TextSize = math.floor(plain_fs * u),
-		TextColor3 = Color3.fromRGB(214, 222, 240),
+		TextColor3 = Color3.fromRGB(225, 230, 236),
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextYAlignment = Enum.TextYAlignment.Top,
 		TextWrapped = true,

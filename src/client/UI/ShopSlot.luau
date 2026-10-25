@@ -42,9 +42,9 @@ ShopSlot.WIGGLE_S = 6.4
 --- The strip at the bottom the word SHOP sits in, logical px.
 ShopSlot.CAPTION_H = 17.0
 
-local GOLD_LIGHT = Color3.fromRGB(255, 226, 122)
-local GOLD_DEEP = Color3.fromRGB(238, 148, 28)
-local INK = Color3.fromRGB(52, 28, 2)
+local GOLD_LIGHT = Color3.fromRGB(165, 159, 255)
+local GOLD_DEEP = Color3.fromRGB(74, 66, 214)
+local INK = Color3.fromRGB(255, 255, 255)
 local RED = Color3.fromRGB(232, 52, 52)
 local FONT_H = Font.fromId(12187365977, Enum.FontWeight.Heavy)
 

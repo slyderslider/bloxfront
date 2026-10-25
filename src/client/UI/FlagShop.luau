@@ -48,7 +48,7 @@ local ROBUX = "rbxasset://textures/ui/common/robux@3x.png"
 local WHITE = Color3.new(1, 1, 1)
 local GOLD = Color3.fromRGB(255, 200, 61)
 local PUMPKIN = Color3.fromRGB(255, 140, 40)
-local MUTED = Color3.fromRGB(160, 168, 190)
+local MUTED = Color3.fromRGB(179, 188, 198)
 
 local function c3(hex: number): Color3
 	return Color3.fromRGB((hex // 65536) % 256, (hex // 256) % 256, hex % 256)
@@ -494,7 +494,7 @@ function FlagShop._bundle(self, order: number, sid: string)
 		Name = "BuyAll",
 		AutoButtonColor = false,
 		Text = "",
-		BackgroundColor3 = Color3.fromRGB(46, 160, 92),
+		BackgroundColor3 = Color3.fromRGB(108, 99, 255),
 		AnchorPoint = Vector2.new(1, 0.5),
 		Position = UDim2.new(1, -px(8), 0.5, 0),
 		Size = UDim2.fromOffset(px(124), px(h - 14)),
@@ -537,10 +537,10 @@ function FlagShop._bundle(self, order: number, sid: string)
 	host:_part(icon, "ImageTransparency", 1.0)
 	host:_part(label, "TextTransparency", 1.0)
 	btn.MouseEnter:Connect(function()
-		btn.BackgroundColor3 = Color3.fromRGB(58, 186, 110)
+		btn.BackgroundColor3 = Color3.fromRGB(128, 120, 255)
 	end)
 	btn.MouseLeave:Connect(function()
-		btn.BackgroundColor3 = Color3.fromRGB(46, 160, 92)
+		btn.BackgroundColor3 = Color3.fromRGB(108, 99, 255)
 	end)
 	btn.Activated:Connect(function()
 		self:_pressed_set(sid)
@@ -640,7 +640,7 @@ function FlagShop._card(self, parent: Instance, key: string, pos: Vector2, size:
 		Name = "Buy",
 		AutoButtonColor = false,
 		Text = "",
-		BackgroundColor3 = if owned then Color3.fromRGB(46, 54, 80) else Color3.fromRGB(46, 160, 92),
+		BackgroundColor3 = if owned then Color3.fromRGB(42, 48, 58) else Color3.fromRGB(108, 99, 255),
 		AnchorPoint = Vector2.new(0.5, 1),
 		Position = UDim2.new(0.5, 0, 1, -px(8)),
 		Size = UDim2.fromOffset(px(cs.X - 16), px(bh)),
@@ -698,10 +698,10 @@ function FlagShop._card(self, parent: Instance, key: string, pos: Vector2, size:
 		end
 	end
 	btn.MouseEnter:Connect(function()
-		btn.BackgroundColor3 = if owned then Color3.fromRGB(60, 70, 102) else Color3.fromRGB(58, 186, 110)
+		btn.BackgroundColor3 = if owned then Color3.fromRGB(52, 58, 70) else Color3.fromRGB(128, 120, 255)
 	end)
 	btn.MouseLeave:Connect(function()
-		btn.BackgroundColor3 = if owned then Color3.fromRGB(46, 54, 80) else Color3.fromRGB(46, 160, 92)
+		btn.BackgroundColor3 = if owned then Color3.fromRGB(42, 48, 58) else Color3.fromRGB(108, 99, 255)
 	end)
 	btn.Activated:Connect(function()
 		self:_pressed(key)

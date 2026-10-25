@@ -53,7 +53,7 @@ function GradientText.new(text: string, px: number, weight: number?)
 	self.weight = weight or 900
 	self.spacing = 0
 	self.top_color = Color3.new(1, 1, 1)
-	self.bottom_color = Color3.new(1.0, 0.8, 0.52)
+	self.bottom_color = Color3.fromRGB(190, 185, 255)
 	self.y0 = 0.0 -- gradient start (logical px from the top of the line)
 	self.span = 100.0
 	self.sweep = -10000.0 -- shine centre x (logical px), off by default
@@ -497,7 +497,7 @@ function TitleScreen._build_head(self)
 	self._tag_row:set_alignment(W.ALIGN_CENTER)
 	self._tag_l = tag_line(false)
 	self._tag_r = tag_line(true)
-	self._tag = UITheme.label("CLAIM THE WHOLE MAP", 15, 600, Color3.new(0.86, 0.89, 0.97), 6)
+	self._tag = UITheme.label("CLAIM THE WHOLE MAP", 15, 600, Color3.new(0.88, 0.89, 0.93), 6)
 	self._tag_row:add_child(self._tag_l)
 	self._tag_row:add_child(self._tag)
 	self._tag_row:add_child(self._tag_r)
