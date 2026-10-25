@@ -419,6 +419,7 @@ function UIRoot.hud_controls(self): { GuiObject }
 		self.board._pill,
 		self.attacks.panel,
 		self.bar.panel,
+		self.bar.stats_panel,
 		self.bar.tray,
 		self.bar._place_chip,
 		self.spawn.panel,
@@ -813,7 +814,7 @@ function UIRoot._build(self)
 	place_confirm:set_meta("bar", bar)
 	place_confirm.blockers = function()
 		local out = {}
-		for _, c in ipairs({ top.panel, attacks.panel, bar.panel, bar.tray, bar._place_chip, alert.panel, board.panel }) do
+		for _, c in ipairs({ top.panel, attacks.panel, bar.panel, bar.stats_panel, bar.tray, bar._place_chip, alert.panel, board.panel }) do
 			if c ~= nil and c:is_visible_in_tree() then
 				table.insert(out, c:get_global_rect())
 			end
@@ -872,6 +873,7 @@ function UIRoot._build(self)
 			board._pill,
 			attacks.panel,
 			bar.panel,
+			bar.stats_panel,
 			bar.tray,
 			bar._place_chip,
 			alert.panel,
@@ -1987,6 +1989,9 @@ function UIRoot._apply_screen(self)
 		elseif scr == "play" then
 			if prev == "spawn" or prev == "title" then
 				W.slide_in(self.bar.panel, Vector2.new(0, 60), 0.1, 0.55)
+				if self.bar.stats_panel.visible then
+					W.slide_in(self.bar.stats_panel, Vector2.new(-80, 0), 0.15, 0.55)
+				end
 				W.slide_in(self.top.panel, Vector2.new(0, -40), 0.2, 0.5)
 				W.slide_in(
 					if self.board.expanded then self.board.panel else self.board._pill,

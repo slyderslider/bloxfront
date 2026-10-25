@@ -87,6 +87,13 @@ function CommandBar.new(c: any)
 	self:set_anchors_and_offsets_preset(W.PRESET_FULL_RECT)
 	self.panel = GlassPanel.new(18.0, 12.0, UITheme.R_LG, true, 22)
 	self:add_child(self.panel)
+	--- BloxFront (2026-10-25): on wide screens the nation, troops and gold leave the bar for their own
+	--- card in the bottom-left corner; the bar becomes a slimmer dock (attack share + slots).
+	self.stats_panel = GlassPanel.new(16.0, 14.0, UITheme.R_LG, true, 22)
+	self.stats_panel:set_accent(UITheme.AMBER, 3.0)
+	self.stats_panel:set_visible(false)
+	self:add_child(self.stats_panel)
+	self._stats_box = nil
 	self:_build_sections()
 	self:_connect(c.ratio_changed:Connect(function(_r)
 		self:_refresh_ratio()
@@ -347,6 +354,17 @@ function CommandBar.apply_layout(self)
 	end
 	local bottom = if not ctx.compact then 12.0 + ctx.insets.w else math.max(6.0, ctx.insets.w)
 	self:_anchor_bottom_center(self.panel, bottom)
+	if self.stats_panel.visible then
+		local sp = self.stats_panel
+		sp.anchor_left, sp.anchor_right, sp.anchor_top, sp.anchor_bottom = 0.0, 0.0, 1.0, 1.0
+		sp.grow_horizontal = W.GROW_END
+		sp.grow_vertical = W.GROW_BEGIN
+		sp.offset_left = ctx.insets.x + 16.0
+		sp.offset_right = sp.offset_left
+		sp.offset_top = -bottom
+		sp.offset_bottom = -bottom
+		sp:reset_size()
+	end
 	-- Tray and placement chip sit just above the bar.
 	local above = bottom + self.panel:get_combined_minimum_size().Y + 8.0
 	self:_anchor_bottom_center(self.tray, above)
@@ -432,6 +450,9 @@ function CommandBar.top_edge(self): number
 		return ctx.vp.Y - ctx.insets.w
 	end
 	local y = self.panel:get_position().Y
+	if self.stats_panel.visible then
+		y = math.min(y, self.stats_panel:get_position().Y)
+	end
 	if self.tray.visible then
 		y = math.min(y, self.tray:get_position().Y)
 	end
@@ -600,6 +621,12 @@ function CommandBar._reflow(self)
 		self._root_box:queue_free()
 		self._root_box = nil
 	end
+	if self._stats_box ~= nil then
+		self.stats_panel:remove_child(self._stats_box)
+		self._stats_box:queue_free()
+		self._stats_box = nil
+	end
+	self.stats_panel:set_visible(false)
 	local compact = self._flow == COMPACT
 	for _, b in pairs(self.buttons) do
 		b:set_compact(compact, ctx.touch)
@@ -663,14 +690,26 @@ function CommandBar._reflow(self)
 	-- the bottom bar, so gold sits next to what it buys, which is more intuitive)
 	local stats_order = { self._nation, self._troops_box, self._ratio_box, self._gold_box }
 	if self._flow == WIDE then
-		local row = T.hbox(16)
+		-- BloxFront: stats card bottom-left (nation over troops over gold), dock = attack share + slots.
+		local card = T.vbox(12)
+		self._stats_box = card
+		card:add_child(self._nation)
+		card:add_child(T.hdivider())
+		card:add_child(self._troops_box)
+		card:add_child(self._gold_box)
+		for _, c in ipairs({ self._nation, self._troops_box, self._gold_box }) do
+			c.size_flags_vertical = W.SHRINK_BEGIN
+			c.size_flags_horizontal = W.EXPAND_FILL
+		end
+		card:set_mouse_filter(W.MOUSE_IGNORE)
+		self.stats_panel:add_child(card)
+		self.stats_panel:set_visible(true)
+		local row = T.hbox(14)
 		row:set_alignment(W.ALIGN_CENTER)
 		self._root_box = row
-		for _, c in ipairs(stats_order) do
-			row:add_child(c)
-			c.size_flags_vertical = W.SHRINK_CENTER
-			row:add_child(T.vdivider(44.0))
-		end
+		row:add_child(self._ratio_box)
+		self._ratio_box.size_flags_vertical = W.SHRINK_CENTER
+		row:add_child(T.vdivider(44.0))
 		row:add_child(self._builds)
 		self._builds.size_flags_vertical = W.SHRINK_CENTER
 	elseif compact then

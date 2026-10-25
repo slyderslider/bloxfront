@@ -31,14 +31,18 @@ Main.boot = {} :: { [string]: number }
 -- Top-bar geometry and look, measured from Roblox's own TopBarApp (menu button / unibar): 44 px
 -- circles filled RGB(18,18,21) at 0.08 transparency, 36 px icon frames, 8 px apart, top edge 12 px
 -- below the screen top (TopbarInset height 58), white state overlay on hover / press.
-local BUTTON = 44
-local GAP = 8
-local ICON = 36 -- the hud_* masks keep Airship's 0.7 inset framing (glyph ≈ 25 px)
-local FILL = Color3.fromRGB(18, 18, 21)
-local FILL_T = 0.08
+-- BloxFront (2026-10-25): the buttons sit together in one slate pill (rounded squares, no fill of
+-- their own) and light up mint on hover / press instead of separate dark circles.
+local BUTTON = 40
+local GAP = 4
+local ICON = 32 -- the hud_* masks keep Airship's 0.7 inset framing (glyph ≈ 22 px)
+local FILL = Color3.fromRGB(19, 22, 27)
+local FILL_T = 1.0
+local OVERLAY = Color3.fromRGB(61, 220, 151)
 local OVERLAY_T = 1.0
-local OVERLAY_HOVER_T = 0.92
-local OVERLAY_PRESS_T = 0.84
+local OVERLAY_HOVER_T = 0.8
+local OVERLAY_PRESS_T = 0.6
+local PILL_T = 0.1
 
 local function optional(parent: Instance?, path: { string }): any
 	local node: Instance? = parent
@@ -150,17 +154,17 @@ local function make_button(h: Hud, key: string, icon: string, tooltip: string, o
 	b.Image = ""
 	b.Selectable = true
 	local corner = Instance.new("UICorner")
-	corner.CornerRadius = UDim.new(1, 0)
+	corner.CornerRadius = UDim.new(0, 10)
 	corner.Parent = b
 	local overlay = Instance.new("Frame")
 	overlay.Name = "StateOverlay"
-	overlay.BackgroundColor3 = Color3.new(1, 1, 1)
+	overlay.BackgroundColor3 = OVERLAY
 	overlay.BackgroundTransparency = OVERLAY_T
 	overlay.BorderSizePixel = 0
 	overlay.Size = UDim2.fromScale(1, 1)
 	overlay.ZIndex = 2
 	local oc = Instance.new("UICorner")
-	oc.CornerRadius = UDim.new(1, 0)
+	oc.CornerRadius = UDim.new(0, 10)
 	oc.Parent = overlay
 	overlay.Parent = b
 	local img = Instance.new("ImageLabel")
@@ -337,12 +341,37 @@ local function build_hud(player: Player)
 	bar.Name = "Bar"
 	bar.BackgroundTransparency = 1
 	bar.Parent = gui
+	-- the pill behind the row, sized to the visible buttons (UIListLayout content size)
+	local pill = Instance.new("Frame")
+	pill.Name = "Pill"
+	pill.BackgroundColor3 = FILL
+	pill.BackgroundTransparency = PILL_T
+	pill.BorderSizePixel = 0
+	pill.ZIndex = 0
+	pill.Parent = gui
+	local pc = Instance.new("UICorner")
+	pc.CornerRadius = UDim.new(0, 14)
+	pc.Parent = pill
+	local ps = Instance.new("UIStroke")
+	ps.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	ps.Color = Color3.new(1, 1, 1)
+	ps.Transparency = 0.9
+	ps.Parent = pill
 	local list = Instance.new("UIListLayout")
 	list.FillDirection = Enum.FillDirection.Horizontal
 	list.SortOrder = Enum.SortOrder.LayoutOrder
 	list.Padding = UDim.new(0, GAP)
 	list.VerticalAlignment = Enum.VerticalAlignment.Center
 	list.Parent = bar
+	local function fit_pill()
+		local w = list.AbsoluteContentSize.X
+		pill.Visible = bar.Visible and w > 0
+		pill.Position = UDim2.new(bar.Position.X.Scale, bar.Position.X.Offset - 4, bar.Position.Y.Scale, bar.Position.Y.Offset - 4)
+		pill.Size = UDim2.fromOffset(w + 8, BUTTON + 8)
+	end
+	list:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(fit_pill)
+	bar:GetPropertyChangedSignal("Position"):Connect(fit_pill)
+	bar:GetPropertyChangedSignal("Visible"):Connect(fit_pill)
 	local tip = Instance.new("TextLabel")
 	tip.Name = "Tooltip"
 	tip.AnchorPoint = Vector2.new(0.5, 0)
