@@ -1941,4 +1941,19 @@ function UITheme.fmt_rate(v: number): string
 	return (if v > 0 then "+" else "−") .. format_troops(math.abs(v)) .. "/s"
 end
 
+--- BloxFront (2026-10-25): windows open as full-height side drawers instead of centred cards.
+--- Puts panel `pn` against the `side` ("right" / "left") edge of `area` (UICtx:clear_rect()), as
+--- tall as the area allows (its content keeps its own minimum).
+function UITheme.place_drawer(pn: any, area: Rect, side: string?)
+	local cms = pn.custom_minimum_size
+	pn:set_min_size(Vector2.new(cms.X, 0))
+	local sz = pn:get_combined_minimum_size()
+	local h = math.max(sz.Y, area.Height - 8.0)
+	pn:set_min_size(Vector2.new(cms.X, h))
+	local x = if side == "left" then area.Min.X + 4.0 else area.Max.X - sz.X - 4.0
+	local y = area.Min.Y + 4.0
+	pn:set_offsets(math.floor(x + 0.5), math.floor(y + 0.5), math.floor(x + 0.5), math.floor(y + 0.5))
+	pn:reset_size()
+end
+
 return UITheme

@@ -809,13 +809,7 @@ end
 
 function PauseMenu._center(self)
 	local ctx = self.ctx
-	local sz = self._panel:get_combined_minimum_size()
-	local area = ctx:clear_rect()
-	local p = area.Min + (Vector2.new(area.Width, area.Height) - sz) * 0.5
-	local y = math.max(p.Y, area.Min.Y + 4.0)
-	local rp = Vector2.new(math.floor(p.X + 0.5), math.floor(y + 0.5))
-	self._panel:set_offsets(rp.X, rp.Y, rp.X, rp.Y)
-	self._panel:reset_size()
+	UITheme.place_drawer(self._panel, ctx:clear_rect(), "left")
 end
 
 return PauseMenu

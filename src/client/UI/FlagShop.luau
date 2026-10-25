@@ -856,12 +856,7 @@ end
 
 function FlagShop._center(self)
 	local area = self.ctx:clear_rect()
-	local pn = self._panel
-	local sz = pn:get_combined_minimum_size()
-	local p = area.Min + (Vector2.new(area.Width, area.Height) - sz) * 0.5
-	local y = math.max(p.Y, area.Min.Y + 4.0)
-	pn:set_offsets(math.floor(p.X + 0.5), math.floor(y + 0.5), math.floor(p.X + 0.5), math.floor(y + 0.5))
-	pn:reset_size()
+	UITheme.place_drawer(self._panel, area, "right")
 end
 
 return FlagShop
