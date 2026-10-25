@@ -2,7 +2,7 @@
 <html><head><meta charset="utf-8"><title>BloxFront UI</title>
 <style>
 :root{--bg:#0e1116;--glass:rgba(19,22,27,.92);--solid:#13161b;--raised:#1f242b;--raised2:#262c35;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.14);
---text:#f5f7fa;--t2:#b3bcc6;--t3:#808a96;--mint:#3ddc97;--mintHi:#6eebb4;--mintLo:#1e9664;--ink:#08241a;--gold:#ffd666;--red:#ff5a64;--cyan:#4fd1ff;--violet:#b89eff;--orange:#ff944f}
+--text:#f5f7fa;--t2:#b3bcc6;--t3:#808a96;--mint:#6c63ff;--mintHi:#a59fff;--mintLo:#4a42d6;--ink:#ffffff;--gold:#ffd666;--red:#ff5a64;--cyan:#4fd1ff;--violet:#b89eff;--orange:#ff944f}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#05070a;font-family:Rubik,Inter,sans-serif;color:var(--text);padding:40px;width:1680px}
 .screen{margin-bottom:60px}
@@ -23,9 +23,9 @@ body{background:#05070a;font-family:Rubik,Inter,sans-serif;color:var(--text);pad
 .btn.primary{background:var(--mint);color:var(--ink);border:none;box-shadow:inset 0 -3px 0 var(--mintLo)}
 .btn.ghost{background:transparent}
 .chip{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:999px;background:var(--raised);border:1px solid var(--line);font-size:12px;font-weight:600;color:var(--t2)}
-.chip.on{background:rgba(61,220,151,.16);border-color:var(--mint);color:var(--mintHi)}
+.chip.on{background:rgba(108,99,255,.2);border-color:var(--mint);color:var(--mintHi)}
 .ico{width:36px;height:36px;border-radius:10px;background:var(--raised);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--t2)}
-.ico.m{background:rgba(61,220,151,.16);color:var(--mint)}
+.ico.m{background:rgba(108,99,255,.2);color:var(--mint)}
 .pill{border-radius:999px}
 .bar{height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.bar i{display:block;height:100%;background:var(--mint);border-radius:99px}
 .toprail{left:24px;top:16px;padding:4px;gap:4px;border-radius:14px}
@@ -35,7 +35,7 @@ body{background:#05070a;font-family:Rubik,Inter,sans-serif;color:var(--text);pad
 .drawer.left{left:16px;right:auto}
 .x{width:36px;height:36px;border-radius:10px;background:var(--raised);display:flex;align-items:center;justify-content:center;color:var(--t2);font-weight:700}
 .list .it{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:var(--raised);border:1px solid transparent}
-.list .it.sel{border-color:var(--mint);background:rgba(61,220,151,.08)}
+.list .it.sel{border-color:var(--mint);background:rgba(108,99,255,.1)}
 .price{margin-left:auto;font-size:13px;font-weight:800;color:var(--gold)}
 .sep{height:1px;background:var(--line);width:100%}
 .slot{width:58px;height:62px;border-radius:12px;background:var(--raised);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:700;color:var(--t2);position:relative}
@@ -57,7 +57,7 @@ body{background:#05070a;font-family:Rubik,Inter,sans-serif;color:var(--text);pad
 <div class="screen map" data-name="01 Title">
  <div class="abs glass row toprail"><div class="ico">♪</div><div class="ico">?</div><div class="ico">⚙</div></div>
  <div class="abs col" style="left:56px;top:110px;gap:10px">
-  <div class="row" style="gap:16px"><div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(#6eebb4,#1e9664)"></div>
+  <div class="row" style="gap:16px"><div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(#8f88ff,#4a42d6)"></div>
    <div class="col"><div style="font-size:72px;font-weight:900;letter-spacing:.04em;line-height:1">BLOXFRONT</div><div class="cap" style="color:var(--mintHi);letter-spacing:.3em">Claim the whole map</div></div></div>
  </div>
  <div class="abs glass col" style="left:56px;bottom:48px;width:520px;padding:20px;gap:14px">
@@ -167,7 +167,7 @@ body{background:#05070a;font-family:Rubik,Inter,sans-serif;color:var(--text);pad
 <div class="screen map" data-name="07 Spawn phase">
  <div class="abs glass row toprail"><div class="ico">♪</div><div class="ico">?</div><div class="ico">▥</div><div class="ico">◍</div><div class="ico">⚙</div><div class="ico">⇥</div></div>
  <div class="abs glass row pill" style="left:50%;transform:translateX(-50%);top:16px;padding:8px 8px 8px 22px;gap:16px"><div class="col"><b style="font-size:14px;letter-spacing:.08em">PICK YOUR START</b><span class="t3" style="font-size:12px">Click unclaimed land · click again to move</span></div><div style="width:44px;height:44px;border-radius:50%;border:3px solid var(--mint);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">3</div></div>
- <div class="abs" style="left:880px;top:420px;width:90px;height:90px;border-radius:50%;border:2px solid var(--mint);background:rgba(61,220,151,.12)"></div>
+ <div class="abs" style="left:880px;top:420px;width:90px;height:90px;border-radius:50%;border:2px solid var(--mint);background:rgba(108,99,255,.14)"></div>
  <div class="abs glass col" style="left:990px;top:440px;width:280px;padding:14px;gap:8px"><b>Unclaimed · Highland</b><div class="row" style="font-size:12px"><span class="t3">Neighbours</span><span style="margin-left:auto;color:var(--orange);font-weight:700">8 nearby · tough start</span></div><div class="sep"></div><span style="color:var(--mint);font-size:12px;font-weight:700">◎ Click to place your capital</span></div>
 </div>
 
@@ -184,7 +184,7 @@ body{background:#05070a;font-family:Rubik,Inter,sans-serif;color:var(--text);pad
  <div class="abs glass row" style="left:50%;transform:translateX(-50%);bottom:16px;padding:12px 16px;gap:14px">
   <div class="col" style="width:180px;gap:6px"><div class="row cap">⚔ Attack<span style="margin-left:auto;color:var(--mint)">25%</span></div><div class="row" style="gap:3px;background:var(--raised);border-radius:8px;padding:3px;font-size:11px;font-weight:700"><span style="flex:1;text-align:center">10%</span><span style="flex:1;text-align:center;background:var(--mint);color:var(--ink);border-radius:6px">25%</span><span style="flex:1;text-align:center">35%</span><span style="flex:1;text-align:center">50%</span><span style="flex:1;text-align:center">75%</span></div><span class="t3" style="font-size:11px">Sends 1.06K troops</span></div>
   <div style="width:1px;height:44px;background:var(--line)"></div>
-  <div class="row" style="gap:4px"><div class="slot red"><span class="k">1</span><b></b>125K</div><div class="slot"><span class="k">2</span><b></b>125K</div><div class="slot red"><span class="k">3</span><b></b>125K</div><div class="slot"><span class="k">4</span><b></b>50K</div><div class="slot red"><span class="k">5</span><b></b>1.5M</div><div class="slot red"><span class="k">6</span><b></b>1M</div><div class="slot"><span class="k">7</span><b></b>250K</div><div style="width:1px;height:40px;background:var(--line);margin:0 6px"></div><div class="slot lock"><span class="k">8</span><b></b>750K</div><div class="slot lock"><span class="k">9</span><b></b>5M</div><div class="slot lock"><span class="k">0</span><b></b>25M</div><div class="slot" style="width:72px;background:var(--mint);color:var(--ink)"><b style="background:rgba(8,36,26,.2)"></b>SHOP</div></div>
+  <div class="row" style="gap:4px"><div class="slot red"><span class="k">1</span><b></b>125K</div><div class="slot"><span class="k">2</span><b></b>125K</div><div class="slot red"><span class="k">3</span><b></b>125K</div><div class="slot"><span class="k">4</span><b></b>50K</div><div class="slot red"><span class="k">5</span><b></b>1.5M</div><div class="slot red"><span class="k">6</span><b></b>1M</div><div class="slot"><span class="k">7</span><b></b>250K</div><div style="width:1px;height:40px;background:var(--line);margin:0 6px"></div><div class="slot lock"><span class="k">8</span><b></b>750K</div><div class="slot lock"><span class="k">9</span><b></b>5M</div><div class="slot lock"><span class="k">0</span><b></b>25M</div><div class="slot" style="width:72px;background:var(--mint);color:var(--ink)"><b style="background:rgba(255,255,255,.22)"></b>SHOP</div></div>
  </div>
 </div>
 
@@ -255,7 +255,7 @@ body{background:#05070a;font-family:Rubik,Inter,sans-serif;color:var(--text);pad
 <div class="screen map" data-name="13 Game over">
  <div class="dim" style="background:rgba(6,8,11,.7)"></div>
  <div class="abs glass col" style="left:50%;top:50%;transform:translate(-50%,-50%);width:620px;padding:36px;gap:22px;align-items:center;text-align:center">
-  <div style="width:84px;height:84px;border-radius:24px;background:linear-gradient(#6eebb4,#1e9664);display:flex;align-items:center;justify-content:center;font-size:40px;color:var(--ink)">♛</div>
+  <div style="width:84px;height:84px;border-radius:24px;background:linear-gradient(#8f88ff,#4a42d6);display:flex;align-items:center;justify-content:center;font-size:40px;color:var(--ink)">♛</div>
   <div class="col" style="gap:6px"><span class="cap" style="color:var(--mint)">Victory</span><div style="font-size:44px;font-weight:900">You rule the map</div><span class="t2">80% of the world in 24:13</span></div>
   <div class="grid4" style="width:100%">
    <div class="col" style="padding:12px;border-radius:12px;background:var(--raised)"><span class="t3" style="font-size:11px">Land</span><b style="font-size:18px">80.2%</b></div>
