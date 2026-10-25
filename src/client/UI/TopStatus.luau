@@ -44,7 +44,8 @@ function TopStatus.new(c: any)
 	self._accum = 0.0
 	self:set_mouse_filter(W.MOUSE_IGNORE)
 	self:set_anchors_and_offsets_preset(W.PRESET_FULL_RECT)
-	self.panel = GlassPanel.new(18.0, 10.0, T.R_LG, true, 18)
+	-- BloxFront (2026-10-25): a slim fully rounded pill; clock left, one-line control bar right.
+	self.panel = GlassPanel.new(22.0, 8.0, 999, true, 18)
 	self.panel:set_mouse_filter(W.MOUSE_IGNORE)
 	on_release(self.panel, function()
 		self.tapped:Fire()
@@ -78,7 +79,6 @@ function TopStatus.new(c: any)
 	tb:move_child(self._grace_row, 0)
 	tb:set_min_size(Vector2.new(88, 0))
 	row:add_child(tb)
-	row:add_child(T.vdivider(38.0))
 
 	local sb = T.vbox(5)
 	sb.size_flags_vertical = W.SHRINK_CENTER
@@ -90,9 +90,10 @@ function TopStatus.new(c: any)
 	self._goal = T.caption("Goal 80%", 11, T.GOLD)
 	head:add_child(self._goal)
 	sb:add_child(head)
-	self._bar = FillBar.new(7.0, T.AMBER)
+	head:set_visible(false)
+	self._bar = FillBar.new(5.0, T.AMBER)
 	self._bar.goal = Rules.WIN_SHARE
-	self._bar:set_min_size(Vector2.new(280, 12))
+	self._bar:set_min_size(Vector2.new(320, 8))
 	sb:add_child(self._bar)
 	local who = T.hbox(6)
 	self._you_sw = T.swatch(T.AMBER, 9.0, 2)
@@ -110,6 +111,7 @@ function TopStatus.new(c: any)
 	self._lead_box:add_child(self._lead)
 	who:add_child(self._lead_box)
 	sb:add_child(who)
+	sb:move_child(who, 1)
 	row:add_child(sb)
 	self:_build_mini()
 	return self
@@ -185,7 +187,7 @@ function TopStatus.apply_layout(self)
 	local p = self.panel
 	local top = 12.0 + ctx.insets.y
 	-- Phones drop the "WORLD CONTROL · GOAL 80%" header: the bar and its gold goal line say it.
-	self._head:set_visible(not ctx.compact)
+	self._head:set_visible(false) -- BloxFront: the pill has no caption row
 	self._full:set_visible(not ctx.compact)
 	self._mini:set_visible(ctx.compact)
 	-- Very narrow phones drop the leaderboard hint icon (the pill still opens the board).

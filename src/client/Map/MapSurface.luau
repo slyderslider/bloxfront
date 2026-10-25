@@ -108,7 +108,7 @@ MapSurface.REPAINT_MIN_TILES = 256
 --- Tiles painted between two looks at the clock.
 MapSurface.REPAINT_CHUNK = 256
 --- Map background (also impassable terrain).
-MapSurface.BACKGROUND = Color3.fromRGB(0x3c, 0x3c, 0x3c)
+MapSurface.BACKGROUND = Color3.fromRGB(0x1c, 0x20, 0x26) -- BloxFront: dark slate
 
 local BAND_ROWS = MapSurface.BAND_ROWS
 local MAX_OWNERS = 4096
@@ -190,12 +190,13 @@ end
 -- Terrain (colour by terrain class and magnitude)
 -- ---------------------------------------------------------------------------------------------
 
-local OCEAN = { 0x47, 0x85, 0xB5 } -- #4785b5
-local SAND = { 0xCC, 0xCB, 0x9E } -- #CCCB9E
-local PLAINS = { 0xBE, 0xDC, 0x8A } -- #BEDC8A
-local HIGHLAND = { 0xDC, 0xCB, 0x9E } -- #DCCB9E
-local MOUNTAIN = { 0xE6, 0xE6, 0xE6 } -- #e6e6e6
-local BACKGROUND = { 0x3C, 0x3C, 0x3C } -- #3c3c3c
+-- BloxFront (2026-10-25): own palette (deeper teal sea, mintier plains, warmer highlands)
+local OCEAN = { 0x2E, 0x6F, 0x94 } -- #2e6f94
+local SAND = { 0xD9, 0xD2, 0xA6 } -- #d9d2a6
+local PLAINS = { 0xA9, 0xD1, 0x8E } -- #a9d18e
+local HIGHLAND = { 0xD6, 0xC4, 0x9A } -- #d6c49a
+local MOUNTAIN = { 0xEE, 0xF1, 0xF4 } -- #eef1f4
+local BACKGROUND = { 0x1C, 0x20, 0x26 } -- #1c2026
 
 --- RGBA8 terrain pixel of a terrain byte (see tile_bytes).
 function MapSurface.terrain_pixel(tb: number): number

@@ -143,7 +143,7 @@ function MapView.new(): MapView
 	local backdrop = Instance.new("Frame")
 	backdrop.Name = "Backdrop"
 	backdrop.Size = UDim2.fromScale(1, 1)
-	backdrop.BackgroundColor3 = Color3.fromRGB(0x3c, 0x3c, 0x3c)
+	backdrop.BackgroundColor3 = Color3.fromRGB(0x1c, 0x20, 0x26)
 	backdrop.BorderSizePixel = 0
 	backdrop.ClipsDescendants = true
 	backdrop.Parent = gui
