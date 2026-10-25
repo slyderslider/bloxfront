@@ -33,6 +33,9 @@ TitleScreen.DESKTOP_WORD_RESERVE = 440.0
 --- The wordmark is at most this share of the screen's width: the width the old name had ("ROWORLD",
 --- since 2026-10-25, is wider than "ROFRONT" and reached under the Arsenal and crate buttons, top right).
 TitleScreen.WORD_MAX_W = 0.35
+--- BloxFront: the desktop left column (wordmark, tagline and dock share it).
+TitleScreen.LEFT_COL_W = 560.0
+TitleScreen.LEFT_MARGIN = 56.0
 --- The credits line under the dock (desktop, phones).
 TitleScreen.CREDITS = "© OpenFront and Contributors  ·  Maps, flags and unit art from OpenFront (CC BY-SA 4.0)  ·  "
 	.. "Music by Rodrigo Flores  ·  GNU AGPL v3, no warranty: see How to play"
@@ -478,14 +481,14 @@ function TitleScreen._build_head(self)
 	self._emblem.size_flags_horizontal = W.SHRINK_CENTER
 	self._head:add_child(self._emblem)
 	-- Warm glow behind the wordmark (placed after the shades, before the fade).
-	self._glow = image_node(S.title_glow, Color3.new(1, 1, 1), 1.0)
+	self._glow = image_node(S.title_glow, Color3.fromRGB(120, 235, 185), 1.0)
 	self:add_child(self._glow)
 	self:move_child(self._glow, 3)
 
 	local word = GradientText.new("BLOXFRONT", 120, 900)
 	word.spacing = 14
 	word.shadow = { color = Color3.new(0.0, 0.02, 0.08), alpha = 0.55, offset_y = 6, outline = 14 }
-	word:set_colors(Color3.new(1, 1, 1), Color3.new(1.0, 0.8, 0.52))
+	word:set_colors(Color3.new(1, 1, 1), Color3.fromRGB(150, 240, 200)) -- BloxFront: white to mint
 	word.size_flags_horizontal = W.SHRINK_CENTER
 	self._word = word
 	self._head:add_child(word)
@@ -839,6 +842,17 @@ function TitleScreen.apply_layout(self)
 			self:_size_word(word_px)
 		end
 	end
+	-- BloxFront (2026-10-25): desktop composition in a left column (wordmark top-left, dock bottom-left)
+	-- so the globe stays free in the middle; phones keep the centred layout.
+	if not compact then
+		local col_w = TitleScreen.LEFT_COL_W
+		local w = self._word:get_combined_minimum_size().X
+		if w > col_w then
+			word_px = math.max(44.0, word_px * col_w / w)
+			self:_size_word(word_px)
+		end
+		col_x = ctx.insets.x + TitleScreen.LEFT_MARGIN + col_w * 0.5
+	end
 	local dx = col_x - vp.X * 0.5
 	local emblem_px = if compact then 0.0 else math.clamp(word_px * 0.56, 44.0, 76.0)
 	self._emblem:set_visible(emblem_px > 0.0)
@@ -847,6 +861,10 @@ function TitleScreen.apply_layout(self)
 	self._tag_l:set_min_size(Vector2.new(if compact then 40 else 72, 2))
 	self._tag_r:set_min_size(self._tag_l.custom_minimum_size)
 	local head_top = (if compact then 56.0 else math.max(vp.Y * 0.07, 40.0)) + ctx.insets.y
+	if not compact then
+		-- the left column starts under the top-bar row
+		head_top = math.max(head_top, ctx.reserved_top_left.Max.Y + 28.0)
+	end
 	if compact then
 		-- Phones: keep the wordmark centred, below the top bar row when they would touch.
 		local ww = self._word:get_combined_minimum_size().X

@@ -415,13 +415,15 @@ function PartyPanel.apply_layout(self)
 		p.offset_left, p.offset_right = x, x
 		p.offset_top, p.offset_bottom = y + 46, y + 46
 	else
-		-- desktop: on the left, halfway down
+		-- desktop: on the right, halfway down (BloxFront: the title's left column holds the menu)
 		p:set_visible(true)
-		p.anchor_left, p.anchor_right, p.anchor_top, p.anchor_bottom = 0, 0, 0.5, 0.5
-		p.grow_horizontal = W.GROW_END
-		p.grow_vertical = W.GROW_BOTH
-		p.offset_left, p.offset_right = x + 4.0, x + 4.0
-		p.offset_top, p.offset_bottom = 0, 0
+		local xr = 16.0 + ctx.insets.z
+		local yb = 40.0 + ctx.insets.w
+		p.anchor_left, p.anchor_right, p.anchor_top, p.anchor_bottom = 1, 1, 1, 1
+		p.grow_horizontal = W.GROW_BEGIN
+		p.grow_vertical = W.GROW_BEGIN
+		p.offset_left, p.offset_right = -xr, -xr
+		p.offset_top, p.offset_bottom = -yb, -yb
 	end
 	p:reset_size()
 	-- the invite list: under the top bar row (its buttons draw above our layer), growing down, its rows

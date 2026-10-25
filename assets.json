@@ -1,0 +1,14 @@
+{
+  "project": "BloxFront",
+  "assets": [
+    {
+      "name": "BloxFrontLogo",
+      "type": "ui-image",
+      "file": "exports/ui/Branding/BloxFrontLogo.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "512x512 app icon / title emblem (Figma file KEo76KefNk9UeH2BhNyMhM, node 1:2). Replaces Snick's logo id in src/shared/Assets/Branding.luau (app_icon, logo_mark) and UiIcons.luau (app_icon). Also usable as the experience icon."
+    }
+  ]
+}
