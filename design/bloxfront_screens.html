@@ -1,0 +1,270 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>BloxFront UI</title>
+<style>
+:root{--bg:#0e1116;--glass:rgba(19,22,27,.92);--solid:#13161b;--raised:#1f242b;--raised2:#262c35;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.14);
+--text:#f5f7fa;--t2:#b3bcc6;--t3:#808a96;--mint:#3ddc97;--mintHi:#6eebb4;--mintLo:#1e9664;--ink:#08241a;--gold:#ffd666;--red:#ff5a64;--cyan:#4fd1ff;--violet:#b89eff;--orange:#ff944f}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#05070a;font-family:Rubik,Inter,sans-serif;color:var(--text);padding:40px;width:1680px}
+.screen{margin-bottom:60px}
+.screen{width:1600px;height:900px;flex:0 0 1600px;position:relative;overflow:hidden;background:
+ radial-gradient(ellipse 14% 20% at 60% 46%,#d6c49a 0 98%,transparent 100%),
+ radial-gradient(ellipse 22% 34% at 58% 50%,#a9d18e 0 98%,transparent 100%),
+ radial-gradient(ellipse 12% 16% at 80% 30%,#a9d18e 0 98%,transparent 100%),
+ radial-gradient(ellipse 9% 14% at 30% 62%,#a9d18e 0 98%,transparent 100%),
+ radial-gradient(ellipse 70% 60% at 60% 50%,#2c6f93 0%,#1f5576 50%,#173f59 100%)}
+.dim{position:absolute;inset:0;background:rgba(6,8,11,.55)}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.abs{position:absolute}
+.row{display:flex;align-items:center}.col{display:flex;flex-direction:column}
+.cap{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
+.h1{font-size:22px;font-weight:800;letter-spacing:.06em}
+.t2{color:var(--t2)}.t3{color:var(--t3)}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:12px;font-weight:700;font-size:15px;height:44px;padding:0 18px;background:var(--raised);border:1px solid var(--line2);color:var(--text)}
+.btn.primary{background:var(--mint);color:var(--ink);border:none;box-shadow:inset 0 -3px 0 var(--mintLo)}
+.btn.ghost{background:transparent}
+.chip{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:999px;background:var(--raised);border:1px solid var(--line);font-size:12px;font-weight:600;color:var(--t2)}
+.chip.on{background:rgba(61,220,151,.16);border-color:var(--mint);color:var(--mintHi)}
+.ico{width:36px;height:36px;border-radius:10px;background:var(--raised);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--t2)}
+.ico.m{background:rgba(61,220,151,.16);color:var(--mint)}
+.pill{border-radius:999px}
+.bar{height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.bar i{display:block;height:100%;background:var(--mint);border-radius:99px}
+.toprail{left:24px;top:16px;padding:4px;gap:4px;border-radius:14px}
+.toprail .ico{background:transparent;color:var(--text)}
+.label{font-size:10px;font-weight:700;color:var(--t3)}
+.drawer{top:16px;bottom:16px;right:16px;width:520px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.drawer.left{left:16px;right:auto}
+.x{width:36px;height:36px;border-radius:10px;background:var(--raised);display:flex;align-items:center;justify-content:center;color:var(--t2);font-weight:700}
+.list .it{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:var(--raised);border:1px solid transparent}
+.list .it.sel{border-color:var(--mint);background:rgba(61,220,151,.08)}
+.price{margin-left:auto;font-size:13px;font-weight:800;color:var(--gold)}
+.sep{height:1px;background:var(--line);width:100%}
+.slot{width:58px;height:62px;border-radius:12px;background:var(--raised);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:700;color:var(--t2);position:relative}
+.slot .k{position:absolute;left:6px;top:4px;font-size:9px;color:var(--t3)}
+.slot b{width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.12)}
+.slot.lock{opacity:.45}.slot.red{color:var(--red)}
+.nation{position:absolute;border-radius:40%;opacity:.85}
+.toast{padding:12px 14px;border-radius:14px;display:flex;gap:12px;align-items:center;font-size:13px;width:340px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tile{height:120px;border-radius:14px;background:var(--raised);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:flex-end;padding:10px;font-size:12px;font-weight:700}
+.tile small{font-size:10px;color:var(--t3);font-weight:600}
+.tile.sel{border-color:var(--mint)}
+.kbd{display:inline-flex;min-width:28px;height:24px;padding:0 8px;border-radius:6px;background:var(--raised2);border:1px solid var(--line2);font-size:11px;font-weight:700;align-items:center;justify-content:center}
+.foot{left:0;right:0;bottom:12px;text-align:center;font-size:11px;color:var(--t3)}
+</style></head><body>
+
+<!-- 01 TITLE -->
+<div class="screen map" data-name="01 Title">
+ <div class="abs glass row toprail"><div class="ico">♪</div><div class="ico">?</div><div class="ico">⚙</div></div>
+ <div class="abs col" style="left:56px;top:110px;gap:10px">
+  <div class="row" style="gap:16px"><div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(#6eebb4,#1e9664)"></div>
+   <div class="col"><div style="font-size:72px;font-weight:900;letter-spacing:.04em;line-height:1">BLOXFRONT</div><div class="cap" style="color:var(--mintHi);letter-spacing:.3em">Claim the whole map</div></div></div>
+ </div>
+ <div class="abs glass col" style="left:56px;bottom:48px;width:520px;padding:20px;gap:14px">
+  <div class="row" style="justify-content:space-between"><div class="t2" style="font-size:13px">Welcome back, <b style="color:var(--text)">Commander Slyder</b></div><div class="chip">★ 32,890</div></div>
+  <div class="row" style="gap:10px"><div class="btn primary" style="flex:1;height:58px;font-size:18px">▶ PLAY SOLO</div><div class="btn" style="width:58px;height:58px">?</div></div>
+  <div class="cap">Live matches</div>
+  <div class="list col" style="gap:8px">
+   <div class="it sel"><div class="ico m">◎</div><div class="col"><b style="font-size:14px">Public match</b><span class="t3" style="font-size:12px">Korea · 30/50 · starts 0:56</span></div><div class="btn primary" style="margin-left:auto;height:32px;font-size:12px">JOIN</div></div>
+   <div class="it"><div class="ico">◍</div><div class="col"><b style="font-size:14px">World</b><span class="t3" style="font-size:12px">Opening soon</span></div><div class="btn" style="margin-left:auto;height:32px;font-size:12px">JOIN</div></div>
+   <div class="it"><div class="ico">◈</div><div class="col"><b style="font-size:14px">Russia · Teams</b><span class="t3" style="font-size:12px">6 teams · 14/30 · 1:26</span></div><div class="btn" style="margin-left:auto;height:32px;font-size:12px">JOIN TEAM</div></div>
+  </div>
+ </div>
+ <div class="abs col" style="right:24px;top:24px;gap:10px;width:260px">
+  <div class="glass row" style="padding:12px;gap:12px"><div class="ico m" style="width:48px;height:48px">★</div><div class="col"><b>Arsenal</b><span class="t3" style="font-size:12px">Unlock weapons</span></div></div>
+  <div class="glass row" style="padding:12px;gap:12px"><div class="ico" style="width:48px;height:48px;color:var(--gold)">▣</div><div class="col"><b>Locker</b><span class="t3" style="font-size:12px">Crates · skins · flags</span></div><div class="chip" style="margin-left:auto">◎ 15</div></div>
+  <div class="glass row" style="padding:12px;gap:12px;border-color:rgba(184,158,255,.5)"><div class="ico" style="width:48px;height:48px;color:var(--violet)">⚑</div><div class="col"><b>Flag shop</b><span style="font-size:12px;color:var(--violet)">Halloween · new in 2:17:19</span></div></div>
+ </div>
+ <div class="abs glass col" style="right:24px;bottom:48px;width:260px;padding:16px;gap:10px"><div class="row" style="gap:8px"><div class="ico m" style="width:28px;height:28px">♟</div><b>Party</b><span class="chip" style="margin-left:auto">1/4</span></div><span class="t3" style="font-size:12px">Friends in your party join public matches on your team.</span><div class="btn" style="height:36px">+ Invite</div></div>
+ <div class="abs foot">© OpenFront and Contributors · Maps, flags and unit art from OpenFront (CC BY-SA 4.0) · Music by Rodrigo Flores · GNU AGPL v3, no warranty: see Help</div>
+</div>
+
+<!-- 02 SOLO SETUP -->
+<div class="screen map" data-name="02 Solo setup">
+ <div class="abs glass row toprail"><div class="ico">♪</div><div class="ico">?</div><div class="ico">⚙</div></div>
+ <div class="abs col" style="left:56px;top:110px"><div style="font-size:72px;font-weight:900;letter-spacing:.04em">BLOXFRONT</div></div>
+ <div class="abs glass col" style="left:56px;bottom:48px;width:520px;padding:20px;gap:16px">
+  <div class="row"><div class="x" style="margin-right:12px">←</div><div class="h1">Solo game</div></div>
+  <div class="cap">Map</div>
+  <div class="grid4"><div class="tile sel">World<small>Earth</small></div><div class="tile">Europe<small>Region</small></div><div class="tile">Asia<small>Region</small></div><div class="tile">More…<small>48 maps</small></div></div>
+  <div class="cap">Difficulty</div>
+  <div class="row" style="gap:8px;background:var(--raised);padding:4px;border-radius:12px"><div class="btn primary" style="flex:1;height:36px">Relaxed</div><div class="btn ghost" style="flex:1;height:36px;border:none">Standard</div><div class="btn ghost" style="flex:1;height:36px;border:none">Brutal</div></div>
+  <div class="t2" style="font-size:12px">Gentle AI with slower growth. Nations leave you alone for 5:00.</div>
+  <div class="btn primary" style="height:58px;font-size:18px">▶ START</div>
+ </div>
+</div>
+
+<!-- 03 INVITE -->
+<div class="screen map" data-name="03 Invite party">
+ <div class="dim"></div>
+ <div class="abs glass drawer">
+  <div class="row"><div class="ico m" style="margin-right:12px">♟</div><div class="col"><div class="h1">Invite to party</div><span class="t3" style="font-size:12px">Accepted friends join you on this server</span></div><div class="x" style="margin-left:auto">✕</div></div>
+  <div class="btn primary">Invite Roblox friends</div>
+  <div class="row" style="height:40px;border-radius:12px;background:var(--raised);padding:0 14px;color:var(--t3);font-size:13px">⌕ Search players on this server</div>
+  <div class="cap">On this server · 24</div>
+  <div class="list col" style="gap:6px">
+   <div class="it"><div class="ico">A</div><b style="font-size:14px">admm7501</b><div class="btn" style="margin-left:auto;height:30px;font-size:12px">Invite</div></div>
+   <div class="it"><div class="ico">B</div><b style="font-size:14px">bleulavip</b><div class="btn" style="margin-left:auto;height:30px;font-size:12px">Invite</div></div>
+   <div class="it"><div class="ico">C</div><b style="font-size:14px">cheesecake</b><div class="chip on" style="margin-left:auto">Invited</div></div>
+   <div class="it"><div class="ico">D</div><b style="font-size:14px">Duck67000009</b><div class="btn" style="margin-left:auto;height:30px;font-size:12px">Invite</div></div>
+   <div class="it"><div class="ico">F</div><b style="font-size:14px">Frauditty</b><div class="btn" style="margin-left:auto;height:30px;font-size:12px">Invite</div></div>
+   <div class="it"><div class="ico">K</div><b style="font-size:14px">kowalski</b><div class="btn" style="margin-left:auto;height:30px;font-size:12px">Invite</div></div>
+  </div>
+ </div>
+</div>
+
+<!-- 04 ARSENAL -->
+<div class="screen map" data-name="04 Arsenal">
+ <div class="dim"></div>
+ <div class="abs glass drawer" style="width:640px">
+  <div class="row"><div class="ico m" style="margin-right:12px">★</div><div class="col"><div class="h1">Arsenal</div><span class="t3" style="font-size:12px">Unlock once, keep forever. Earn stars by playing.</span></div><div class="chip" style="margin-left:auto;margin-right:10px;color:var(--gold)">★ 32,890</div><div class="x">✕</div></div>
+  <div class="row" style="gap:8px"><span class="chip on">All</span><span class="chip">Nukes</span><span class="chip">Army</span><span class="chip">Boosts</span></div>
+  <div style="height:220px;border-radius:14px;background:linear-gradient(135deg,#2b3340,#1a1f26);position:relative;border:1px solid var(--line)"><div class="abs" style="left:24px;bottom:20px"><div style="font-size:26px;font-weight:900">MEGA NUKE</div><div class="row" style="gap:6px;margin-top:6px"><span class="chip">Nuke</span><span class="chip on">Forever</span><span class="chip">4× blast</span></div></div><div class="abs" style="right:40px;top:40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(#ffe0a3,#ff944f 60%,transparent 70%)"></div></div>
+  <div class="t2" style="font-size:13px">Four times the blast of an Atom Bomb. Launch it from your Missile Silos.</div>
+  <div class="row" style="gap:10px"><div class="btn primary" style="flex:1;height:50px">BUY NOW · ◎ 39</div><div class="btn" style="flex:1;height:50px;color:var(--gold)">Unlock · ★ 20,000</div></div>
+  <div class="grid4">
+   <div class="tile sel">Mega Nuke<small>★ 20K</small></div><div class="tile">Scattershot<small>◎ 67</small></div><div class="tile">Reinforce<small>◎ 149</small></div><div class="tile">Artillery<small>◎ 99</small></div>
+   <div class="tile">Air Strike<small>◎ 349</small></div><div class="tile">Railgun<small>◎ 999</small></div><div class="tile">2× Stars<small>◎ 59</small></div><div class="tile">Rapid Reload<small>◎ 129</small></div>
+  </div>
+ </div>
+</div>
+
+<!-- 05 LOCKER -->
+<div class="screen map" data-name="05 Locker">
+ <div class="dim"></div>
+ <div class="abs glass drawer" style="width:860px">
+  <div class="row"><div class="ico" style="margin-right:12px;color:var(--gold)">▣</div><div class="col"><div class="h1">Locker</div><span class="t3" style="font-size:12px">0 of 279 unlocked</span></div><div class="x" style="margin-left:auto">✕</div></div>
+  <div class="row" style="gap:16px;align-items:stretch;flex:1">
+   <div class="col" style="flex:1;gap:12px">
+    <div class="row" style="gap:8px"><span class="chip on">Skins</span><span class="chip">Flags</span><span class="chip" style="margin-left:auto">Sort: rarity</span></div>
+    <div class="grid4"><div class="tile sel">None<small style="color:var(--mint)">Wearing</small></div><div class="tile">Ember<small>Locked</small></div><div class="tile">Frost<small>Locked</small></div><div class="tile">Gilded<small>Locked</small></div><div class="tile">Obsidian<small>Locked</small></div><div class="tile">Camo<small>Locked</small></div><div class="tile">Circuit<small>Locked</small></div><div class="tile">Hive<small>Locked</small></div></div>
+   </div>
+   <div class="col" style="width:260px;gap:12px;padding:16px;border-radius:14px;background:var(--raised)">
+    <div style="height:130px;border-radius:12px;background:linear-gradient(#3a2d22,#241c16)"></div>
+    <b style="font-size:16px;letter-spacing:.06em">COSMETIC CRATE</b><span class="t3" style="font-size:12px">A skin or flag you don't own yet</span>
+    <div class="col" style="gap:6px;font-size:12px"><div class="row">⬤ Common<span style="margin-left:auto">62%</span></div><div class="row" style="color:var(--cyan)">⬤ Rare<span style="margin-left:auto">25%</span></div><div class="row" style="color:var(--violet)">⬤ Epic<span style="margin-left:auto">10%</span></div><div class="row" style="color:var(--gold)">⬤ Legendary<span style="margin-left:auto">3%</span></div></div>
+    <div class="btn primary">Open · ◎ 15</div><div class="btn">3 crates · ◎ 100</div>
+   </div>
+  </div>
+  <div class="t3" style="font-size:11px">Flags from OpenFront (CC BY-SA 4.0)</div>
+ </div>
+</div>
+
+<!-- 06 FLAG SHOP -->
+<div class="screen map" data-name="06 Flag shop">
+ <div class="dim"></div>
+ <div class="abs glass drawer">
+  <div class="row"><div class="ico" style="margin-right:12px;color:var(--violet)">⚑</div><div class="col"><div class="h1">Flag shop</div><span style="font-size:12px;color:var(--violet)">Halloween set · new flags in 2:17:19</span></div><div class="x" style="margin-left:auto">✕</div></div>
+  <div class="grid2">
+   <div class="tile" style="height:150px">Pumpkin King<small style="color:var(--gold)">Legendary · ◎ 99</small></div><div class="tile" style="height:150px">Bat Moon<small style="color:var(--violet)">Epic · ◎ 49</small></div>
+   <div class="tile" style="height:150px">Candle Skull<small style="color:var(--violet)">Epic · ◎ 49</small></div><div class="tile" style="height:150px">Witch's Brew<small style="color:var(--violet)">Epic · ◎ 49</small></div>
+   <div class="tile" style="height:150px">Ghost Trail<small style="color:var(--cyan)">Rare · ◎ 29</small></div><div class="tile" style="height:150px">Web Corner<small style="color:var(--cyan)">Rare · ◎ 29</small></div>
+  </div>
+ </div>
+</div>
+
+<!-- 07 SPAWN -->
+<div class="screen map" data-name="07 Spawn phase">
+ <div class="abs glass row toprail"><div class="ico">♪</div><div class="ico">?</div><div class="ico">▥</div><div class="ico">◍</div><div class="ico">⚙</div><div class="ico">⇥</div></div>
+ <div class="abs glass row pill" style="left:50%;transform:translateX(-50%);top:16px;padding:8px 8px 8px 22px;gap:16px"><div class="col"><b style="font-size:14px;letter-spacing:.08em">PICK YOUR START</b><span class="t3" style="font-size:12px">Click unclaimed land · click again to move</span></div><div style="width:44px;height:44px;border-radius:50%;border:3px solid var(--mint);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">3</div></div>
+ <div class="abs" style="left:880px;top:420px;width:90px;height:90px;border-radius:50%;border:2px solid var(--mint);background:rgba(61,220,151,.12)"></div>
+ <div class="abs glass col" style="left:990px;top:440px;width:280px;padding:14px;gap:8px"><b>Unclaimed · Highland</b><div class="row" style="font-size:12px"><span class="t3">Neighbours</span><span style="margin-left:auto;color:var(--orange);font-weight:700">8 nearby · tough start</span></div><div class="sep"></div><span style="color:var(--mint);font-size:12px;font-weight:700">◎ Click to place your capital</span></div>
+</div>
+
+<!-- 08 HUD -->
+<div class="screen map" data-name="08 HUD in match">
+ <div class="nation" style="left:620px;top:300px;width:220px;height:200px;background:#8ea8ff;border:4px solid #3e5cff"></div>
+ <div class="nation" style="left:900px;top:180px;width:200px;height:160px;background:#7fd3b1;border:4px solid #1d8a62"></div>
+ <div class="abs glass row toprail"><div class="ico">♪</div><div class="ico">?</div><div class="ico">▥</div><div class="ico">◍</div><div class="ico">⚙</div><div class="ico">⇥</div></div>
+ <div class="abs glass row pill" style="left:50%;transform:translateX(-50%);top:16px;padding:10px 24px;gap:20px;width:520px"><div class="col"><span style="color:var(--mint);font-size:10px;font-weight:800">⛨ PROTECTED</span><b style="font-size:20px;color:var(--mint)">4:54</b></div><div class="col" style="flex:1;gap:6px"><div class="row" style="font-size:12px"><span>■ You 0.04%</span><span class="t3" style="margin-left:auto">♛ Rootreach 0.13%</span></div><div class="bar"><i style="width:8%"></i></div></div><span style="font-size:11px;color:var(--gold);font-weight:800">80%</span></div>
+ <div class="abs glass row pill" style="right:24px;top:20px;padding:10px 18px;gap:10px;font-weight:700">▥ #411 · 0.02%</div>
+ <div class="abs glass col" style="left:24px;top:80px;width:300px;padding:12px;gap:8px"><div class="row cap">⚔ Attacks<span style="margin-left:auto">2 out</span></div><div class="list col" style="gap:6px"><div class="it"><span style="font-size:13px">Thunder Wolverine</span><b style="margin-left:auto;font-size:13px">1.08K</b><div class="x" style="width:26px;height:26px;margin-left:8px">↺</div></div><div class="it"><span style="font-size:13px">Expansion</span><b style="margin-left:auto;font-size:13px">656</b><div class="x" style="width:26px;height:26px;margin-left:8px">↺</div></div></div></div>
+ <div class="abs col" style="right:24px;bottom:110px;gap:8px"><div class="glass toast" style="border-left:3px solid var(--red)"><span style="color:var(--red)">✕</span>Sudan (4.14K) is attacking you!</div><div class="glass toast" style="border-left:3px solid var(--orange)"><span style="color:var(--orange)">⛨</span>Chad borders you with 8× your army</div></div>
+ <div class="abs glass col" style="left:16px;bottom:16px;width:200px;padding:14px 16px;gap:10px;border-left:3px solid var(--mint)"><div class="row" style="gap:8px"><div style="width:12px;height:12px;border-radius:3px;background:#8ea8ff"></div><b>Slyder</b><span style="color:var(--gold);margin-left:auto">♛</span></div><span class="t3" style="font-size:11px;margin-top:-8px">0.36% of the world</span><div class="sep"></div><div class="col"><div class="row cap">Troops<span style="margin-left:auto;color:var(--mint)">+479/s</span></div><b style="font-size:20px">4.25K <span class="t3" style="font-size:12px">/ 30.8K</span></b><div class="bar" style="height:4px"><i style="width:14%;background:var(--cyan)"></i></div></div><div class="col"><div class="row cap">Gold<span style="margin-left:auto;color:var(--mint)">+1.0K/s</span></div><b style="font-size:20px;color:var(--gold)">16.0K</b></div></div>
+ <div class="abs glass row" style="left:50%;transform:translateX(-50%);bottom:16px;padding:12px 16px;gap:14px">
+  <div class="col" style="width:180px;gap:6px"><div class="row cap">⚔ Attack<span style="margin-left:auto;color:var(--mint)">25%</span></div><div class="row" style="gap:3px;background:var(--raised);border-radius:8px;padding:3px;font-size:11px;font-weight:700"><span style="flex:1;text-align:center">10%</span><span style="flex:1;text-align:center;background:var(--mint);color:var(--ink);border-radius:6px">25%</span><span style="flex:1;text-align:center">35%</span><span style="flex:1;text-align:center">50%</span><span style="flex:1;text-align:center">75%</span></div><span class="t3" style="font-size:11px">Sends 1.06K troops</span></div>
+  <div style="width:1px;height:44px;background:var(--line)"></div>
+  <div class="row" style="gap:4px"><div class="slot red"><span class="k">1</span><b></b>125K</div><div class="slot"><span class="k">2</span><b></b>125K</div><div class="slot red"><span class="k">3</span><b></b>125K</div><div class="slot"><span class="k">4</span><b></b>50K</div><div class="slot red"><span class="k">5</span><b></b>1.5M</div><div class="slot red"><span class="k">6</span><b></b>1M</div><div class="slot"><span class="k">7</span><b></b>250K</div><div style="width:1px;height:40px;background:var(--line);margin:0 6px"></div><div class="slot lock"><span class="k">8</span><b></b>750K</div><div class="slot lock"><span class="k">9</span><b></b>5M</div><div class="slot lock"><span class="k">0</span><b></b>25M</div><div class="slot" style="width:72px;background:var(--mint);color:var(--ink)"><b style="background:rgba(8,36,26,.2)"></b>SHOP</div></div>
+ </div>
+</div>
+
+<!-- 09 TARGET + ACTIONS -->
+<div class="screen map" data-name="09 Target card + action menu">
+ <div class="nation" style="left:620px;top:300px;width:220px;height:200px;background:#8ea8ff;border:4px solid #3e5cff"></div>
+ <div class="nation" style="left:860px;top:330px;width:180px;height:160px;background:#d9d2c0;border:4px solid #9c958a"></div>
+ <div class="abs" style="left:900px;top:360px;width:220px;height:220px;border-radius:50%;border:2px dashed var(--line2)"></div>
+ <div class="abs col" style="left:930px;top:300px;gap:8px">
+  <div class="glass row pill" style="padding:8px 14px;gap:8px;font-size:13px;font-weight:700"><span class="ico m" style="width:24px;height:24px">⚔</span>Attack</div>
+ </div>
+ <div class="abs glass row pill" style="left:1130px;top:440px;padding:8px 14px;gap:8px;font-size:13px;font-weight:700"><span class="ico" style="width:24px;height:24px;color:var(--violet)">♡</span>Ally</div>
+ <div class="abs glass row pill" style="left:930px;top:590px;padding:8px 14px;gap:8px;font-size:13px;font-weight:700"><span class="ico" style="width:24px;height:24px;color:var(--cyan)">⛵</span>Boat</div>
+ <div class="abs glass row pill" style="left:780px;top:440px;padding:8px 14px;gap:8px;font-size:13px;font-weight:700"><span class="ico" style="width:24px;height:24px">◉</span>Info</div>
+ <div class="abs glass col" style="right:24px;top:80px;width:300px;padding:16px;gap:10px"><div class="row" style="gap:8px"><div style="width:12px;height:12px;border-radius:3px;background:#d9d2c0"></div><b>Thunder Wolverine</b><span class="chip" style="margin-left:auto;color:var(--orange);border-color:var(--orange);height:22px">AT WAR</span></div><span class="t3" style="font-size:12px">Tribe · Highland</span><div class="grid2" style="font-size:12px"><div class="col" style="padding:10px;border-radius:10px;background:var(--raised)"><span class="t3">Troops</span><b style="font-size:16px">1.66K</b></div><div class="col" style="padding:10px;border-radius:10px;background:var(--raised)"><span class="t3">Land</span><b style="font-size:16px">0.13%</b></div></div><div class="btn primary" style="height:38px">⚔ Attack with 1.13K</div><span class="t3" style="font-size:11px;text-align:center">Right-click for more actions</span></div>
+</div>
+
+<!-- 10 HELP -->
+<div class="screen map" data-name="10 How to play">
+ <div class="dim"></div>
+ <div class="abs glass row" style="left:160px;right:160px;top:70px;bottom:70px;padding:0;overflow:hidden;align-items:stretch">
+  <div class="col" style="width:280px;padding:24px;gap:6px;background:rgba(255,255,255,.03);border-right:1px solid var(--line)">
+   <div class="h1" style="margin-bottom:4px">How to play</div><span class="t3" style="font-size:12px;margin-bottom:14px">Game paused</span>
+   <div class="it btn primary" style="justify-content:flex-start">1 · Pick your start</div><div class="btn ghost" style="justify-content:flex-start;border:none">2 · Expand & attack</div><div class="btn ghost" style="justify-content:flex-start;border:none">3 · Boats</div><div class="btn ghost" style="justify-content:flex-start;border:none">4 · Alliances</div><div class="btn ghost" style="justify-content:flex-start;border:none">5 · Economy</div><div class="btn ghost" style="justify-content:flex-start;border:none">6 · Nukes & SAMs</div><div class="btn ghost" style="justify-content:flex-start;border:none">7 · Win at 80%</div><div class="sep" style="margin:8px 0"></div><div class="btn ghost" style="justify-content:flex-start;border:none">Controls</div><div class="btn ghost" style="justify-content:flex-start;border:none">Credits & licence</div>
+  </div>
+  <div class="col" style="flex:1;padding:32px;gap:18px">
+   <div class="row"><div class="ico m" style="width:56px;height:56px;margin-right:16px">◎</div><div class="col"><span class="cap" style="color:var(--mint)">Step 1 of 7</span><div style="font-size:28px;font-weight:800">Pick your start</div></div><div class="x" style="margin-left:auto">✕</div></div>
+   <div class="t2" style="font-size:15px;line-height:1.6;max-width:640px">Click any unclaimed land to place your capital. In solo games you deploy a few seconds after choosing, and until then you can still move it.</div>
+   <div style="height:300px;border-radius:16px;background:linear-gradient(135deg,#2b3340,#1a1f26);border:1px solid var(--line)"></div>
+   <div class="row" style="gap:10px;margin-top:auto"><div class="btn">← Back</div><div class="btn primary" style="margin-left:auto">Next: Expand & attack →</div></div>
+  </div>
+ </div>
+</div>
+
+<!-- 11 MENU / SETTINGS -->
+<div class="screen map" data-name="11 Game menu + settings">
+ <div class="dim"></div>
+ <div class="abs glass drawer left" style="width:420px">
+  <div class="row"><div class="h1">Menu</div><div class="x" style="margin-left:auto">✕</div></div>
+  <div class="col" style="gap:8px"><div class="btn primary" style="justify-content:flex-start">▶ Resume</div><div class="btn" style="justify-content:flex-start">↻ Restart match</div><div class="btn" style="justify-content:flex-start;color:var(--red)">⚑ Surrender</div><div class="btn" style="justify-content:flex-start">⇥ Back to title</div></div>
+  <div class="sep"></div><div class="cap">Settings</div>
+  <div class="col" style="gap:14px;font-size:14px">
+   <div class="row">Music<div class="bar" style="margin-left:auto;width:160px"><i style="width:60%"></i></div></div>
+   <div class="row">Sound effects<div class="bar" style="margin-left:auto;width:160px"><i style="width:80%"></i></div></div>
+   <div class="row">Show nation names<span style="margin-left:auto;width:44px;height:24px;border-radius:99px;background:var(--mint)"></span></div>
+   <div class="row">Territory patterns<span style="margin-left:auto;width:44px;height:24px;border-radius:99px;background:var(--raised2)"></span></div>
+   <div class="row">Confirm before nukes<span style="margin-left:auto;width:44px;height:24px;border-radius:99px;background:var(--mint)"></span></div>
+  </div>
+ </div>
+</div>
+
+<!-- 12 LEADERBOARD -->
+<div class="screen map" data-name="12 Leaderboard">
+ <div class="abs glass row toprail"><div class="ico">♪</div><div class="ico">?</div><div class="ico m">▥</div><div class="ico">◍</div><div class="ico">⚙</div><div class="ico">⇥</div></div>
+ <div class="abs glass drawer" style="width:380px;top:80px;bottom:auto">
+  <div class="row"><div class="h1">Leaderboard</div><div class="row" style="margin-left:auto;gap:6px"><span class="chip on">Land</span><span class="chip">Troops</span></div></div>
+  <div class="list col" style="gap:6px;font-size:13px">
+   <div class="it"><b style="width:22px;color:var(--gold)">1</b><span>Venezuela</span><b style="margin-left:auto">1.60%</b></div>
+   <div class="it"><b style="width:22px">2</b><span>Russia</span><b style="margin-left:auto">1.20%</b></div>
+   <div class="it"><b style="width:22px">3</b><span>China</span><b style="margin-left:auto">1.10%</b></div>
+   <div class="it sel"><b style="width:22px;color:var(--mint)">8</b><span>Slyder (you)</span><b style="margin-left:auto">0.92%</b></div>
+   <div class="it"><b style="width:22px">9</b><span>Brazil</span><b style="margin-left:auto">0.90%</b></div>
+  </div>
+ </div>
+</div>
+
+<!-- 13 GAME OVER -->
+<div class="screen map" data-name="13 Game over">
+ <div class="dim" style="background:rgba(6,8,11,.7)"></div>
+ <div class="abs glass col" style="left:50%;top:50%;transform:translate(-50%,-50%);width:620px;padding:36px;gap:22px;align-items:center;text-align:center">
+  <div style="width:84px;height:84px;border-radius:24px;background:linear-gradient(#6eebb4,#1e9664);display:flex;align-items:center;justify-content:center;font-size:40px;color:var(--ink)">♛</div>
+  <div class="col" style="gap:6px"><span class="cap" style="color:var(--mint)">Victory</span><div style="font-size:44px;font-weight:900">You rule the map</div><span class="t2">80% of the world in 24:13</span></div>
+  <div class="grid4" style="width:100%">
+   <div class="col" style="padding:12px;border-radius:12px;background:var(--raised)"><span class="t3" style="font-size:11px">Land</span><b style="font-size:18px">80.2%</b></div>
+   <div class="col" style="padding:12px;border-radius:12px;background:var(--raised)"><span class="t3" style="font-size:11px">Nations beaten</span><b style="font-size:18px">41</b></div>
+   <div class="col" style="padding:12px;border-radius:12px;background:var(--raised)"><span class="t3" style="font-size:11px">Peak troops</span><b style="font-size:18px">412K</b></div>
+   <div class="col" style="padding:12px;border-radius:12px;background:var(--raised)"><span class="t3" style="font-size:11px">Stars</span><b style="font-size:18px;color:var(--gold)">+1,240</b></div>
+  </div>
+  <div class="row" style="gap:10px;width:100%"><div class="btn" style="flex:1">Spectate</div><div class="btn" style="flex:1">Title</div><div class="btn primary" style="flex:1.4">▶ Play again</div></div>
+ </div>
+</div>
+
+</body></html>
