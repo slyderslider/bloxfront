@@ -144,19 +144,22 @@ function UITheme.equal(a: any, b: any): boolean
 end
 
 -- --- colour tokens (same as ui_theme.gd) ------------------------------------------------------
-UITheme.GLASS = UITheme.rgba(0.051, 0.075, 0.149, 0.84) -- #0d1326 @ 84 %
-UITheme.GLASS_SOLID = UITheme.rgba(0.043, 0.062, 0.125, 0.96)
-UITheme.GLASS_RAISED = UITheme.rgba(0.1, 0.13, 0.24, 0.94)
-UITheme.LINE = UITheme.rgba(1.0, 1.0, 1.0, 0.1)
-UITheme.LINE_2 = UITheme.rgba(1.0, 1.0, 1.0, 0.18)
-UITheme.FILL = UITheme.rgba(1.0, 1.0, 1.0, 0.06)
-UITheme.FILL_2 = UITheme.rgba(1.0, 1.0, 1.0, 0.11)
-UITheme.TEXT = Color3.new(0.94, 0.955, 1.0)
-UITheme.TEXT_2 = Color3.new(0.68, 0.73, 0.86)
-UITheme.TEXT_3 = Color3.new(0.48, 0.53, 0.67)
-UITheme.AMBER = Color3.new(1.0, 0.71, 0.278) -- #ffb547 primary actions
-UITheme.AMBER_HI = Color3.new(1.0, 0.8, 0.47)
-UITheme.AMBER_LO = Color3.new(0.8, 0.49, 0.13)
+-- BloxFront theme (2026-10-25): neutral slate glass instead of navy, mint primary instead of amber,
+-- flatter (less sheen) and rounder. Token names stay so every screen picks the new look up.
+UITheme.GLASS = UITheme.rgba(0.075, 0.086, 0.106, 0.9) -- #13161b @ 90 %
+UITheme.GLASS_SOLID = UITheme.rgba(0.063, 0.071, 0.086, 0.97)
+UITheme.GLASS_RAISED = UITheme.rgba(0.125, 0.141, 0.169, 0.95)
+UITheme.LINE = UITheme.rgba(1.0, 1.0, 1.0, 0.07)
+UITheme.LINE_2 = UITheme.rgba(1.0, 1.0, 1.0, 0.14)
+UITheme.FILL = UITheme.rgba(1.0, 1.0, 1.0, 0.05)
+UITheme.FILL_2 = UITheme.rgba(1.0, 1.0, 1.0, 0.09)
+UITheme.TEXT = Color3.new(0.96, 0.97, 0.98)
+UITheme.TEXT_2 = Color3.new(0.7, 0.74, 0.78)
+UITheme.TEXT_3 = Color3.new(0.5, 0.54, 0.59)
+--- primary actions (named AMBER for the original's call sites; BloxFront: mint #3ddc97)
+UITheme.AMBER = Color3.fromRGB(61, 220, 151)
+UITheme.AMBER_HI = Color3.fromRGB(110, 235, 180)
+UITheme.AMBER_LO = Color3.fromRGB(30, 150, 100)
 UITheme.CYAN = Color3.new(0.31, 0.82, 1.0) -- info
 UITheme.GREEN = Color3.new(0.37, 0.89, 0.6)
 UITheme.RED = Color3.new(1.0, 0.33, 0.39)
@@ -167,7 +170,7 @@ UITheme.SURRENDER_RED_LO = Color3.fromRGB(140, 20, 32)
 UITheme.ORANGE = Color3.new(1.0, 0.58, 0.36)
 UITheme.VIOLET = Color3.new(0.72, 0.62, 1.0)
 UITheme.GOLD = Color3.new(1.0, 0.84, 0.4)
-UITheme.INK = Color3.new(0.1, 0.066, 0.02) -- text on amber
+UITheme.INK = Color3.fromRGB(8, 36, 24) -- text on the primary (mint)
 UITheme.WHITE = Color3.new(1, 1, 1)
 UITheme.BLACK = Color3.new(0, 0, 0)
 UITheme.CLEAR = UITheme.rgba(0, 0, 0, 0)
@@ -180,9 +183,9 @@ UITheme.S4 = 16
 UITheme.S5 = 24
 UITheme.S6 = 32
 UITheme.S7 = 48
-UITheme.R_SM = 6
-UITheme.R_MD = 10
-UITheme.R_LG = 14
+UITheme.R_SM = 8
+UITheme.R_MD = 12
+UITheme.R_LG = 18
 
 --- No backdrop blur in Roblox: glass panels take the GDScript no-frost path (tint alpha + 0.08,
 --- "a slightly more opaque tint reads just as well" -- what the original used on phones) plus the
@@ -190,7 +193,7 @@ UITheme.R_LG = 14
 --- sharply; 0.08 keeps the territory colour tinting the glass while hiding that detail.
 UITheme.GLASS_BOOST = 0.08
 --- Top sheen of the frosted glass (frost shader `sheen`, 0.045 when on).
-UITheme.GLASS_SHEEN = 0.045
+UITheme.GLASS_SHEEN = 0.015 -- BloxFront: flatter panels
 
 --- Frosted (screen-sampling) glass is unavailable in Roblox (kept for API parity).
 UITheme.frost_enabled = false

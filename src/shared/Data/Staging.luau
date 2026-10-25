@@ -5,7 +5,7 @@
 local Staging = {}
 
 --- Rofront Staging's universe id.
-Staging.UNIVERSE = 10769439627
+Staging.UNIVERSE = 0
 
 --- True in the Rofront Staging experience.
 function Staging.here(): boolean

@@ -482,7 +482,7 @@ function TitleScreen._build_head(self)
 	self:add_child(self._glow)
 	self:move_child(self._glow, 3)
 
-	local word = GradientText.new("ROWORLD", 120, 900)
+	local word = GradientText.new("BLOXFRONT", 120, 900)
 	word.spacing = 14
 	word.shadow = { color = Color3.new(0.0, 0.02, 0.08), alpha = 0.55, offset_y = 6, outline = 14 }
 	word:set_colors(Color3.new(1, 1, 1), Color3.new(1.0, 0.8, 0.52))
@@ -494,7 +494,7 @@ function TitleScreen._build_head(self)
 	self._tag_row:set_alignment(W.ALIGN_CENTER)
 	self._tag_l = tag_line(false)
 	self._tag_r = tag_line(true)
-	self._tag = UITheme.label("CONQUER THE REAL WORLD", 15, 600, Color3.new(0.86, 0.89, 0.97), 6)
+	self._tag = UITheme.label("CLAIM THE WHOLE MAP", 15, 600, Color3.new(0.86, 0.89, 0.97), 6)
 	self._tag_row:add_child(self._tag_l)
 	self._tag_row:add_child(self._tag)
 	self._tag_row:add_child(self._tag_r)

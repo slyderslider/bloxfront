@@ -24,7 +24,7 @@
 # cutting matches short, ask Roblox for a delayed restart (docs/fresh-servers.md): tools/restart_servers.sh 60
 set -u
 REPO="${0:A:h:h}"
-PLACE_ID=137151641329864
+PLACE_ID=0  # BloxFront: set your own root place id
 STAGING=0
 if [[ "${1:-}" == "--staging" ]]; then
 	STAGING=1; shift

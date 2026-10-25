@@ -1,16 +1,15 @@
-# Rofront
+# BloxFront
 
-## Publish announcements (Discord)
+Fork of RoWorld (Snick Co.), which is a fork of OpenFront. AGPL-3.0 with the extra terms at the end of LICENSE.
 
-User (2026-10-15): "whenever you ship to prod or staging, start sending a message to our company discord ... a
-list/summary of the changes", narrowed the same day: "change publish discord message rule to only send when shipping
-to prod". So: **prod only**; a staging publish is not announced.
+## Never remove (licence)
+- "© OpenFront and Contributors" must stay visible (title screen footer, How to play › Credits).
+- Keep the upstream notices "Changes © 2026 Snick Co." and the CC BY-SA / CC BY credits (OpenFront art, Rodrigo Flores music).
+- Never use "OpenFront" or "RoWorld" as the game's title, and never claim endorsement.
+- Every published version needs its full source public (HelpOverlay.SOURCE_REPO points at it).
 
-- Right after every successful publish / deploy to **prod**, post it with the shared script
-  (`~/.local/bin/snick-announce`, used by every Snick project):
-  `snick-announce --project "RoWorld" --target prod [--version vN] [--ref <commit>] --notes-file notes.md [--extra "Restart: ..."]`
-  (after `tools/publish.sh` succeeds without `--staging`). User (2026-10-25): "publish messages should use
-  "RoWorld" instead of "RoFront"" (the game's current name; posts up to v101 said Rofront).
-- Notes: one "- " line per change, in plain words for the team (what players / visitors notice), not commit messages.
-- The webhook lives in `~/.config/snick/discord_publish_webhook` (chmod 600): never print it, never commit it.
-- A failed post never undoes the publish: retry, or tell the user it wasn't announced.
+## Before a publish
+See SETUP_CHECKLIST.md (own asset uploads, own logo, own Robux products, public repo).
+
+## Communication
+Informal German, short and action-oriented.
