@@ -32,13 +32,13 @@ Main.boot = {} :: { [string]: number }
 -- circles filled RGB(18,18,21) at 0.08 transparency, 36 px icon frames, 8 px apart, top edge 12 px
 -- below the screen top (TopbarInset height 58), white state overlay on hover / press.
 -- BloxFront (2026-10-25): the buttons sit together in one slate pill (rounded squares, no fill of
--- their own) and light up mint on hover / press instead of separate dark circles.
+-- their own) and light up indigo on hover / press instead of separate dark circles.
 local BUTTON = 40
 local GAP = 4
 local ICON = 32 -- the hud_* masks keep Airship's 0.7 inset framing (glyph ≈ 22 px)
 local FILL = Color3.fromRGB(19, 22, 27)
 local FILL_T = 1.0
-local OVERLAY = Color3.fromRGB(61, 220, 151)
+local OVERLAY = Color3.fromRGB(108, 99, 255)
 local OVERLAY_T = 1.0
 local OVERLAY_HOVER_T = 0.8
 local OVERLAY_PRESS_T = 0.6

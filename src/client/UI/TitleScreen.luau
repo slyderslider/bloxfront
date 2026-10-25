@@ -481,14 +481,14 @@ function TitleScreen._build_head(self)
 	self._emblem.size_flags_horizontal = W.SHRINK_CENTER
 	self._head:add_child(self._emblem)
 	-- Warm glow behind the wordmark (placed after the shades, before the fade).
-	self._glow = image_node(S.title_glow, Color3.fromRGB(120, 235, 185), 1.0)
+	self._glow = image_node(S.title_glow, Color3.fromRGB(140, 130, 255), 1.0)
 	self:add_child(self._glow)
 	self:move_child(self._glow, 3)
 
 	local word = GradientText.new("BLOXFRONT", 120, 900)
 	word.spacing = 14
 	word.shadow = { color = Color3.new(0.0, 0.02, 0.08), alpha = 0.55, offset_y = 6, outline = 14 }
-	word:set_colors(Color3.new(1, 1, 1), Color3.fromRGB(150, 240, 200)) -- BloxFront: white to mint
+	word:set_colors(Color3.new(1, 1, 1), Color3.fromRGB(190, 185, 255)) -- BloxFront: white to indigo
 	word.size_flags_horizontal = W.SHRINK_CENTER
 	self._word = word
 	self._head:add_child(word)
@@ -992,6 +992,11 @@ function TitleScreen._place_crate_button(self, compact: boolean, head_top: numbe
 	local asz = a:size_px()
 	local aright = right - size.X - (if compact then 4.0 else 22.0)
 	local atop = top + (size.Y - asz.Y)
+	if not compact then
+		-- BloxFront (2026-10-25): desktop shop rail, one column on the right (crates, Arsenal, flags)
+		aright = right - (size.X - asz.X) * 0.5
+		atop = top + size.Y + 18.0
+	end
 	a:set_anchors(0, 0, 0, 0)
 	a:set_offsets(aright - asz.X, atop, aright, atop + asz.Y)
 	-- the flag shop's button under the pair, right-aligned with the crate button (always there while
@@ -1000,7 +1005,7 @@ function TitleScreen._place_crate_button(self, compact: boolean, head_top: numbe
 	local shb = self._shop_btn
 	shb:set_scale(if compact then ShopButton.PHONE_K else 1.0)
 	local shsz = shb:size_px()
-	local shtop = top + size.Y + gap
+	local shtop = if compact then top + size.Y + gap else atop + asz.Y + gap
 	shb:set_anchors(0, 0, 0, 0)
 	shb:set_offsets(right - shsz.X, shtop, right, shtop + shsz.Y)
 	shb:refresh()

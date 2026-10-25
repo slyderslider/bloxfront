@@ -2188,7 +2188,10 @@ function UIRoot._layout(self)
 	end
 	local bar = self.bar
 	local attacks_top = math.max(board:bottom_edge(), if self.top.visible then self.top:bottom_edge() else 0.0) + 10.0
-	attacks_top = attacks_top
+	if not ctx.compact then
+		-- BloxFront: the desktop list hangs under the top-left button row
+		attacks_top = ctx.reserved_top_left.Max.Y + 10.0
+	end
 	self.attacks.tray_open = bar.tray ~= nil and bar.tray.visible
 	self.attacks:apply_layout(attacks_top, (if bar.visible then bar:top_edge() else vp.Y - ctx.insets.w) - 8.0)
 	self.attacks:refresh()
@@ -2414,7 +2417,9 @@ function UIRoot._poll_layout(self)
 		self.feed:apply_layout(bar_top - 12.0)
 		self.attacks.tray_open = bar.tray ~= nil and bar.tray.visible
 		self.attacks:apply_layout(
-			math.max(self.board:bottom_edge(), if self.top.visible then self.top:bottom_edge() else 0.0) + 10.0,
+			if ctx.compact
+				then math.max(self.board:bottom_edge(), if self.top.visible then self.top:bottom_edge() else 0.0) + 10.0
+				else ctx.reserved_top_left.Max.Y + 10.0,
 			(if bar.visible then bar:top_edge() else vp.Y - ctx.insets.w) - 8.0
 		)
 		self:_layout_alert()

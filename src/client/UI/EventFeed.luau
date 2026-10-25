@@ -102,13 +102,15 @@ function EventFeed.apply_layout(self, bottom_y: number)
 		return
 	end
 	st:set_alignment(W.ALIGN_END)
-	local left = if not ctx.compact then 16.0 + ctx.insets.x else 8.0 + ctx.insets.x
-	local w = if not ctx.compact then 340.0 else 290.0
-	st.anchor_left, st.anchor_right, st.anchor_top, st.anchor_bottom = 0.0, 0.0, 1.0, 1.0
+	-- BloxFront (2026-10-25): desktop toasts stack in the bottom-right corner (the stats card owns
+	-- the bottom-left one)
+	local right = 16.0 + ctx.insets.z
+	local w = 340.0
+	st.anchor_left, st.anchor_right, st.anchor_top, st.anchor_bottom = 1.0, 1.0, 1.0, 1.0
 	st.grow_vertical = W.GROW_BEGIN
-	st.grow_horizontal = W.GROW_END
-	st.offset_left = left
-	st.offset_right = left + w
+	st.grow_horizontal = W.GROW_BEGIN
+	st.offset_left = -right - w
+	st.offset_right = -right
 	st.offset_bottom = -(ctx.vp.Y - bottom_y)
 	st.offset_top = st.offset_bottom
 	st:set_min_size(Vector2.new(w, 0))
