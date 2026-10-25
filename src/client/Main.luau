@@ -597,7 +597,7 @@ end
 -- roblox://experiences/start?placeId=137151641329864&launchData=autosolo:48,10) starts a Standard solo
 -- match and picks the unclaimed land nearest to lat/lon, so the published game can be verified on a
 -- real Roblox client without clicking through the title. Ignored for everyone else.
-Main.OWNER_USER_ID = 22641473
+Main.OWNER_USER_ID = 3352325475 -- BloxFront owner (Roman)
 function Main.launch_hooks(player: Player)
 	task.spawn(function()
 		local ld = player:GetAttribute("AF_LaunchData")

@@ -55,7 +55,7 @@ ServerMain.server = nil :: any
 ServerMain.MAX_MESSAGES_PER_SEC = 90
 --- The production experience (Rofront; build/publish.json). Other experiences running this code
 --- (Rofront Staging) stay off the services production shares.
-ServerMain.PROD_UNIVERSE = 10768172922
+ServerMain.PROD_UNIVERSE = 0 -- BloxFront: set to your experience's universe id if you add a lobby service
 --- Team games and parties in production (docs/teams-and-parties.md; always on in Staging and Studio).
 ServerMain.TEAM_GAMES_LIVE = true
 --- SETTING messages per second per client (clients throttle each section to 2/s).
