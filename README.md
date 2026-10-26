@@ -8,6 +8,8 @@ A Roblox territory-conquest game. BloxFront is a modified version of
 - Changes © 2026 Snick Co.
 - Further changes © 2026 Roman (BloxFront) — see the git history for every change made in this fork.
 
+Source code: https://github.com/slyderslider/bloxfront
+
 ## Licence
 
 BloxFront is free software under the GNU Affero General Public License v3, with the additional terms

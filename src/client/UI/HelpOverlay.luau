@@ -265,7 +265,7 @@ HelpOverlay.LEGAL = {
 --- Where the source lives, under the credits: plain text with the GitHub mark, since Roblox games
 --- can't link off-platform (2026-10-25: "Source <github logo> <repo>" at the bottom; the public repo is
 --- lukechatton/roworld, lukechatton/rofront is private).
-HelpOverlay.SOURCE_REPO = "YOUR-GITHUB/bloxfront" -- BloxFront: set to your public repo before publishing
+HelpOverlay.SOURCE_REPO = "slyderslider/bloxfront"
 --- The card that pops up over the repo name when it's pressed (2026-10-25), and how long it stays.
 HelpOverlay.SOURCE_TIP = {
 	title = "Source code",

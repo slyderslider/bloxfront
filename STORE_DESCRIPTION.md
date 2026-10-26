@@ -19,11 +19,10 @@ Pick your starting land, expand into neutral territory and outgrow every nation 
 Unlock weapons in the Arsenal, open crates for territory skins and collect flags for your nation.
 
 —
-BloxFront is a modified version of RoWorld (Snick Co.), which is based on OpenFront. Free software under the GNU AGPL v3, with no warranty. Source code: github.com/YOUR-GITHUB/bloxfront
+BloxFront is a modified version of RoWorld (Snick Co.), which is based on OpenFront. Free software under the GNU AGPL v3, with no warranty. Source code: github.com/slyderslider/bloxfront
 Maps, country flags and unit art from OpenFront (CC BY-SA 4.0). Music by Rodrigo Flores (CC BY 4.0).
 BloxFront is not affiliated with or endorsed by OpenFront or Snick Co.
 
 ## Hinweise
-- „YOUR-GITHUB“ ersetzen, sobald das Repo existiert.
 - Die Credit-Zeilen nicht kürzen. „Modified version of …“ ist absichtlich so formuliert, siehe Chat: Ein bloßes „inspired by“ wäre lizenzrechtlich die unsichere Variante.
 - Falls du andere Musik nimmst, die Musik-Zeile anpassen.

@@ -15,10 +15,10 @@
 2. **Musik**: schicken oder hochladen. Die Menü- und Match-Musik sind noch Snicks IDs (`Soundtrack.luau`, `Audio.luau` music) und bleiben stumm.
 3. **Veröffentlichen**: in Studio File → Publish to Roblox (Alt+P).
 4. **Creator Dashboard**: Icon und Thumbnails setzen, die Beschreibung mit der Credit-Zeile (siehe unten), Genre, Geräte.
-5. **Öffentliches GitHub-Repo** (AGPL-Pflicht) und `HelpOverlay.SOURCE_REPO` setzen. `.secrets/` ist ignoriert.
+5. ✅ Öffentliches GitHub-Repo: https://github.com/slyderslider/bloxfront (bei jedem Update: erst pushen, dann publishen). `.secrets/` ist ignoriert.
 
 Beschreibung, letzte Zeile:
-> BloxFront is a modified version of RoWorld (Snick Co.), itself based on OpenFront. Licensed under the GNU AGPL v3. Source code: github.com/YOUR-GITHUB/bloxfront. Maps, flags and unit art from OpenFront (CC BY-SA 4.0). Music by Rodrigo Flores (CC BY 4.0). Not affiliated with OpenFront or Snick Co.
+> BloxFront is a modified version of RoWorld (Snick Co.), itself based on OpenFront. Licensed under the GNU AGPL v3. Source code: github.com/slyderslider/bloxfront. Maps, flags and unit art from OpenFront (CC BY-SA 4.0). Music by Rodrigo Flores (CC BY 4.0). Not affiliated with OpenFront or Snick Co.
 
 ## Nie entfernen (Lizenz)
 Footer „© OpenFront and Contributors …“, How to play → Credits & licence, `LICENSE`, `README.md`, `assets/openfront/LICENSE.md`.
