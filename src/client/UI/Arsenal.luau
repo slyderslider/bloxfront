@@ -818,13 +818,14 @@ local function buy_button(
 		ZIndex = 46,
 	}, face)
 	if on then
-		new("UIStroke", { Color = GREEN_INK, Thickness = 1.5, Transparency = 0.55 }, label)
+		-- BloxFront (2026-10-26): black outline on the buy text (white on indigo looked washed out)
+		new("UIStroke", { Color = Color3.new(0, 0, 0), Thickness = 1.5, Transparency = 0.35 }, label)
 	end
 	if on and not busy then
 		local pill = new("Frame", {
 			Name = "Price",
-			BackgroundColor3 = GREEN_INK,
-			BackgroundTransparency = 0.3,
+			BackgroundColor3 = Color3.new(0, 0, 0),
+			BackgroundTransparency = 0.55,
 			BorderSizePixel = 0,
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.new(1, -7 * u, 0.5, 0),

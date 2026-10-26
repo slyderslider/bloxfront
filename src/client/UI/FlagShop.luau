@@ -677,6 +677,9 @@ function FlagShop._card(self, parent: Instance, key: string, pos: Vector2, size:
 		FontFace = FONT_H,
 		Text = text,
 		TextColor3 = if wearing then GOLD else WHITE,
+		-- BloxFront: black outline on the price text
+		TextStrokeColor3 = Color3.new(0, 0, 0),
+		TextStrokeTransparency = 0.45,
 		TextSize = px(if hero then 17 else 14),
 		AutomaticSize = Enum.AutomaticSize.X,
 		Size = UDim2.fromOffset(0, px(bh)),
