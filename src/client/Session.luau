@@ -215,6 +215,11 @@ function Session.new(env: { [string]: any }?)
 	self.public = { state = "idle" } :: { [string]: any }
 	--- Game admins only (the server sends it to nobody else): owner id → true for bot players.
 	self.admin_bots = nil :: { [number]: boolean }?
+	--- BloxFront admin panel: the server said we are a game admin (OP.ADMIN_OK).
+	self.is_admin = false
+	--- This match was played with the admin panel (no Stars) / with the whole Arsenal unlocked.
+	self._admin_used = false
+	self._admin_unlocks = false
 	self.admin_changed = Signal.new()
 	--- the mode `state` belongs to (MODE_TITLE for the title backdrop even while queued)
 	self.state_mode = MODE_TITLE
@@ -497,7 +502,7 @@ end
 
 --- Does the player have Arsenal item `key`?
 function Session.has_unlock(self: any, key: string): boolean
-	return self.inventory.unlocks[key] == true
+	return self._admin_unlocks or self.inventory.unlocks[key] == true
 end
 
 --- Unlock Arsenal item `key` with Stars (the answer comes as unlock_result; the inventory follows).
@@ -573,7 +578,7 @@ function Session._apply_own_unlocks(self: any)
 		if self._sim ~= sim then
 			return
 		end
-		sim:set_unlocks(st.local_owner, Arsenal.mask(self.inventory.unlocks))
+		sim:set_unlocks(st.local_owner, if self._admin_unlocks then 127 else Arsenal.mask(self.inventory.unlocks))
 	end
 end
 
@@ -585,6 +590,9 @@ function Session._solo_report(self: any, left: boolean)
 	if tracker == nil or self._solo_reported or st == nil or (st.local_owner or 0) == 0 then
 		return
 	end
+	if self._admin_used then
+		return -- BloxFront: a match played with the admin panel earns no Stars
+	end
 	local result = tracker:result(st.local_owner, left)
 	if not result.spawned then
 		return
@@ -594,6 +602,68 @@ function Session._solo_report(self: any, left: boolean)
 	if net ~= nil and net.connected and type(net.send) == "function" then
 		net.send(OP.SOLO_RESULT, result)
 	end
+end
+
+--- BloxFront admin panel (game admins only; the server checks again). For this match only, nothing saved:
+--- a solo match runs on this device, so its Sim changes here; a public match changes on the server
+--- (OP.ADMIN). action: "gold" / "troops" (arg = how many), "fill", "unlock_all", "stars" (Studio test
+--- grant), and solo only: "speed" (arg = 1..8), "eliminate" (test the defeat screen).
+function Session.admin(self: any, action: string, arg: any): boolean
+	if not self.is_admin then
+		return false
+	end
+	local net = self.env.net
+	local function to_server(): boolean
+		if net == nil or not net.connected or type(net.send) ~= "function" then
+			return false
+		end
+		net.send(OP.ADMIN, action, arg)
+		return true
+	end
+	if action == "stars" then
+		return to_server()
+	end
+	local n = if type(arg) == "number" and arg == arg then math.clamp(arg, 0, 1e9) else 0
+	if action == "unlock_all" then
+		self._admin_unlocks = true
+	end
+	if self.mode ~= MODE_SOLO then
+		self._admin_used = true
+		return to_server()
+	end
+	local sim = self:local_sim()
+	local st = self.state
+	local id = if st ~= nil then st.local_owner or 0 else 0
+	if sim == nil or id == 0 then
+		return false
+	end
+	self._admin_used = true
+	if action == "gold" then
+		sim:add_bonus_gold(id, n, sim.o_spawn_tile[id])
+	elseif action == "gold_min" then
+		sim.o_gold[id] = math.max(sim.o_gold[id], n)
+	elseif action == "troops" then
+		sim.o_troops[id] += n
+	elseif action == "fill" then
+		sim.o_troops[id] = math.max(sim.o_troops[id], sim.o_cap[id])
+	elseif action == "unlock_all" then
+		sim:set_unlocks(id, 127) -- Defs.UNLOCK_ALL
+		self:_emit("inventory_changed")
+	elseif action == "speed" then
+		self.local_speed = math.clamp(n, 1, 8)
+	elseif action == "eliminate" then
+		local killer = 0
+		for _, r in st:ranking() do
+			if r.id ~= id then
+				killer = r.id
+				break
+			end
+		end
+		sim:_eliminate(id, killer)
+	else
+		return false
+	end
+	return true
 end
 
 --- Open one bought crate (the answer comes as crate_result; the inventory follows).
@@ -1116,6 +1186,8 @@ function Session._finish_build(self: any, r: { [string]: any })
 	self._tracker = nil
 	self._solo_reported = false
 	self.last_award = nil
+	self._admin_used = false
+	self._admin_unlocks = false
 	if self._build_mode == MODE_SOLO and r.id ~= 0 then
 		self:_apply_own_cosmetics(r.id)
 		self:_apply_own_unlocks()
@@ -1546,6 +1618,9 @@ function Session._on_net(self: any, op: number, ...: any)
 		if type(kind) == "string" then
 			self:_emit("credit_result", kind, ok == true, if type(reason) == "string" then reason else nil)
 		end
+	elseif op == OP.ADMIN_OK then
+		self.is_admin = true
+		self:_emit("admin_changed")
 	elseif op == OP.ADMIN_BOTS then
 		local ids = ...
 		if type(ids) == "table" then

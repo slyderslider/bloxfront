@@ -135,6 +135,8 @@ function ServerMain.start()
 	to_client.Parent = folder
 
 	local listening: { [Player]: boolean } = {}
+	--- BloxFront admin panel: set once the admin list exists (below); OP.ADMIN goes through it.
+	local admin_action: ((Player, any, any) -> ())? = nil
 	local listening_list: { Player } = {}
 	local msg_budget: { [Player]: number } = {}
 	local setting_budget: { [Player]: number } = {}
@@ -888,6 +890,10 @@ function ServerMain.start()
 					pcall(Analytics.report, player, "starter", "shown")
 				end
 			end)
+		elseif op == OP.ADMIN then
+			if admin_action ~= nil then
+				admin_action(player, ...)
+			end
 		elseif op == OP.NEW_PLAYER then
 			-- Rofront Staging / Studio: "Replay as new player" (the game menu)
 			if not (Staging.here() or RunService:IsStudio()) then
@@ -1210,8 +1216,33 @@ function ServerMain.start()
 			end
 		end)
 	end
+	--- BloxFront admin panel: game admins only. Match actions change this match (public match servers;
+	--- a solo match runs on the admin's own device, which changes it there); "stars" is a Studio-only
+	--- test grant (the Studio data store). Nothing else is saved.
+	local admin_ok_sent: { [Player]: boolean } = {}
+	admin_action = function(player: Player, action: any, arg: any)
+		if not admins[player] or type(action) ~= "string" then
+			return
+		end
+		if action == "stars" then
+			if RunService:IsStudio() then
+				task.spawn(Purchases.add_stars, player, math.clamp(tonumber(arg) or 10000, 0, 1e6))
+			end
+			return
+		end
+		if is_match_server then
+			server:admin(player, action, arg)
+		end
+	end
+
 	--- Bot players of the running match (owner ids) to each admin, whenever the match changes.
 	local function push_admin_bots()
+		for p in admins do
+			if listening[p] and not admin_ok_sent[p] then
+				admin_ok_sent[p] = true
+				send(p, OP.ADMIN_OK, true)
+			end
+		end
 		local sim = server:sim()
 		local ids = {}
 		if sim ~= nil and sim.o_bot ~= nil then
@@ -1450,6 +1481,7 @@ function ServerMain.start()
 		spectating[player] = nil
 		admins[player] = nil
 		admin_sent[player] = nil
+		admin_ok_sent[player] = nil
 		if party ~= nil then
 			party:removed(player)
 		end

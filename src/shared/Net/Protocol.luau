@@ -115,6 +115,9 @@ Protocol.OP = {
 	-- info: { map, map_name }?) asking / waiting in line for a free seat / seated, on the way / neither
 	STARTER_SEEN = 41, -- client → server: the starter pack's offer is on my screen: start its clock (once;
 	-- server/Purchases.starter_seen; the INVENTORY that follows carries `starter`)
+	ADMIN = 42, -- client → server: (action: string, arg: any) BloxFront admin panel, game admins only: changes
+	-- this match for the admin's own nation, nothing saved (server/MatchServer.admin)
+	ADMIN_OK = 43, -- server → client: (true) you are a game admin: the admin panel may show
 }
 
 Protocol.INTENT_TYPES = {

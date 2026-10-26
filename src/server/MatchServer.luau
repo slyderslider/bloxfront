@@ -939,6 +939,35 @@ function MatchServer._apply_unlocks(self: any, peer: any)
 	end
 end
 
+--- BloxFront admin panel (server/ServerMain checks the player is a game admin): changes this match for
+--- the admin's own nation only, nothing is saved, and a match it was used in pays no Stars (_pay).
+--- action: "gold" / "troops" (arg = how many), "gold_min" (gold kept at least arg), "fill" (troops up
+--- to the cap), "unlock_all" (every Arsenal item, this match).
+function MatchServer.admin(self: any, peer: any, action: string, arg: any): boolean
+	local sim = self._mp_sim
+	local part = self._participants[peer]
+	if sim == nil or part == nil or part.owner == 0 then
+		return false
+	end
+	local id = part.owner
+	local n = if type(arg) == "number" and arg == arg then math.clamp(arg, 0, 1e9) else 0
+	if action == "gold" then
+		sim:add_bonus_gold(id, n, sim.o_spawn_tile[id])
+	elseif action == "gold_min" then
+		sim.o_gold[id] = math.max(sim.o_gold[id], n)
+	elseif action == "troops" then
+		sim.o_troops[id] += n
+	elseif action == "fill" then
+		sim.o_troops[id] = math.max(sim.o_troops[id], sim.o_cap[id])
+	elseif action == "unlock_all" then
+		sim:set_unlocks(id, 127) -- Defs.UNLOCK_ALL
+	else
+		return false
+	end
+	part.admin_used = true
+	return true
+end
+
 --- A player unlocked something mid-match: it works from the next tick.
 function MatchServer.unlocks_changed(self: any, peer: any)
 	self:_apply_unlocks(peer)
@@ -953,6 +982,9 @@ function MatchServer._pay(self: any, peer: any, left: boolean)
 		return
 	end
 	part.paid = true
+	if part.admin_used then
+		return -- BloxFront: a match played with the admin panel pays no Stars
+	end
 	pcall(self.deps.on_result, peer, tracker:result(part.owner, left))
 end
 

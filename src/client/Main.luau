@@ -125,7 +125,7 @@ local function icon_id(name: string): string?
 end
 
 local FALLBACK_GLYPH =
-	{ music_on = "♪", music_off = "♪", help = "?", leaderboard = "≡", globe = "⌂", exit = "⏻", settings = "⚙" }
+	{ music_on = "♪", music_off = "♪", help = "?", leaderboard = "≡", globe = "⌂", exit = "⏻", settings = "⚙", admin = "A" }
 
 local function show_tip(h: Hud, button: GuiObject?, text: string?)
 	local tip = h.tip
@@ -296,10 +296,38 @@ local function current_screen(): string
 	return if type(s) == "string" then s else "title"
 end
 
+--- BloxFront admin panel (UI/AdminPanel): built the first time an admin opens it.
+local admin_panel: any = nil
+local function toggle_admin()
+	local s = Main.session
+	if s == nil or not s.is_admin then
+		return
+	end
+	if admin_panel == nil then
+		local AdminPanel = optional(script.Parent, { "UI", "AdminPanel" })
+		if AdminPanel == nil then
+			return
+		end
+		admin_panel = AdminPanel.new(s)
+	end
+	admin_panel:toggle()
+end
+
+local admin_hooked = false
 local function refresh_hud()
 	local h = hud
 	if h == nil then
 		return
+	end
+	-- the admin button shows once the server says this player is a game admin (Session.is_admin)
+	local s = Main.session
+	if s ~= nil and not admin_hooked and s.admin_changed ~= nil then
+		admin_hooked = true
+		s.admin_changed:Connect(refresh_hud)
+	end
+	local admin = h.buttons["admin"]
+	if admin then
+		admin.button.Visible = s ~= nil and s.is_admin == true
 	end
 	-- Match-only controls: the title screen has no leaderboard, nation or game menu yet.
 	local in_match = Main.ui ~= nil and current_screen() ~= "title"
@@ -424,6 +452,9 @@ local function build_hud(player: Player)
 	make_button(h, "menu", "exit", "Game menu", 6, function()
 		call(Main.ui, "open_pause_menu")
 	end)
+	-- BloxFront admin panel: game admins only (refresh_hud shows it), this match only, nothing saved
+	local admin = make_button(h, "admin", "admin", "Admin panel (test, this match only)", 7, toggle_admin)
+	admin.button.Visible = false
 	GuiService:GetPropertyChangedSignal("TopbarInset"):Connect(layout_hud)
 	-- (a resized window may change layouts: the row follows once the UI has laid itself out)
 	local cam = workspace.CurrentCamera
