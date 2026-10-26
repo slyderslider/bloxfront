@@ -2,7 +2,7 @@
 -- The territory skins' previews in one atlas (Locker cards, the crate reveal): each skin's pixel rect
 -- (ImageRectOffset = x, y; ImageRectSize = w, h). Draw with ResampleMode Pixelated.
 return {
-	image = "rbxassetid://134849434328525",
+	image = "rbxassetid://79502573446512",
 	cells = {
 		stripes = { 0, 0, 96, 96 },
 		bands = { 100, 0, 96, 96 },

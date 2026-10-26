@@ -3,11 +3,11 @@
 -- in its atlas (ImageRectOffset = x, y; ImageRectSize = w, h).
 return {
 	atlases = {
-		"rbxassetid://95399993143540",
-		"rbxassetid://113077381076370",
-		"rbxassetid://120638723258637",
-		"rbxassetid://80591040062277",
-		"rbxassetid://123483078887321",
+		"rbxassetid://99136990049427",
+		"rbxassetid://84642958678609",
+		"rbxassetid://89063362281245",
+		"rbxassetid://107581878425966",
+		"rbxassetid://99004203866075",
 	},
 	flags = {
 		{ code = "ac", name = "Ascension Island", atlas = 1, x = 2, y = 4, w = 116, h = 72 },

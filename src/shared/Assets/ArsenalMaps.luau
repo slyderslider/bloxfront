@@ -3,7 +3,7 @@
 -- cell: a scene's size in the atlas (tiles = px); scenes[key]: its cells (one per frame, top left)
 -- and its border's split of the scene (nil: the player's land only).
 return {
-	id = "rbxassetid://119736826585163",
+	id = "rbxassetid://73233373555697",
 	size = Vector2.new(980, 368),
 	cell = Vector2.new(192, 88),
 	scenes = {
