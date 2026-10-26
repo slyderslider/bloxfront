@@ -5,7 +5,7 @@
 -- framing, so size the ImageLabel to the Godot px). app_icon is full colour (512×512), do not tint.
 return {
 	alliance = "rbxassetid://120076017928031",
-	app_icon = "rbxassetid://108387382145456",
+	app_icon = "rbxassetid://103317700335238",
 	atom = "rbxassetid://136929909210131",
 	attack = "rbxassetid://105254872492310",
 	betray = "rbxassetid://104027126885899",

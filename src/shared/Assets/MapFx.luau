@@ -2,7 +2,7 @@
 -- Rofront's own map effects (pixel art, a pixel a map tile): rows of one atlas, frames left to right.
 -- banner: the flag's cloth in white and greys, drawn under `flag` tinted the conqueror's colour.
 return {
-	id = "rbxassetid://125545079883909",
+	id = "rbxassetid://113419860889034",
 	nuke = { x = 0, y = 0, w = 60, h = 60, frames = 12 },
 	flag = { x = 0, y = 60, w = 24, h = 24, frames = 10 },
 	banner = { x = 0, y = 84, w = 24, h = 24, frames = 10 },
