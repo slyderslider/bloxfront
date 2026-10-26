@@ -18,7 +18,7 @@
 5. ✅ Öffentliches GitHub-Repo: https://github.com/slyderslider/bloxfront (bei jedem Update: erst pushen, dann publishen). `.secrets/` ist ignoriert.
 
 Beschreibung, letzte Zeile:
-> BloxFront is a modified version of RoWorld (Snick Co.), itself based on OpenFront. Licensed under the GNU AGPL v3. Source code: github.com/slyderslider/bloxfront. Maps, flags and unit art from OpenFront (CC BY-SA 4.0). Music by Rodrigo Flores (CC BY 4.0). Not affiliated with OpenFront or Snick Co.
+> BloxFront is a modified version of RoWorld (Snick Co.), itself based on OpenFront. Licensed under the GNU AGPL v3. Source code: github.com/slyderslider/bloxfront. Maps, flags and unit art from OpenFront (CC BY-SA 4.0). Music by zec53, Syouki Takahashi and sonic289 (Pixabay). Not affiliated with OpenFront or Snick Co.
 
 ## Nie entfernen (Lizenz)
 Footer „© OpenFront and Contributors …“, How to play → Credits & licence, `LICENSE`, `README.md`, `assets/openfront/LICENSE.md`.

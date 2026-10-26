@@ -6,8 +6,8 @@
 -- (Sound.PlaybackRegionsEnabled = true; PlaybackRegion = NumberRange.new(start, stop)).
 return {
 	music = {
-		menu = { id = "rbxassetid://119819342827167", length = 106.666667 },
-		war = { id = "rbxassetid://135124812568552", length = 160 },
+		menu = { id = "rbxassetid://102793180804899", length = 122.88 },
+		war = { id = "rbxassetid://86175445825124", length = 157.32 },
 	},
 	sfx = {
 		alliance = { id = "rbxassetid://82802880839273", length = 3 },

@@ -17,6 +17,6 @@ BloxFront is free software under the GNU Affero General Public License v3, with 
 
 Maps, country flags and unit art come from OpenFront under CC BY-SA 4.0 (see
 [assets/openfront/LICENSE.md](assets/openfront/LICENSE.md)); adapted versions are shared under the same
-licence. Music by Rodrigo Flores, CC BY 4.0.
+licence. Music by zec53, Syouki Takahashi and sonic289 (Pixabay).
 
 BloxFront is not affiliated with or endorsed by OpenFront or Snick Co.

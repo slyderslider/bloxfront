@@ -171,6 +171,186 @@
       "assetId": "118294902349556",
       "studioPath": null,
       "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "Incoming_flags_pumpkin_king",
+      "type": "flag-image",
+      "file": "incoming/flags/pumpkin_king.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1536x1024. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_flags_bat_moon",
+      "type": "flag-image",
+      "file": "incoming/flags/bat_moon.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1536x1024. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_flags_grinning_skull",
+      "type": "flag-image",
+      "file": "incoming/flags/grinning_skull.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1536x1024. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_flags_cauldron",
+      "type": "flag-image",
+      "file": "incoming/flags/cauldron.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1536x1024. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_flags_phantom",
+      "type": "flag-image",
+      "file": "incoming/flags/phantom.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1536x1024. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_flags_spider_web",
+      "type": "flag-image",
+      "file": "incoming/flags/spider_web.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1536x1024. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_takeover",
+      "type": "product-icon",
+      "file": "incoming/icons/takeover.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_crate",
+      "type": "product-icon",
+      "file": "incoming/icons/crate.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_crate_first",
+      "type": "product-icon",
+      "file": "incoming/icons/crate_first.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_crate3",
+      "type": "product-icon",
+      "file": "incoming/icons/crate3.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_unlock_mega",
+      "type": "product-icon",
+      "file": "incoming/icons/unlock_mega.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_unlock_scatter",
+      "type": "product-icon",
+      "file": "incoming/icons/unlock_scatter.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_unlock_reinforce",
+      "type": "product-icon",
+      "file": "incoming/icons/unlock_reinforce.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_unlock_artillery",
+      "type": "product-icon",
+      "file": "incoming/icons/unlock_artillery.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_unlock_airfield",
+      "type": "product-icon",
+      "file": "incoming/icons/unlock_airfield.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_unlock_railgun",
+      "type": "product-icon",
+      "file": "incoming/icons/unlock_railgun.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_unlock_stars2x",
+      "type": "product-icon",
+      "file": "incoming/icons/unlock_stars2x.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_unlock_reload2x",
+      "type": "product-icon",
+      "file": "incoming/icons/unlock_reload2x.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_starter_pack",
+      "type": "product-icon",
+      "file": "incoming/icons/starter_pack.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_icons_bundle_halloween",
+      "type": "product-icon",
+      "file": "incoming/icons/bundle_halloween.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
     }
   ]
 }
