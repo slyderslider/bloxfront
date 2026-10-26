@@ -1,0 +1,347 @@
+{
+ "sfx_alliance.wav": {
+  "manifest": "Audio.luau",
+  "key": "alliance",
+  "length": 3.0
+ },
+ "sfx_ally_request.wav": {
+  "manifest": "Audio.luau",
+  "key": "ally_request",
+  "length": 0.9
+ },
+ "sfx_attack_launch.wav": {
+  "manifest": "Audio.luau",
+  "key": "attack_launch",
+  "length": 2.2
+ },
+ "sfx_betrayal.wav": {
+  "manifest": "Audio.luau",
+  "key": "betrayal",
+  "length": 3.4
+ },
+ "sfx_boat_launch.wav": {
+  "manifest": "Audio.luau",
+  "key": "boat_launch",
+  "length": 2.6
+ },
+ "sfx_build.wav": {
+  "manifest": "Audio.luau",
+  "key": "build",
+  "length": 1.92839
+ },
+ "sfx_conquer.wav": {
+  "manifest": "Audio.luau",
+  "key": "conquer",
+  "length": 3.0
+ },
+ "sfx_countdown_tick.wav": {
+  "manifest": "Audio.luau",
+  "key": "countdown_tick",
+  "length": 0.15
+ },
+ "sfx_defeat.wav": {
+  "manifest": "Audio.luau",
+  "key": "defeat",
+  "length": 7.8
+ },
+ "sfx_expand.wav": {
+  "manifest": "Audio.luau",
+  "key": "expand",
+  "length": 0.6
+ },
+ "sfx_game_start.wav": {
+  "manifest": "Audio.luau",
+  "key": "game_start",
+  "length": 3.6
+ },
+ "sfx_nuke_alarm.wav": {
+  "manifest": "Audio.luau",
+  "key": "nuke_alarm",
+  "length": 2.799977
+ },
+ "sfx_nuke_explosion.wav": {
+  "manifest": "Audio.luau",
+  "key": "nuke_explosion",
+  "length": 6.0
+ },
+ "sfx_nuke_launch.wav": {
+  "manifest": "Audio.luau",
+  "key": "nuke_launch",
+  "length": 4.2
+ },
+ "sfx_order_ack.wav": {
+  "manifest": "Audio.luau",
+  "key": "order_ack",
+  "length": 0.25
+ },
+ "sfx_sam_intercept.wav": {
+  "manifest": "Audio.luau",
+  "key": "sam_intercept",
+  "length": 1.6
+ },
+ "sfx_sam_launch.wav": {
+  "manifest": "Audio.luau",
+  "key": "sam_launch",
+  "length": 0.85
+ },
+ "sfx_shell_fire.wav": {
+  "manifest": "Audio.luau",
+  "key": "shell_fire",
+  "length": 0.3
+ },
+ "sfx_shell_hit.wav": {
+  "manifest": "Audio.luau",
+  "key": "shell_hit",
+  "length": 0.45
+ },
+ "sfx_shell_splash.wav": {
+  "manifest": "Audio.luau",
+  "key": "shell_splash",
+  "length": 0.4
+ },
+ "sfx_ship_sink.wav": {
+  "manifest": "Audio.luau",
+  "key": "ship_sink",
+  "length": 2.2
+ },
+ "sfx_spawn_confirm.wav": {
+  "manifest": "Audio.luau",
+  "key": "spawn_confirm",
+  "length": 2.4
+ },
+ "sfx_ui_click.wav": {
+  "manifest": "Audio.luau",
+  "key": "ui_click",
+  "length": 0.09
+ },
+ "sfx_ui_error.wav": {
+  "manifest": "Audio.luau",
+  "key": "ui_error",
+  "length": 0.239977
+ },
+ "sfx_ui_hover.wav": {
+  "manifest": "Audio.luau",
+  "key": "ui_hover",
+  "length": 0.06
+ },
+ "sfx_ui_open.wav": {
+  "manifest": "Audio.luau",
+  "key": "ui_open",
+  "length": 0.9
+ },
+ "sfx_under_attack.wav": {
+  "manifest": "Audio.luau",
+  "key": "under_attack",
+  "length": 1.3
+ },
+ "sfx_victory.wav": {
+  "manifest": "Audio.luau",
+  "key": "victory",
+  "length": 11.5
+ },
+ "sfx_warship.wav": {
+  "manifest": "Audio.luau",
+  "key": "warship",
+  "length": 3.6
+ },
+ "x_card_flip.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "card_flip",
+  "length": 0.300375
+ },
+ "x_card_whoosh.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "card_whoosh",
+  "length": 0.457625
+ },
+ "x_countdown_gamestart.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "countdown_gamestart",
+  "length": 3.25
+ },
+ "x_countdown_tick.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "countdown_tick",
+  "length": 0.111771
+ },
+ "x_countdown_tick_1.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "countdown_tick_1",
+  "length": 1.4
+ },
+ "x_countdown_tick_2.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "countdown_tick_2",
+  "length": 1.4
+ },
+ "x_countdown_tick_3.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "countdown_tick_3",
+  "length": 1.4
+ },
+ "x_countdown_tick_4.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "countdown_tick_4",
+  "length": 1.4
+ },
+ "x_countdown_tick_5.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "countdown_tick_5",
+  "length": 1.366667
+ },
+ "x_crate_drop.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "crate_drop",
+  "length": 1.42575
+ },
+ "x_crate_land.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "crate_land",
+  "length": 0.583333
+ },
+ "x_crate_open.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "crate_open",
+  "length": 1.483333
+ },
+ "x_crate_preview_common.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "crate_preview_common",
+  "length": 2.15
+ },
+ "x_crate_preview_epic.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "crate_preview_epic",
+  "length": 2.15
+ },
+ "x_crate_preview_legendary.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "crate_preview_legendary",
+  "length": 2.15
+ },
+ "x_crate_preview_rare.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "crate_preview_rare",
+  "length": 2.15
+ },
+ "x_crate_rattle.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "crate_rattle",
+  "length": 0.7
+ },
+ "x_crate_shimmer.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "crate_shimmer",
+  "length": 4.333333
+ },
+ "x_game_start.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "game_start",
+  "length": 6.733333
+ },
+ "x_queue_start.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "queue_start",
+  "length": 1.6
+ },
+ "x_reveal_common.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "reveal_common",
+  "length": 2.666667
+ },
+ "x_reveal_epic.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "reveal_epic",
+  "length": 2.666667
+ },
+ "x_reveal_legendary.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "reveal_legendary",
+  "length": 2.9
+ },
+ "x_reveal_rare.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "reveal_rare",
+  "length": 2.666667
+ },
+ "x_spawn_confirm.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "spawn_confirm",
+  "length": 0.134172
+ },
+ "x_spectate_switch.wav": {
+  "manifest": "AudioExtra.luau",
+  "key": "spectate_switch",
+  "length": 0.235688
+ },
+ "ui_buy_spend.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "buy_spend",
+  "length": 1.48424
+ },
+ "ui_eliminate.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "eliminate",
+  "length": 0.610272
+ },
+ "ui_expand_pop.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "expand_pop",
+  "length": 0.12
+ },
+ "ui_star_get.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "star_get",
+  "length": 1.562313
+ },
+ "ui_star_tick.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "star_tick",
+  "length": 0.120295
+ },
+ "ui_ui_back.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "ui_back",
+  "length": 0.185488
+ },
+ "ui_ui_click.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "ui_click",
+  "length": 0.080998
+ },
+ "ui_ui_confirm.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "ui_confirm",
+  "length": 0.797483
+ },
+ "ui_ui_error.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "ui_error",
+  "length": 0.163673
+ },
+ "ui_ui_hover.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "ui_hover",
+  "length": 0.1
+ },
+ "ui_ui_locked.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "ui_locked",
+  "length": 0.104966
+ },
+ "ui_ui_open.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "ui_open",
+  "length": 0.216349
+ },
+ "ui_ui_tab.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "ui_tab",
+  "length": 0.1
+ },
+ "ui_unlock.wav": {
+  "manifest": "AudioUI.luau",
+  "key": "unlock",
+  "length": 3.626417
+ }
+}

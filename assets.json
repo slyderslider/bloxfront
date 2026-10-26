@@ -9,6 +9,42 @@
       "assetId": null,
       "studioPath": null,
       "notes": "512x512 app icon / title emblem (Figma file KEo76KefNk9UeH2BhNyMhM, node 1:2). Replaces Snick's logo id in src/shared/Assets/Branding.luau (app_icon, logo_mark) and UiIcons.luau (app_icon). Also usable as the experience icon."
+    },
+    {
+      "name": "BloxFrontIcon",
+      "type": "store-image",
+      "file": "exports/ui/Store/BloxFrontIcon.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "512x512 experience icon (Creator Dashboard > Places > Icon). Figma node 53:2. Also usable as the in-game app_icon (Branding.luau / UiIcons.luau)."
+    },
+    {
+      "name": "Thumbnail1_Strike",
+      "type": "store-image",
+      "file": "exports/ui/Store/Thumbnail1_Strike.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "1920x1080 thumbnail, Figma node 54:2"
+    },
+    {
+      "name": "Thumbnail2_Takeover",
+      "type": "store-image",
+      "file": "exports/ui/Store/Thumbnail2_Takeover.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "1920x1080 thumbnail, Figma node 55:2"
+    },
+    {
+      "name": "SfxPack",
+      "type": "audio",
+      "file": "exports/audio/sfx/*.wav",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "69 synthesised sound effects (tools/assets/synth_sfx.py); index.json maps each file to its manifest key in Audio.luau / AudioExtra.luau / AudioUI.luau. Music: Roman picks it."
     }
   ]
 }
