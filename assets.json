@@ -351,6 +351,222 @@
       "assetId": null,
       "studioPath": null,
       "notes": "Built-in Imagegen, 2026-10-26. 1024x1024, transparent rounded corners. Ready for user atlas/upload workflow; existing product IDs unchanged."
+    },
+    {
+      "name": "Incoming_flags_lion_crest",
+      "type": "flag-image",
+      "file": "incoming/flags/lion_crest.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Empires. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_wolf_pack",
+      "type": "flag-image",
+      "file": "incoming/flags/wolf_pack.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Empires. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_dragon_dynasty",
+      "type": "flag-image",
+      "file": "incoming/flags/dragon_dynasty.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Empires. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_phoenix",
+      "type": "flag-image",
+      "file": "incoming/flags/phoenix.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Empires. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_radioactive",
+      "type": "flag-image",
+      "file": "incoming/flags/radioactive.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Doomsday. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_warhead",
+      "type": "flag-image",
+      "file": "incoming/flags/warhead.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Doomsday. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_mirv_storm",
+      "type": "flag-image",
+      "file": "incoming/flags/mirv_storm.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Doomsday. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_big_red_button",
+      "type": "flag-image",
+      "file": "incoming/flags/big_red_button.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Doomsday. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_kraken",
+      "type": "flag-image",
+      "file": "incoming/flags/kraken.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Naval. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_anchor",
+      "type": "flag-image",
+      "file": "incoming/flags/anchor.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Naval. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_jolly_roger",
+      "type": "flag-image",
+      "file": "incoming/flags/jolly_roger.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Naval. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_lighthouse",
+      "type": "flag-image",
+      "file": "incoming/flags/lighthouse.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Naval. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_astronaut",
+      "type": "flag-image",
+      "file": "incoming/flags/astronaut.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Space. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_rocket",
+      "type": "flag-image",
+      "file": "incoming/flags/rocket.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Space. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_ringed_planet",
+      "type": "flag-image",
+      "file": "incoming/flags/ringed_planet.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Space. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_comet",
+      "type": "flag-image",
+      "file": "incoming/flags/comet.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Space. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_cat",
+      "type": "flag-image",
+      "file": "incoming/flags/cat.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Fun. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_capybara",
+      "type": "flag-image",
+      "file": "incoming/flags/capybara.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Fun. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_rubber_duck",
+      "type": "flag-image",
+      "file": "incoming/flags/rubber_duck.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Fun. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_pizza",
+      "type": "flag-image",
+      "file": "incoming/flags/pizza.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Fun. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_volcano",
+      "type": "flag-image",
+      "file": "incoming/flags/volcano.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Elements. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_thunder",
+      "type": "flag-image",
+      "file": "incoming/flags/thunder.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Elements. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_frost_crown",
+      "type": "flag-image",
+      "file": "incoming/flags/frost_crown.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Elements. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
+    },
+    {
+      "name": "Incoming_flags_tornado",
+      "type": "flag-image",
+      "file": "incoming/flags/tornado.png",
+      "status": "exported",
+      "assetId": null,
+      "studioPath": null,
+      "notes": "Daily flag: Elements. Built-in Imagegen, 1536x1024, 2026-10-26. Ready for manual atlas/upload workflow."
     }
   ]
 }

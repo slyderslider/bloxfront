@@ -3,8 +3,8 @@
 -- Locker (like Assets/Flags), `big` for the shop's cards; each flag's rects, and its developer
 -- product in production (`product`) and Rofront Staging (`staging`), 0 = not made yet.
 return {
-	atlases = { "rbxassetid://71018652099965" },
-	big = { "rbxassetid://134989596128578", "rbxassetid://74001488357048" },
+	atlases = { "rbxassetid://132142324475964" },
+	big = { "rbxassetid://128107617393950", "rbxassetid://100302742450052" },
 	flags = {
 		{ key = "pumpkin_king", name = "Pumpkin King", theme = "Halloween", rarity = "legendary", set = "halloween", atlas = 1, x = 3, y = 2, w = 114, h = 76, big_rect = { 1, 2, 2, 228, 152 }, product = 3722459108, staging = 0 },
 		{ key = "bat_moon", name = "Bat Moon", theme = "Halloween", rarity = "epic", set = "halloween", atlas = 1, x = 123, y = 2, w = 114, h = 76, big_rect = { 1, 234, 2, 228, 152 }, product = 3722459115, staging = 0 },
