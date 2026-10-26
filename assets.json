@@ -14,9 +14,9 @@
       "name": "BloxFrontIcon",
       "type": "store-image",
       "file": "exports/ui/Store/BloxFrontIcon.png",
-      "status": "exported",
-      "assetId": null,
-      "studioPath": null,
+      "status": "wired",
+      "assetId": "108387382145456",
+      "studioPath": "ReplicatedStorage.Airfront.Assets.Branding / UiIcons (app_icon, logo_mark)",
       "notes": "512x512 experience icon (Creator Dashboard > Places > Icon). Figma node 53:2. Also usable as the in-game app_icon (Branding.luau / UiIcons.luau)."
     },
     {
@@ -45,6 +45,132 @@
       "assetId": null,
       "studioPath": null,
       "notes": "69 synthesised sound effects (tools/assets/synth_sfx.py); index.json maps each file to its manifest key in Audio.luau / AudioExtra.luau / AudioUI.luau. Music: Roman picks it."
+    },
+    {
+      "name": "ProductIcon_takeover",
+      "type": "product-icon",
+      "file": "exports/ui/Products/takeover.png",
+      "status": "imported",
+      "assetId": "104809365243599",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_crate",
+      "type": "product-icon",
+      "file": "exports/ui/Products/crate.png",
+      "status": "imported",
+      "assetId": "102621670478911",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_crate_first",
+      "type": "product-icon",
+      "file": "exports/ui/Products/crate_first.png",
+      "status": "imported",
+      "assetId": "99114214570142",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_crate3",
+      "type": "product-icon",
+      "file": "exports/ui/Products/crate3.png",
+      "status": "imported",
+      "assetId": "128148439607801",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_unlock_mega",
+      "type": "product-icon",
+      "file": "exports/ui/Products/unlock_mega.png",
+      "status": "imported",
+      "assetId": "138553901482907",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_unlock_scatter",
+      "type": "product-icon",
+      "file": "exports/ui/Products/unlock_scatter.png",
+      "status": "imported",
+      "assetId": "89819574292951",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_unlock_reinforce",
+      "type": "product-icon",
+      "file": "exports/ui/Products/unlock_reinforce.png",
+      "status": "imported",
+      "assetId": "94823027457265",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_unlock_artillery",
+      "type": "product-icon",
+      "file": "exports/ui/Products/unlock_artillery.png",
+      "status": "imported",
+      "assetId": "87477286683608",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_unlock_airfield",
+      "type": "product-icon",
+      "file": "exports/ui/Products/unlock_airfield.png",
+      "status": "imported",
+      "assetId": "133597290171012",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_unlock_railgun",
+      "type": "product-icon",
+      "file": "exports/ui/Products/unlock_railgun.png",
+      "status": "imported",
+      "assetId": "111645865413746",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_unlock_stars2x",
+      "type": "product-icon",
+      "file": "exports/ui/Products/unlock_stars2x.png",
+      "status": "imported",
+      "assetId": "136354513231913",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_unlock_reload2x",
+      "type": "product-icon",
+      "file": "exports/ui/Products/unlock_reload2x.png",
+      "status": "imported",
+      "assetId": "100878978038403",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_starter_pack",
+      "type": "product-icon",
+      "file": "exports/ui/Products/starter_pack.png",
+      "status": "imported",
+      "assetId": "129957538917725",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
+    },
+    {
+      "name": "ProductIcon_bundle_halloween",
+      "type": "product-icon",
+      "file": "exports/ui/Products/bundle_halloween.png",
+      "status": "imported",
+      "assetId": "118294902349556",
+      "studioPath": null,
+      "notes": "icon for the developer product of the same key (PRODUCTS.md)"
     }
   ]
 }

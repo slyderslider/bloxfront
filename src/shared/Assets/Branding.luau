@@ -4,6 +4,6 @@
 -- rounded corners. The publishing icon (assets/branding/experience_icon_512.png) is not
 -- used in game and is set in the experience settings instead.
 return {
-	app_icon = "rbxassetid://81884831811669",
-	logo_mark = "rbxassetid://81884831811669",
+	app_icon = "rbxassetid://108387382145456",
+	logo_mark = "rbxassetid://108387382145456",
 }
