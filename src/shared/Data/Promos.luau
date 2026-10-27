@@ -27,7 +27,7 @@ Promos.EVENT = {
 	to = 1793559600,
 	-- the Roblox experience event's id (Creator Dashboard -> Events: the number in its link); "" = no
 	-- RSVP button
-	rsvp_id = "",
+	rsvp_id = "8369433822273602127",
 	skin = "ev_jack_o_lantern",
 	flag = "phantom",
 }
