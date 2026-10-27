@@ -17,7 +17,7 @@ local Staging: any = if IS_ROBLOX then require((script :: any).Parent.Staging) e
 
 local Subscription = {}
 
-Subscription.ID = "" -- BloxFront: create the subscription on the dashboard, then put its "EXP-..." id here
+Subscription.ID = "EXP-7192362128878207547" -- BloxFront General (Creator Dashboard, 2026-10-27)
 Subscription.STAGING = ""
 Subscription.NAME = "BloxFront General"
 --- The price set on the dashboard (Robux a month); the interface shows Roblox's own.

@@ -1039,14 +1039,7 @@ function TitleScreen._place_crate_button(self, compact: boolean, head_top: numbe
 	local stop = if shb.visible then shtop + shsz.Y + (if compact then 8.0 else 14.0) else shtop
 	sb:set_anchors(0, 0, 0, 0)
 	sb:set_offsets(right - ssz.X, stop, right, stop + ssz.Y)
-	-- RoWorld General's under them all
-	local gb = self._general_btn
-	gb:set_scale(if compact then GeneralButton.PHONE_K else 1.0)
-	local gsz = gb:size_px()
 	local below = if sb.visible then stop + ssz.Y else (if shb.visible then shtop + shsz.Y else top + size.Y)
-	local gtop = below + (if compact then 8.0 else 14.0)
-	gb:set_anchors(0, 0, 0, 0)
-	gb:set_offsets(right - gsz.X, gtop, right, gtop + gsz.Y)
 	-- BloxFront's free cards side by side right under the flag shop's button, the row as wide as it
 	-- (2026-10-27: Roman; the event's only while it runs)
 	local cgap = if compact then 6.0 else 10.0
@@ -1062,7 +1055,7 @@ function TitleScreen._place_crate_button(self, compact: boolean, head_top: numbe
 	if #shown == 1 then
 		cw = PromoCard.SIZE.X * (if compact then PromoCard.PHONE_K else 1.0)
 	end
-	local ctop = shtop + shsz.Y + (if compact then 8.0 else 12.0)
+	local ctop = below + (if compact then 8.0 else 12.0)
 	local cx = right
 	local row_left = right
 	local row_bottom = ctop
@@ -1075,6 +1068,20 @@ function TitleScreen._place_crate_button(self, compact: boolean, head_top: numbe
 		row_left = cx - csz.X
 		row_bottom = ctop + csz.Y
 		cx -= csz.X + cgap
+	end
+	-- RoWorld General's: desktop, left of the flag shop's button (BloxFront 2026-10-27: under the rail
+	-- it ran into the free cards and the party panel); phones, under the cards
+	local gb = self._general_btn
+	gb:set_scale(if compact then GeneralButton.PHONE_K else 1.0)
+	local gsz = gb:size_px()
+	gb:set_anchors(0, 0, 0, 0)
+	if compact then
+		local gtop = (if #shown > 0 then row_bottom else below) + 8.0
+		gb:set_offsets(right - gsz.X, gtop, right, gtop + gsz.Y)
+	else
+		local gright = right - shsz.X - 16.0
+		local gtop = shtop + (shsz.Y - gsz.Y) * 0.5
+		gb:set_offsets(gright - gsz.X, gtop, gright, gtop + gsz.Y)
 	end
 	-- desktop: the party panel (bottom right) moves left of the rail when the cards reach down to it
 	local party = self._party
