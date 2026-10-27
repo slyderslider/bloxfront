@@ -1341,11 +1341,39 @@ function MatchServer.broadcast_lobby(self: any)
 	end
 end
 
---- The server is going away (Roblox BindToClose): tell everyone, stop the match.
+--- BloxFront (2026-10-27): every participant's Stars for the running match so far, as if it ended now
+--- (a restart: nobody loses a match to an update). Nothing when no match runs.
+function MatchServer.pay_all(self: any)
+	for _, peer in table.clone(self._order) do
+		self:_pay(peer, false)
+	end
+end
+
+--- BloxFront restart countdown (server/Restart) ran out: pay the running match, end it, everyone back
+--- to the title. The server stays open (Roblox's migration closes it).
+function MatchServer.end_for_restart(self: any, reason: string)
+	if self._closed then
+		return
+	end
+	self:pay_all()
+	for _, peer in table.clone(self._order) do
+		self:_send(peer, OP.MATCH_CLOSED, reason)
+	end
+	self:_close_match()
+	table.clear(self._participants)
+	table.clear(self._order)
+	self._stage = STAGE_IDLE
+	self._stage_time = 0.0
+	self:broadcast_lobby()
+end
+
+--- The server is going away (Roblox BindToClose): pay the running match (BloxFront), tell everyone,
+--- stop the match.
 function MatchServer.shutdown(self: any, reason: string?)
 	if self._closed then
 		return
 	end
+	self:pay_all()
 	for _, peer in table.clone(self._order) do
 		self:_send(peer, OP.MATCH_CLOSED, reason or "The game server is restarting. You're back at the title screen.")
 	end

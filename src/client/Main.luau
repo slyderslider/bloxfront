@@ -545,6 +545,11 @@ function Main.start()
 	local session = Session.new()
 	Main.session = session
 	Main.boot.session_new = os.clock()
+	-- BloxFront restart countdown banner (server/Restart)
+	local RestartBanner = optional(script.Parent, { "UI", "RestartBanner" })
+	if RestartBanner ~= nil then
+		task.spawn(RestartBanner.new, session)
+	end
 	local audio = AudioDirector.new("menu")
 	audio:bind_settings(session)
 	Main.audio = audio

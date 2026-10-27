@@ -122,6 +122,8 @@ Protocol.OP = {
 	ADMIN_OK = 44, -- server → client: (true) you are a game admin: the admin panel may show
 	PROMO = 45, -- server → client: ({ group: boolean, event: { key, claimed, skin, flag, to }?, given:
 	-- { skin?, flag? }? }) BloxFront promos (server/Promos); client → server: () check the group again
+	RESTART = 46, -- server → client: ({ at: number }) BloxFront restart countdown (server/Restart): the
+	-- servers restart at unix time `at` (0: cancelled); the running match is paid and ended then
 }
 
 Protocol.INTENT_TYPES = {

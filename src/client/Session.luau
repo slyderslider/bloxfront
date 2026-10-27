@@ -277,6 +277,10 @@ function Session.new(env: { [string]: any }?)
 	self.promo = { group = false, event = nil }
 	--- (promo, given: { skin?, flag? }?) the server's word, and what the event just gave
 	self.promo_changed = Signal.new()
+	--- BloxFront restart countdown (server/Restart): unix time the servers restart (0: none announced)
+	self.restart_at = 0
+	--- (at) the server's word on it
+	self.restart_changed = Signal.new()
 	--- (state) the player's party (server/Party.state; team games on: staging only for now)
 	self.party_changed = Signal.new()
 	--- the last party state (nil: parties are off on this server)
@@ -630,7 +634,7 @@ function Session.admin(self: any, action: string, arg: any): boolean
 		net.send(OP.ADMIN, action, arg)
 		return true
 	end
-	if action == "stars" then
+	if action == "stars" or action == "restart" then
 		return to_server()
 	end
 	local n = if type(arg) == "number" and arg == arg then math.clamp(arg, 0, 1e9) else 0
@@ -687,6 +691,14 @@ function Session.open_crate(self: any): boolean
 end
 
 --- Wear an owned cosmetic in `slot` ("skin" / "flag"), or none (id false).
+--- BloxFront restart countdown ran out: a solo match (it runs on this device) reports its Stars now, so
+--- the update costs nothing (a public match is paid by its server).
+function Session.restart_due(self: any)
+	if self.mode == MODE_SOLO then
+		self:_solo_report(false)
+	end
+end
+
 --- BloxFront promos: ask the server to check the group again (after Roblox's join prompt).
 function Session.promo_check(self: any): boolean
 	local net = self.env.net
@@ -1678,6 +1690,12 @@ function Session._on_net(self: any, op: number, ...: any)
 				}
 				else nil
 			self:_emit("promo_changed", self.promo, given)
+		end
+	elseif op == OP.RESTART then
+		local st = ...
+		if type(st) == "table" then
+			self.restart_at = if type(st.at) == "number" then st.at else 0
+			self:_emit("restart_changed", self.restart_at)
 		end
 	elseif op == OP.ADMIN_OK then
 		self.is_admin = true

@@ -47,6 +47,7 @@ local Purchases = require(script.Parent.Purchases) :: any
 local Rewards = require(script.Parent.Rewards) :: any
 local General = require(script.Parent.General) :: any
 local Promos = require(script.Parent.Promos) :: any
+local Restart = require(script.Parent.Restart) :: any
 local Subscription = require(Shared.Data.Subscription) :: any
 local MarketplaceService = game:GetService("MarketplaceService")
 local GroupService = game:GetService("GroupService")
@@ -767,6 +768,10 @@ function ServerMain.start()
 				send(player, OP.GENERAL, General.state(player))
 			end
 			send(player, OP.PROMO, Promos.state(player))
+			local rs = Restart.state()
+			if rs ~= nil then
+				send(player, OP.RESTART, rs)
+			end
 			if party ~= nil then
 				send(player, OP.PARTY_STATE, party:state(player))
 			end
@@ -1248,6 +1253,12 @@ function ServerMain.start()
 			end
 			return
 		end
+		if action == "restart" then
+			-- the restart countdown for every server (server/Restart; arg = minutes, 0 cancels)
+			print(string.format("[Restart] %s announced %s min", player.Name, tostring(arg)))
+			task.spawn(Restart.announce, tonumber(arg) or 0)
+			return
+		end
 		if is_match_server then
 			server:admin(player, action, arg)
 		end
@@ -1691,8 +1702,56 @@ function ServerMain.start()
 		end
 	end)
 
+	-- BloxFront restart countdown (server/Restart; 2026-10-27): announced from the admin panel, heard by
+	-- every server; when it runs out the running match is paid and ended, and a match server sends its
+	-- players back to a hub
+	local RESTART_MSG = "Update time! Your Stars for this match were paid. Back at the title screen."
+	Restart.configure({
+		publish = if RunService:IsStudio()
+			then nil
+			else function(msg: any)
+				game:GetService("MessagingService"):PublishAsync(Restart.TOPIC, msg)
+			end,
+		send_all = function(state: any)
+			for _, p in Players:GetPlayers() do
+				send(p, OP.RESTART, state)
+			end
+		end,
+		on_due = function()
+			server:end_for_restart(RESTART_MSG)
+			if host ~= nil and not RunService:IsStudio() then
+				task.delay(4, function()
+					pcall(teleports.to_hub, Players:GetPlayers())
+				end)
+			end
+		end,
+		now = os.time,
+		log = print,
+	})
+	if not RunService:IsStudio() then
+		task.spawn(function()
+			pcall(function()
+				game:GetService("MessagingService"):SubscribeAsync(Restart.TOPIC, function(msg: any)
+					Restart.heard(if type(msg) == "table" then msg.Data else nil)
+				end)
+			end)
+		end)
+	end
+	task.spawn(function()
+		while true do
+			task.wait(1)
+			pcall(Restart.tick)
+		end
+	end)
+
 	game:BindToClose(function()
-		server:shutdown("The game server is restarting. You're back at the title screen.")
+		server:shutdown("The game server is restarting. Your Stars for this match were paid.")
+		-- (the running match's Stars are being written: wait for them, bounded)
+		local t0 = os.clock()
+		task.wait(0.5)
+		while Rewards.inflight() > 0 and os.clock() - t0 < 15 do
+			task.wait(0.25)
+		end
 		if host ~= nil and not RunService:IsStudio() then
 			-- a match server closing: everyone to a hub instead of out of the game
 			pcall(teleports.to_hub, Players:GetPlayers())

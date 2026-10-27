@@ -57,11 +57,24 @@ local function now(): number
 	return if deps.now then deps.now() else os.clock()
 end
 
+--- payouts writing right now (a closing server waits for them: Rewards.inflight)
+local inflight = 0
+
+--- How many payouts are being written right now.
+function Rewards.inflight(): number
+	return inflight
+end
+
 local function deliver(player: any, lines: { { any } }, total: number, mode: string): number
 	if total <= 0 then
 		return 0
 	end
-	local ok, balance = deps.add_stars(player, total)
+	inflight += 1
+	local ok_call, ok, balance = pcall(deps.add_stars, player, total)
+	inflight -= 1
+	if not ok_call then
+		return 0
+	end
 	if not ok then
 		return 0
 	end

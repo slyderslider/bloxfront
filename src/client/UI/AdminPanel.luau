@@ -140,6 +140,28 @@ function AdminPanel._build(self)
 	self.list = list
 	self.status = self:_label("", TEXT_3)
 
+	self:_caption("SERVER RESTART (all servers)")
+	self:_row({
+		{ "In 1 min", function()
+			self:_do("restart", 1)
+		end },
+		{ "In 5 min", function()
+			self:_do("restart", 5)
+		end },
+		{ "In 10 min", function()
+			self:_do("restart", 10)
+		end },
+	})
+	self:_row({
+		{ "Cancel restart", function()
+			self:_do("restart", 0)
+		end, RED },
+	})
+	self:_label(
+		"Publish first. At 0:00 running matches are paid and ended; then click \"Migrate to Latest Update\" in the Creator Dashboard.",
+		TEXT_3
+	)
+
 	self:_caption("MATCH")
 	self:_row({
 		{ "+10K Gold", function()
