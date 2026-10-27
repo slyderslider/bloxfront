@@ -54,6 +54,8 @@ Stars.LABELS = {
 	placed = "Final place",
 	victory = "Victory",
 	double = "2x Stars",
+	general = "General +50%",
+	group = "Group +10%",
 }
 
 export type Result = {

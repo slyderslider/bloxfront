@@ -267,6 +267,16 @@ function Session.new(env: { [string]: any }?)
 	self._tracker = nil :: any
 	self._solo_reported = false
 	self.crate_result = Signal.new() -- (ok, item_id | reason) an open_crate's answer
+	--- RoWorld General (Data/Subscription; server/General): subscribed, as the server last said
+	self.general = false
+	--- (on: boolean, given: { crate?, stars?, skin? }?) the server's word: subscribed or not, and what
+	--- the day's perks just gave
+	self.general_changed = Signal.new()
+	--- BloxFront promos (Data/Promos; server/Promos): { group: boolean, event: { key, claimed, skin, flag,
+	--- to }? }, as the server last said
+	self.promo = { group = false, event = nil }
+	--- (promo, given: { skin?, flag? }?) the server's word, and what the event just gave
+	self.promo_changed = Signal.new()
 	--- (state) the player's party (server/Party.state; team games on: staging only for now)
 	self.party_changed = Signal.new()
 	--- the last party state (nil: parties are off on this server)
@@ -677,6 +687,16 @@ function Session.open_crate(self: any): boolean
 end
 
 --- Wear an owned cosmetic in `slot` ("skin" / "flag"), or none (id false).
+--- BloxFront promos: ask the server to check the group again (after Roblox's join prompt).
+function Session.promo_check(self: any): boolean
+	local net = self.env.net
+	if net == nil or not net.connected or type(net.send) ~= "function" then
+		return false
+	end
+	net.send(OP.PROMO)
+	return true
+end
+
 function Session.equip(self: any, slot: string, id: string | false): boolean
 	local net = self.env.net
 	if net == nil or not net.connected or type(net.send) ~= "function" then
@@ -1562,6 +1582,20 @@ function Session._on_net(self: any, op: number, ...: any)
 				self:_emit("unlocked", key)
 			end
 		end
+	elseif op == OP.GENERAL then
+		local st = ...
+		if type(st) == "table" then
+			self.general = st.on == true
+			local g = if type(st.given) == "table" then st.given else nil
+			local given = if g ~= nil
+				then {
+					crate = g.crate == true,
+					stars = if type(g.stars) == "number" then g.stars else nil,
+					skin = if type(g.skin) == "string" then g.skin else nil,
+				}
+				else nil
+			self:_emit("general_changed", self.general, given)
+		end
 	elseif op == OP.CRATE_RESULT then
 		local ok, res = ...
 		self:_emit("crate_result", ok == true, if type(res) == "string" then res else "")
@@ -1617,6 +1651,31 @@ function Session._on_net(self: any, op: number, ...: any)
 		local kind, ok, reason = ...
 		if type(kind) == "string" then
 			self:_emit("credit_result", kind, ok == true, if type(reason) == "string" then reason else nil)
+		end
+	elseif op == OP.PROMO then
+		local st = ...
+		if type(st) == "table" then
+			local ev = if type(st.event) == "table" then st.event else nil
+			self.promo = {
+				group = st.group == true,
+				event = if ev ~= nil and type(ev.key) == "string"
+					then {
+						key = ev.key,
+						claimed = ev.claimed == true,
+						skin = if type(ev.skin) == "string" then ev.skin else nil,
+						flag = if type(ev.flag) == "string" then ev.flag else nil,
+						to = if type(ev.to) == "number" then ev.to else nil,
+					}
+					else nil,
+			}
+			local g = if type(st.given) == "table" then st.given else nil
+			local given = if g ~= nil
+				then {
+					skin = if type(g.skin) == "string" then g.skin else nil,
+					flag = if type(g.flag) == "string" then g.flag else nil,
+				}
+				else nil
+			self:_emit("promo_changed", self.promo, given)
 		end
 	elseif op == OP.ADMIN_OK then
 		self.is_admin = true

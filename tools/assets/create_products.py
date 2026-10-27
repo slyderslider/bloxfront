@@ -27,6 +27,7 @@ MAIN = {
     "crate": ("Cosmetic Crate", "One cosmetic crate: a territory skin or flag you don't own yet."),
     "crate_first": ("First Crate", "Your first cosmetic crate at a discount."),
     "crate3": ("3 Cosmetic Crates", "Three cosmetic crates at once, cheaper than one by one."),
+    "crate10": ("10 Cosmetic Crates", "Ten cosmetic crates at once, the best price per crate."),
     "unlock_mega": ("Unlock Mega Nuke", "Four times the blast of an Atom Bomb. Yours for good."),
     "unlock_scatter": ("Unlock Scattershot", "One nuke that splits into several warheads. Yours for good."),
     "unlock_reinforce": ("Unlock Reinforcements", "Call in extra troops when you need them. Yours for good."),

@@ -253,13 +253,14 @@ HelpOverlay.SECTIONS = {
 	},
 }
 --- The "Credits & licence" card, last: the AGPL's Appropriate Legal Notices (a copyright notice, no
---- warranty, that the game may be shared under the licence, where the licence is) and the CC BY-SA credits
---- (2026-10-25: the AGPL licence and its notices, the copyright notice and the credit for the sprites).
+--- warranty, that the game may be shared under the licence, where the licence is) and the credits
+--- (2026-10-25: the AGPL licence and its notices and the copyright notice; the flags, map icons, sprites
+--- and effects are RoWorld's own or public domain since that day, and the World map since 2026-10-26).
 --- NOTICE.md and LICENSE in the source have the full text.
 HelpOverlay.LEGAL = {
 	"BloxFront is a modified version of RoWorld, which is a modified version of OpenFront. © OpenFront and Contributors. Changes © 2026 Snick Co. Further changes © 2026 Roman (BloxFront).",
 	"BloxFront is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License, version 3, with the additional terms in its LICENSE file. It comes with ABSOLUTELY NO WARRANTY. The licence comes with BloxFront's source code.",
-	"Maps, country flags and unit art from OpenFront, licensed CC BY-SA 4.0; the versions converted or adapted for BloxFront are shared under the same licence. Music by zec53, Syouki Takahashi and sonic289 (Pixabay).",
+	"Maps made with Natural Earth and NOAA ETOPO1 data (public domain). Country flags from Wikimedia Commons (public domain). Music by zec53, Syouki Takahashi and sonic289 (Pixabay).",
 	"BloxFront is not affiliated with or endorsed by OpenFront or Snick Co.",
 }
 --- Where the source lives, under the credits: plain text with the GitHub mark, since Roblox games

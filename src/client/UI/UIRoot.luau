@@ -26,6 +26,8 @@ local Takeover = require("./Takeover")
 local Locker = require("./Locker")
 local Arsenal = require("./Arsenal")
 local StarterOffer = require("./StarterOffer")
+local GeneralOffer = require("./GeneralOffer")
+local PromoOffer = require("./PromoOffer")
 local FlagShop = require("./FlagShop")
 local ArsenalData: any = if typeof(game) == "Instance"
 	then require((game :: any):GetService("ReplicatedStorage"):WaitForChild("Airfront").Data.Arsenal)
@@ -168,6 +170,22 @@ function UIRoot.setup(self, session: any, world: any, audio: any)
 		if self.starter ~= nil then
 			self.starter:bind(session)
 		end
+		if self.general ~= nil then
+			self.general:bind(session)
+		end
+		if self.promo ~= nil then
+			self.promo:bind(session)
+		end
+		-- BloxFront promos (Data/Promos): the title's free cards, and what the event just gave
+		self:_sig(session, "promo_changed", function(_promo: any, given: any)
+			self.title:refresh_promo()
+			self:_on_promo(given)
+		end)
+		-- RoWorld General (Data/Subscription): the title's button and greeting, and what a day gave
+		self:_sig(session, "general_changed", function(on: boolean, given: any)
+			self.title:refresh_general()
+			self:_on_general(on, given)
+		end)
 		if self.title ~= nil and self.title._starter_btn ~= nil then
 			self.title._starter_btn:bind(session)
 		end
@@ -378,6 +396,7 @@ function UIRoot.replay_as_new_player(self)
 	self.tutorial:stop("left")
 	ctx:set_setting("tutorial", "")
 	ctx:session_call("new_player")
+	self.telemetry:new_player()
 	-- (the starter pack is on offer again from the start: it may open by itself again)
 	self._starter_shown = false
 	ctx:set_setting("starter_auto_at", 0)
@@ -582,6 +601,8 @@ function UIRoot._starter_auto(self)
 		and not (self.flag_shop ~= nil and self.flag_shop.is_open)
 		and not (self.arsenal ~= nil and self.arsenal.is_open)
 		and not (self.crate_opening ~= nil and self.crate_opening.is_open)
+		and not (self.general ~= nil and self.general.is_open)
+		and not (self.promo ~= nil and self.promo.is_open)
 		and self._tutorial_at == nil
 		and not (self.tutorial ~= nil and self.tutorial.active)
 		and self._autostart == nil
@@ -603,6 +624,67 @@ function UIRoot._starter_auto(self)
 	self._starter_shown = true
 	ctx:set_setting("starter_auto_at", os.time())
 	self:open_starter("auto")
+end
+
+--- RoWorld General's window (Data/Subscription): the title's General button.
+function UIRoot.open_general(self, from: string)
+	if self.general == nil or self.general.is_open then
+		return
+	end
+	self.general:open(from)
+	self:_update_input_gate()
+end
+
+--- BloxFront's free cards' window (Data/Promos): "group" or "event".
+function UIRoot.open_promo(self, kind: string)
+	if self.promo == nil or self.promo.is_open then
+		return
+	end
+	self.promo:open(kind)
+	self:_update_input_gate()
+end
+
+--- What the event just gave says so (a toast).
+function UIRoot._on_promo(self, given: any)
+	if type(given) ~= "table" then
+		return
+	end
+	local Cosmetics = UICtx.data("Cosmetics")
+	local parts = {}
+	for _, id in { given.skin, given.flag } do
+		local it = if type(id) == "string" then Cosmetics.item(id) else nil
+		if it ~= nil then
+			table.insert(parts, it.name .. " " .. it.kind)
+		end
+	end
+	if #parts > 0 then
+		self:_on_notice("Halloween gift: " .. table.concat(parts, " + ") .. " added to your Locker!", 0)
+		self.ctx:sfx("confirm")
+	end
+end
+
+--- The server's word on RoWorld General: what a General's day just gave says so (a toast), and a
+--- new General is thanked.
+function UIRoot._on_general(self, on: boolean, given: any)
+	if type(given) == "table" then
+		local parts = {}
+		if given.crate then
+			table.insert(parts, "today's free crate is in your Locker")
+		end
+		if type(given.stars) == "number" then
+			table.insert(parts, string.format("+%s Stars today", UICtx.commas(given.stars)))
+		end
+		local skin = if type(given.skin) == "string" then UICtx.data("Cosmetics").item(given.skin) else nil
+		if skin ~= nil then
+			table.insert(parts, "this month's skin " .. skin.name .. " is yours")
+		end
+		if #parts > 0 then
+			self:_on_notice("General: " .. table.concat(parts, ", "), 0)
+		end
+	end
+	if on and self.general ~= nil and self.general.is_open then
+		self.ctx:sfx("confirm")
+	end
 end
 
 --- The Locker (Main's crate button on the title): crates, skins and flags.
@@ -953,6 +1035,12 @@ function UIRoot._build(self)
 	title.open_starter:Connect(function()
 		self:open_starter("button")
 	end)
+	title.open_general:Connect(function()
+		self:open_general("title")
+	end)
+	title.open_promo:Connect(function(kind: string)
+		self:open_promo(kind)
+	end)
 	title.open_arsenal:Connect(function()
 		ctx:sfx("confirm")
 		self:open_arsenal(nil, "title")
@@ -1084,6 +1172,22 @@ function UIRoot._build(self)
 		self:_update_input_gate()
 	end)
 	root:add_child(starter)
+	-- RoWorld General's window (the title's General button; Data/Subscription)
+	local general = GeneralOffer.new(ctx)
+	general.name = "GeneralOffer"
+	self.general = general
+	general.closed:Connect(function()
+		self:_update_input_gate()
+	end)
+	root:add_child(general)
+	-- BloxFront's free cards' window (the title's group / event cards; Data/Promos)
+	local promo = PromoOffer.new(ctx)
+	promo.name = "PromoOffer"
+	self.promo = promo
+	promo.closed:Connect(function()
+		self:_update_input_gate()
+	end)
+	root:add_child(promo)
 	-- the flag shop (the title's shop button)
 	local flag_shop = FlagShop.new(ctx)
 	flag_shop.name = "FlagShop"
@@ -1117,6 +1221,9 @@ function UIRoot._build(self)
 	root:add_child(tooltip)
 
 	self.advisor = UIAdvisor.new(self)
+	ctx.floor_held:Connect(function()
+		self.advisor:on_floor_held()
+	end)
 	self.probe = UILayoutProbe.new(self)
 	local interact = UIInteract.new(ctx)
 	interact.bar = bar
@@ -1609,6 +1716,7 @@ function UIRoot._bind_state(self, s: any)
 	-- resync hands over mid-match)
 	if not (ctx.session ~= nil and ctx.session.state_is_resync == true) then
 		ctx:reset_ratio()
+		ctx.troop_floor = nil -- (a new player's floor arms again in this match: UIAdvisor.check_floor)
 		if self.board.expanded then
 			self.board:close_for_match()
 			self.leaderboard_toggled:Fire(false)
@@ -2048,6 +2156,8 @@ function UIRoot._update_input_gate(self)
 		or (self.flag_shop ~= nil and self.flag_shop.is_open)
 		or (self.arsenal ~= nil and self.arsenal.is_open)
 		or (self.starter ~= nil and self.starter.is_open)
+		or (self.general ~= nil and self.general.is_open)
+		or (self.promo ~= nil and self.promo.is_open)
 	ctx:set_world_input(not modal and not self.rotate_card.visible and not self.radial.is_open)
 	self.feed:set_visible(self.hud.visible and not self.over.is_open)
 	self.coach:set_visible(
@@ -2231,6 +2341,12 @@ function UIRoot._layout(self)
 	if self.arsenal ~= nil and self.arsenal.is_open then
 		self.arsenal:apply_layout()
 	end
+	if self.general ~= nil and self.general.is_open then
+		self.general:apply_layout()
+	end
+	if self.promo ~= nil and self.promo.is_open then
+		self.promo:apply_layout()
+	end
 	if self.starter ~= nil and self.starter.is_open then
 		self.starter:apply_layout()
 	end
@@ -2310,6 +2426,7 @@ end
 local function tips_and_threats(self)
 	self.advisor:check_threats()
 	self.advisor:check_tips()
+	self.advisor:check_floor()
 	self.advisor:flush_volleys()
 end
 
