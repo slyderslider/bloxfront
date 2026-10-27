@@ -35,14 +35,39 @@ Tutorial.RATIO_CAP = 0.5
 --- runs an order leaves at least TROOP_FLOOR of the army's cap at home (it is trimmed to what may go,
 --- and refused when nothing may). The floor holds from the first time the army reaches FLOOR_ARM of
 --- its cap: a new nation starts below it.
+---   * Not before the FLOOR_FROM step (2026-10-27): on "grow" it refused taps the card asked for
+---     ("Troops low. Let them grow back" under the card's "Keep tapping empty land to grow"), since
+---     the cap climbs with every tile taken. Grow lost 11.6% of the players who reached it, the most
+---     of any step, and 110,302 of its 175,898 left with Skip (the week to 2026-10-26). Before the
+---     first neighbour there is nobody to fear, and the Attack bar's cap (RATIO_CAP) still holds.
 Tutorial.TROOP_FLOOR = 0.25
 Tutorial.FLOOR_ARM = 0.35
+Tutorial.FLOOR_FROM = "attack"
 Tutorial.FLOOR_REASON = "Troops low. Let them grow back"
+--- A new player's first ROOKIE_MATCHES matches (the tutorial's among them) keep a floor under the
+--- army after the tutorial too (2026-10-27): an order leaves ROOKIE_FLOOR of the army's cap at home,
+--- from the first time the army reaches FLOOR_ARM of it (client/UI/UIAdvisor.check_floor). An army
+--- spent below a fifth of its cap all but loses the match, and 23% of matches ended within their
+--- first 3 minutes (Match funnel, the week to 2026-10-26). The first order held back in a match
+--- says why (Coach "floor").
+Tutorial.ROOKIE_MATCHES = 5
+Tutorial.ROOKIE_FLOOR = 0.2
+
+--- True while a player with `matches_before` matches before this one is still a new player.
+function Tutorial.rookie(matches_before: number): boolean
+	return matches_before < Tutorial.ROOKIE_MATCHES
+end
 --- Seconds on the spawn step before a start is picked for the player.
 Tutorial.AUTO_SPAWN_S = 12
---- "grow": GROW_TAPS more orders, and this many times the land the nation had when the step began (at
---- least GROW_MIN tiles more). On open land one order alone triples a new nation, so the taps count.
-Tutorial.GROW_TAPS = 3
+--- "grow": GROW_TAPS more expansions, and this many times the land the nation had when the step began
+--- (at least GROW_MIN tiles more). On open land one order alone triples a new nation, so the
+--- expansions count. It teaches the rhythm, never "keep tapping" (2026-10-27: the card said "Keep
+--- tapping empty land to grow", which is bad advice: an order sent on an emptied army leaves the
+--- nation open, and a small army regrows slowly). An expansion counts when it is sent with the army
+--- at GROW_READY of its cap or more; below that the card says to let the troops refill and the mark
+--- is on the troop count, and taps meanwhile don't count.
+Tutorial.GROW_TAPS = 2
+Tutorial.GROW_READY = 0.3
 Tutorial.GROW_FACTOR = 3
 Tutorial.GROW_MIN = 300
 --- "attack": passed over when nobody borders the player this long after the step began.
@@ -71,7 +96,13 @@ Tutorial.NUDGE_S = 5
 Tutorial.STEPS = {
 	{ id = "spawn", touch = "Tap the map to start your nation", desktop = "Click the map to start your nation" },
 	{ id = "expand", touch = "Tap the land next to you to take it", desktop = "Click the land next to you to take it" },
-	{ id = "grow", touch = "Keep tapping empty land to grow", desktop = "Keep clicking empty land to grow", bar = true },
+	{
+		id = "grow",
+		touch = "Tap empty land to expand",
+		desktop = "Click empty land to expand",
+		wait = "Now let your troops refill",
+		bar = true,
+	},
 	-- (the neighbour before the slider: a first attack at the slider's 20% leaves an army at home; in
 	-- the first order of steps a new player dragged it to 100% and sent everything)
 	{
@@ -127,6 +158,16 @@ end
 --- The land "grow" asks for, from the land the nation had when the step began.
 function Tutorial.grow_goal(tiles: number): number
 	return math.floor(math.max(tiles * Tutorial.GROW_FACTOR, tiles + Tutorial.GROW_MIN))
+end
+
+--- Where step `id` is in STEPS, or nil.
+function Tutorial.step_index(id: string): number?
+	for i, s in Tutorial.STEPS do
+		if s.id == id then
+			return i
+		end
+	end
+	return nil
 end
 
 return Tutorial

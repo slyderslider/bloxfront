@@ -9,7 +9,11 @@
 -- good player, and nothing at all without the time passing.
 --
 --   Rewards.configure(deps)          { add_stars = fn(player, n) -> (ok, balance), double = fn(player)
---                                      -> boolean, send = fn(player, payload), now = fn() -> s, log? }
+--                                      -> boolean, general = fn(player) -> boolean, send = fn(player,
+--                                      payload), now = fn() -> s, log? }
+-- A RoWorld General (Data/Subscription) gets Subscription.STARS_BONUS of the match's Stars on top
+-- (before 2x Stars doubles: the "general" line). A member of the BloxFront group (Data/Promos;
+-- deps.group = fn(player) -> boolean) gets Promos.GROUP_STARS_BONUS the same way (the "group" line).
 --   Rewards.solo_started(player, mode)   the client's match_start ("solo0" / "solo1" / "solo2")
 --   Rewards.solo_result(player, report)  OP.SOLO_RESULT (yields)
 --   Rewards.pay(player, result, mode)    a result this server measured itself (yields)
@@ -19,6 +23,12 @@ local IS_ROBLOX = typeof(game) == "Instance"
 local Stars: any = if IS_ROBLOX
 	then require((game :: any):GetService("ReplicatedStorage"):WaitForChild("Airfront").Data.Stars)
 	else require("../shared/Data/Stars")
+local Subscription: any = if IS_ROBLOX
+	then require((game :: any):GetService("ReplicatedStorage"):WaitForChild("Airfront").Data.Subscription)
+	else require("../shared/Data/Subscription")
+local Promos: any = if IS_ROBLOX
+	then require((game :: any):GetService("ReplicatedStorage"):WaitForChild("Airfront").Data.Promos)
+	else require("../shared/Data/Promos")
 
 local Rewards = {}
 
@@ -65,9 +75,24 @@ local function deliver(player: any, lines: { { any } }, total: number, mode: str
 end
 
 local function with_double(player: any, lines: { { any } }, total: number): ({ { any } }, number)
+	local base = total
 	if total > 0 and deps.double and deps.double(player) == true then
 		table.insert(lines, { "double", total })
-		return lines, total * 2
+		total *= 2
+	end
+	if base > 0 and deps.general and deps.general(player) == true then
+		local extra = Subscription.bonus(base, Stars.QUANTUM)
+		if extra > 0 then
+			table.insert(lines, { "general", extra })
+			total += extra
+		end
+	end
+	if base > 0 and deps.group and deps.group(player) == true then
+		local extra = Promos.group_bonus(base, Stars.QUANTUM)
+		if extra > 0 then
+			table.insert(lines, { "group", extra })
+			total += extra
+		end
 	end
 	return lines, total
 end

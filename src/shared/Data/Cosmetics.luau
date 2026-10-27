@@ -6,7 +6,7 @@
 --           secondary tiles; mask pixels are 2^scale tiles wide). '#' = the secondary colour: your
 --           own colour lightened (tone > 0) or darkened (tone < 0), or a fixed `accent` colour
 --           (legendary skins). Original designs.
---   flags   country flags (Assets/Flags, CC BY-SA 4.0), shown by your
+--   flags   country flags (Assets/Flags, public domain from Wikimedia Commons), shown by your
 --           name on the map and the leaderboard. Every flag is Common.
 --   exclusive skins (exclusive_skins) are made for particular players: several colours, never in a
 --           crate (Cosmetics.all() is the crate catalog; Cosmetics.exclusives() these).
@@ -311,6 +311,58 @@ Cosmetics.exclusive_skins = {
 --- How an exclusive item shows in the Locker (not a crate rarity: no odds).
 Cosmetics.EXCLUSIVE = { id = "exclusive", name = "Exclusive", odds = 0, color = 0xFF6FD8 }
 
+--- RoWorld General's skins (Data/Subscription; 2026-10-27): a new one each month for subscribers,
+--- who keep it. Never in a crate nor on a bot player, not in the Locker's "N of M"; only
+--- server/Purchases.general_perks gives one, and anyone given one may own it. Several colours, as an
+--- exclusive's.
+Cosmetics.general_skins = {
+	{
+		-- a ribbon: a navy band edged and studded in gold
+		id = "gen_chevrons",
+		name = "Officer's Braid",
+		scale = 1,
+		alpha = 200,
+		colors = { 0xE2BC58, 0x1C2740 },
+		mask = { "11111111", "22222222", "22122212", "22222222", "11111111", "........", "........", "........" },
+	},
+}
+--- How a General skin shows in the Locker.
+Cosmetics.GENERAL = { id = "general", name = "General", odds = 0, color = 0xD9B24E }
+
+--- BloxFront event skins (Data/Promos.EVENT; 2026-10-27): given free to everyone who joins while the
+--- event runs (server/Purchases.event_gift), kept for good. Never in a crate nor on a bot player, not in
+--- the Locker's "N of M". Several colours, as an exclusive's.
+Cosmetics.event_skins = {
+	{
+		-- jack-o'-lanterns: an orange pumpkin with a dark grin and a green stem
+		id = "ev_jack_o_lantern",
+		name = "Jack-o'-Lantern",
+		scale = 0,
+		alpha = 210,
+		colors = { 0xFF7A1A, 0x22102E, 0x5FB83A },
+		mask = {
+			"................",
+			"........33......",
+			".......33.......",
+			"...1111111111...",
+			"..111111111111..",
+			".11122111122111.",
+			".11222211222211.",
+			".11111111111111.",
+			".11111122111111.",
+			".11211111111211.",
+			".11122222222111.",
+			"..112212212211..",
+			"...1111111111...",
+			"................",
+			"................",
+			"................",
+		},
+	},
+}
+--- How an event skin shows in the Locker.
+Cosmetics.EVENT = { id = "event", name = "Event", odds = 0, color = 0xFF8A1F }
+
 --- Alpha of the secondary tiles (the primary fill is MapSurface.TERRITORY_ALPHA, 150).
 Cosmetics.SECONDARY_ALPHA = 190
 
@@ -346,6 +398,28 @@ for _, s in Cosmetics.exclusive_skins do
 		granted[uid] = granted[uid] or {}
 		table.insert(granted[uid], it.id)
 	end
+end
+
+-- (General skins resolve by id too, and stay out of `order` like the exclusives)
+local generals: { Item } = {}
+for _, g in Cosmetics.general_skins do
+	local it: any = table.clone(g)
+	it.kind = "skin"
+	it.rarity = "general"
+	it.general = true
+	items[it.id] = it
+	table.insert(generals, it)
+end
+
+-- (event skins resolve by id too, and stay out of `order` like the exclusives)
+local events: { Item } = {}
+for _, g in Cosmetics.event_skins do
+	local it: any = table.clone(g)
+	it.kind = "skin"
+	it.rarity = "event"
+	it.event = true
+	items[it.id] = it
+	table.insert(events, it)
 end
 
 -- (shop flags resolve by id too, and stay out of `order` like the exclusives)
@@ -385,6 +459,16 @@ function Cosmetics.exclusives(): { Item }
 	return exclusives
 end
 
+--- RoWorld General's skins (Cosmetics.general_skins), as items.
+function Cosmetics.generals(): { Item }
+	return generals
+end
+
+--- The event skins (Cosmetics.event_skins), as items.
+function Cosmetics.events(): { Item }
+	return events
+end
+
 --- The flag shop's flags (Data/Shop), as items.
 function Cosmetics.shop_items(): { Item }
 	return shop_items
@@ -418,7 +502,7 @@ function Cosmetics.crate_owned(owned: { [string]: any }): number
 	local n = 0
 	for id in owned do
 		local it = items[id]
-		if it ~= nil and not it.exclusive and not it.shop then
+		if it ~= nil and not it.exclusive and not it.shop and not it.general and not it.event then
 			n += 1
 		end
 	end
@@ -428,6 +512,10 @@ end
 function Cosmetics.rarity(id: string): any
 	if id == "exclusive" then
 		return Cosmetics.EXCLUSIVE
+	elseif id == "general" then
+		return Cosmetics.GENERAL
+	elseif id == "event" then
+		return Cosmetics.EVENT
 	end
 	for _, r in Cosmetics.RARITIES do
 		if r.id == id then

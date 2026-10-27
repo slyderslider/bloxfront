@@ -9,3 +9,4 @@ assets/audio/
 
 *.rbxlx
 *.rbxl
+src/server/Lobbies/Secret.luau

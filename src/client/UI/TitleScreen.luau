@@ -16,6 +16,8 @@ local UICtx = require("./UICtx")
 local CrateButton = require("./CrateButton")
 local ArsenalButton = require("./ArsenalButton")
 local StarterButton = require("./StarterButton")
+local GeneralButton = require("./GeneralButton")
+local PromoCard = require("./PromoCard")
 local ShopButton = require("./ShopButton")
 local PartyPanel = require("./PartyPanel")
 local Signal = UITheme.core("Signal")
@@ -36,11 +38,11 @@ TitleScreen.WORD_MAX_W = 0.35
 --- BloxFront: the desktop left column (wordmark, tagline and dock share it).
 TitleScreen.LEFT_COL_W = 560.0
 TitleScreen.LEFT_MARGIN = 56.0
---- The credits line under the dock (desktop, phones).
-TitleScreen.CREDITS = "© OpenFront and Contributors  ·  Maps, flags and unit art from OpenFront (CC BY-SA 4.0)  ·  "
-	.. "Music from Pixabay  ·  GNU AGPL v3, no warranty: see How to play"
-TitleScreen.CREDITS_SHORT = "© OpenFront and Contributors  ·  Maps & art: OpenFront (CC BY-SA 4.0)  ·  "
-	.. "Music: Pixabay  ·  GNU AGPL v3"
+--- The credits line under the dock (desktop, phones). It points at the help window by its top-bar name
+--- (upstream 2026-10-26: no map credit, the World map is made from public-domain data).
+TitleScreen.CREDITS = "© OpenFront and Contributors  ·  Music from Pixabay  ·  "
+	.. "GNU AGPL v3, no warranty: See Help & Credits"
+TitleScreen.CREDITS_SHORT = "© OpenFront and Contributors  ·  Music: Pixabay  ·  GNU AGPL v3"
 
 local SHINE_HALF = 70.0 -- smoothstep(0, 70, |x - sweep - (y - y0) * 0.35|)
 
@@ -366,6 +368,10 @@ function TitleScreen.new(c: any)
 	--- the starter pack's button (under the pair, while its offer runs): UIRoot opens the offer
 	self.open_starter = Signal.new()
 	self.open_shop = Signal.new()
+	--- RoWorld General's button (Data/Subscription): UIRoot opens its window
+	self.open_general = Signal.new()
+	--- (kind: "group" | "event") BloxFront's free cards (Data/Promos): UIRoot opens PromoOffer
+	self.open_promo = Signal.new()
 	--- (action, user_id?) the party panel (Session.party_action)
 	self.party_action = Signal.new()
 	self.difficulty =
@@ -396,8 +402,8 @@ function TitleScreen.new(c: any)
 	self:_build_dock()
 	self:_build_queue()
 	self:_build_solo_menu()
-	-- credits: the copyright notice the code's licence asks to keep visible, the CC BY-SA art and
-	-- maps, Rodrigo Flores' soundtrack (Orchestral Ambients) and the licence (2026-10-25: the full
+	-- credits: the copyright notice the code's licence asks to keep visible, Rodrigo Flores'
+	-- soundtrack (Orchestral Ambients) and the licence (2026-10-25: the full
 	-- notices are in How to play, HelpOverlay.LEGAL); phones get the short line (apply_layout)
 	self._credits = UITheme.label(
 		TitleScreen.CREDITS,
@@ -432,6 +438,23 @@ function TitleScreen.new(c: any)
 		self.open_starter:Fire()
 	end)
 	self:add_child(self._starter_btn)
+	-- and RoWorld General's (Data/Subscription; 2026-10-27), once the subscription exists
+	self._general_btn = GeneralButton.new(c)
+	self._general_btn.pressed:Connect(function()
+		self.open_general:Fire()
+	end)
+	self:add_child(self._general_btn)
+	-- and BloxFront's free cards side by side under it (Data/Promos; 2026-10-27): the group's +10%
+	-- Stars and, while it runs, the event's free skin
+	self._promo_cards = {}
+	for _, kind in { "group", "event" } do
+		local card = PromoCard.new(c, kind)
+		card.pressed:Connect(function()
+			self.open_promo:Fire(kind)
+		end)
+		self:add_child(card)
+		table.insert(self._promo_cards, card)
+	end
 	-- the party (team games on: staging only for now; hidden until the server sends one)
 	self._party = PartyPanel.new(c)
 	self._party.on_action = function(action: string, uid: number?)
@@ -1016,11 +1039,50 @@ function TitleScreen._place_crate_button(self, compact: boolean, head_top: numbe
 	local stop = if shb.visible then shtop + shsz.Y + (if compact then 8.0 else 14.0) else shtop
 	sb:set_anchors(0, 0, 0, 0)
 	sb:set_offsets(right - ssz.X, stop, right, stop + ssz.Y)
+	-- RoWorld General's under them all
+	local gb = self._general_btn
+	gb:set_scale(if compact then GeneralButton.PHONE_K else 1.0)
+	local gsz = gb:size_px()
+	local below = if sb.visible then stop + ssz.Y else (if shb.visible then shtop + shsz.Y else top + size.Y)
+	local gtop = below + (if compact then 8.0 else 14.0)
+	gb:set_anchors(0, 0, 0, 0)
+	gb:set_offsets(right - gsz.X, gtop, right, gtop + gsz.Y)
+	-- BloxFront's free cards in a column left of the flag shop's button, from its top down (under the
+	-- rail they ran into the party panel; the event's only while it runs)
+	local px = right - shsz.X - (if compact then 10.0 else 16.0)
+	local py = shtop
+	for _, card in self._promo_cards do
+		card:set_scale(if compact then PromoCard.PHONE_K else 1.0)
+		card:refresh()
+		if card.visible then
+			local csz = card:size_px()
+			card:set_anchors(0, 0, 0, 0)
+			card:set_offsets(px - csz.X, py, px, py + csz.Y)
+			py += csz.Y + (if compact then 10.0 else 14.0)
+		end
+	end
+end
+
+--- BloxFront's free cards say whether the group's boost is on and the event's gifts are claimed.
+function TitleScreen.refresh_promo(self)
+	for _, card in self._promo_cards do
+		card:refresh()
+	end
+	self:apply_layout()
+end
+
+--- RoWorld General's button says whether the player is one (Session.general).
+function TitleScreen.refresh_general(self)
+	self._general_btn:refresh()
+	self:_refresh_greeting()
 end
 
 function TitleScreen._refresh_greeting(self)
 	local n = self.ctx:username()
-	local text = if n ~= "Commander" and n ~= "" then ("Welcome, Commander " .. n) else "Welcome, Commander"
+	-- (a RoWorld General is greeted as one: Data/Subscription)
+	local s0 = self.ctx.session
+	local rank = if s0 ~= nil and s0.general == true then "General" else "Commander"
+	local text = if n ~= "Commander" and n ~= "" then ("Welcome, " .. rank .. " " .. n) else ("Welcome, " .. rank)
 	-- game admins (the server told this client which players are bots): say so, so it's easy to check
 	local s = self.ctx.session
 	if s ~= nil and s.admin_bots ~= nil then

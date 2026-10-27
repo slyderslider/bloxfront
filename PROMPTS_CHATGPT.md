@@ -78,3 +78,21 @@ Gleicher Grund-Prompt wie bei A), nur den letzten Satz „Halloween theme.“ du
 | `thunder.png` | Elements | A big yellow lightning bolt striking down from a dark storm cloud, deep blue field. |
 | `frost_crown.png` | Elements | An ice-blue crystal crown with snowflakes around it, on a pale blue-to-white field. |
 | `tornado.png` | Elements | A grey swirling tornado funnel with a few flying leaves, on a sandy yellow-to-grey field. |
+
+## D) Halloween-Event (2 Bilder)
+
+Der Gratis-Skin selbst ist im Spiel schon fertig: Skins sind Muster aus Kacheln (Jack-o'-Lantern: orange Kürbisse mit dunklem Grinsen und grünem Stiel) und werden im Code gemalt. Dafür brauchst du also kein Bild. Die zwei Bilder hier sind fürs Event-Marketing.
+
+Speichern unter `incoming/event/` und mir Bescheid sagen. Das Thumbnail lädst du selbst im Creator Dashboard hoch (Experience → Events → Create Event → Thumbnail). Das Quadrat lade ich hoch und nutze es als Event-Icon.
+
+### D1) `halloween_event_thumbnail.png` (16:9, 1920x1080, Roblox-Event-Thumbnail)
+
+```
+A bright, stylized low-poly game thumbnail for a Roblox strategy game called "BloxFront", Halloween event. A top-down world map seen from slightly above, with countries painted in bold territory colors. One big nation in the center is covered in a playful tiled pattern of small orange jack-o'-lanterns with dark grins and green stems. Over it flies a ghostly white "Phantom" flag on a pole. Around the map: soft purple night sky, a big glowing full moon, a few cartoon bats, floating pumpkins, gentle orange glow from below. Big bold title text at the top: "HALLOWEEN EVENT" in chunky orange letters with a thick black outline, and below it a smaller green pill-shaped badge with the white text "FREE SKIN + FLAG". Clean, high contrast, readable on a phone, no small text, no real logos, no real country flags, no people, no blood or gore, family friendly. Colors: orange, deep purple, indigo, black, a little lime green.
+```
+
+### D2) `halloween_event_icon.png` (quadratisch, 1024x1024, Event-Icon)
+
+```
+A square app-style icon for a game event, stylized low-poly and glossy. A cute carved jack-o'-lantern pumpkin with a friendly dark grin and a green stem, sitting in front of a small waving ghost-white flag. Behind it: a deep purple to indigo radial gradient with soft orange rim light and a few tiny bats. A green rounded badge in the top-right corner with the white word "FREE" with a black outline. Thick clean shapes, bold colors, centered composition with some padding, readable at small sizes, no other text, no logos, family friendly.
+```
