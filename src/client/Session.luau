@@ -1661,7 +1661,9 @@ function Session._on_net(self: any, op: number, ...: any)
 				event = if ev ~= nil and type(ev.key) == "string"
 					then {
 						key = ev.key,
+						on = ev.on == true,
 						claimed = ev.claimed == true,
+						from = if type(ev.from) == "number" then ev.from else nil,
 						skin = if type(ev.skin) == "string" then ev.skin else nil,
 						flag = if type(ev.flag) == "string" then ev.flag else nil,
 						to = if type(ev.to) == "number" then ev.to else nil,

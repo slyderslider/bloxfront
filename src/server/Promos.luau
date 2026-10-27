@@ -10,6 +10,7 @@
 --   Promos.recheck(player)   the client asks again (after Roblox's join prompt; yields, rate-limited)
 --   Promos.in_group(player) -> boolean
 --   Promos.state(player) -> { group, event? }   for a client that says HELLO
+--   Promos.tick()            about every 30 s: when the event starts, its gifts for everyone here (yields)
 --   Promos.release(player)   PlayerRemoving
 local IS_ROBLOX = typeof(game) == "Instance"
 local Data: any = if IS_ROBLOX
@@ -21,7 +22,7 @@ local Promos = {}
 --- A client may ask for a fresh group check this often (s).
 Promos.RECHECK_S = 5.0
 
-type Entry = { group: boolean, checked: number?, event: boolean }
+type Entry = { group: boolean, checked: number?, event: boolean, gifting: boolean? }
 
 local deps: { [string]: any } = {}
 local entries: { [any]: Entry } = {}
@@ -55,8 +56,16 @@ function Promos.state(player: any): any
 	local ev = Data.EVENT
 	return {
 		group = e.group,
-		event = if Data.event_on(now())
-			then { key = ev.key, claimed = e.event, skin = ev.skin, flag = ev.flag, to = ev.to }
+		event = if Data.event_shown(now())
+			then {
+				key = ev.key,
+				on = Data.event_on(now()),
+				claimed = e.event,
+				skin = ev.skin,
+				flag = ev.flag,
+				from = ev.from,
+				to = ev.to,
+			}
 			else nil,
 	}
 end
@@ -83,6 +92,21 @@ local function check_group(player: any): boolean?
 	return nil
 end
 
+--- The event's gifts for `player` if it runs and they don't have them yet: what it gave now, or nil.
+local function gift(player: any, e: Entry): any
+	if e.event or e.gifting or not Data.event_on(now()) or deps.gift == nil then
+		return nil
+	end
+	e.gifting = true
+	local ok, g = pcall(deps.gift, player, Data.EVENT)
+	e.gifting = nil
+	if ok and g ~= nil then
+		e.event = true
+		return if next(g) ~= nil then g else nil
+	end
+	return nil
+end
+
 function Promos.joined(player: any)
 	local e = entry(player)
 	local on = check_group(player)
@@ -90,16 +114,30 @@ function Promos.joined(player: any)
 		e.group = on
 		e.checked = os.clock()
 	end
-	local given = nil
-	if Data.event_on(now()) and deps.gift ~= nil then
-		local ok, g = pcall(deps.gift, player, Data.EVENT)
-		if ok and g ~= nil then
-			e.event = true
-			given = if next(g) ~= nil then g else nil
-		end
-	end
+	local given = gift(player, e)
 	if entries[player] == e then
 		send(player, given)
+	end
+end
+
+--- the event's state last tick (on / shown): a change is sent to everyone
+local last_on: boolean? = nil
+local last_shown: boolean? = nil
+
+function Promos.tick()
+	local t = now()
+	local on, shown = Data.event_on(t), Data.event_shown(t)
+	local changed = on ~= last_on or shown ~= last_shown
+	last_on, last_shown = on, shown
+	for player, e in entries do
+		if on and not e.event then
+			local given = gift(player, e)
+			if entries[player] == e then
+				send(player, given)
+			end
+		elseif changed then
+			send(player)
+		end
 	end
 end
 

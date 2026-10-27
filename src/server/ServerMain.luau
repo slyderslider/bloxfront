@@ -1499,6 +1499,12 @@ function ServerMain.start()
 			pcall(General.tick)
 		end
 	end)
+	task.spawn(function()
+		while true do
+			task.wait(30)
+			pcall(Promos.tick)
+		end
+	end)
 	MarketplaceService.ProcessReceipt = function(info: any): Enum.ProductPurchaseDecision
 		local ok, r = pcall(Purchases.process_receipt, info)
 		if ok and r == "granted" then

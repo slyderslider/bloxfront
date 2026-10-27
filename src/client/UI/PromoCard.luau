@@ -276,22 +276,30 @@ function PromoCard.refresh(self)
 	local s = self.ctx.session
 	local promo = if s ~= nil then s.promo else nil
 	local done = false
+	local soon = false
 	if self.kind == "event" then
-		local on = Promos.event_on(os.time())
+		local t = os.time()
+		local shown = Promos.event_shown(t)
+		soon = not Promos.event_on(t)
 		if promo ~= nil and promo.event ~= nil then
-			on = true
+			shown = true
+			soon = promo.event.on ~= true
 			done = promo.event.claimed == true
 		end
-		self:set_visible(on)
+		self:set_visible(shown)
 	else
 		done = promo ~= nil and promo.group == true
 	end
-	if self._tab_text == nil or done == self._state then
+	local state = if done then "done" elseif soon then "soon" else "free"
+	if self._tab_text == nil or state == self._state then
 		return
 	end
-	self._state = done
-	self._tab_text.Text = if done then (if self.kind == "event" then "CLAIMED" else "ACTIVE") else "FREE"
-	self._tab.Size = UDim2.fromOffset(if done then 64 else 54, 20)
+	self._state = state
+	self._tab_text.Text = if state == "done"
+		then (if self.kind == "event" then "CLAIMED" else "ACTIVE")
+		elseif state == "soon" then "SOON"
+		else "FREE"
+	self._tab.Size = UDim2.fromOffset(if state == "done" then 64 else 54, 20)
 end
 
 function PromoCard._process(self, dt: number)

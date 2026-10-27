@@ -3,8 +3,10 @@
 --   "group"  join the BloxFront group for +10% Stars on every match. JOIN GROUP opens Roblox's own
 --            prompt (GroupService:PromptJoinAsync); the server then checks again (Session.promo_check)
 --            and says so (OP.PROMO), and the window shows the boost as on.
---   "event"  the running event: everyone who joins while it runs gets its skin and flag for good (the
---            server gives them on joining: server/Promos). EQUIP SKIN puts the skin on.
+--   "event"  the event: before it starts, when (in the player's own time) and NOTIFY ME, Roblox's RSVP
+--            prompt for the experience event (SocialService:PromptRsvpToEventAsync); while it runs,
+--            everyone who joins gets its skin and flag for good (server/Promos). EQUIP SKIN puts the
+--            skin on.
 --
 --   PromoOffer.new(ctx)   :bind(session)   :open(kind)   :close()   .closed (Signal)   .is_open
 local UITheme = require("./UITheme")
@@ -174,15 +176,15 @@ function PromoOffer._promo(self): any
 	return if s ~= nil and s.promo ~= nil then s.promo else { group = false }
 end
 
-local function time_left(to: number): string
+local function time_left(to: number, what: string?): string
 	local left = math.max(0, to - os.time())
 	local d = math.floor(left / 86400)
 	local h = math.floor(left % 86400 / 3600)
 	local m = math.floor(left % 3600 / 60)
 	if d > 0 then
-		return string.format("Ends in %dd %dh", d, h)
+		return string.format("%s %dd %dh", what or "Ends in", d, h)
 	end
-	return string.format("Ends in %dh %dm", h, m)
+	return string.format("%s %dh %dm", what or "Ends in", h, m)
 end
 
 function PromoOffer.refresh(self)
@@ -190,12 +192,19 @@ function PromoOffer.refresh(self)
 	if self.kind == "event" then
 		local ev = Promos.EVENT
 		local claimed = promo.event ~= nil and promo.event.claimed == true
+		local started = if promo.event ~= nil then promo.event.on == true else Promos.event_on(os.time())
 		local skin = Cosmetics.item(ev.skin)
 		local flag = if Shop.flag(ev.flag) ~= nil then Cosmetics.item(Shop.item_id(ev.flag)) else nil
 		self._cap:set_text("LIMITED EVENT")
 		self._title:set_text(string.upper(ev.name))
 		self._title:set_color(ORANGE)
-		self._sub:set_text("Join the game while the event runs and get these for free. Yours to keep!")
+		self._sub:set_text(
+			string.format(
+				"Join the game between %s and %s and get these for free. Yours to keep!",
+				os.date("%b %d, %H:%M", ev.from),
+				os.date("%b %d, %H:%M", ev.to)
+			)
+		)
 		self._row1.head:set_text((if skin ~= nil then skin.name else "Halloween") .. " skin")
 		self._row1.body:set_text("A spooky territory skin for your nation.")
 		show_thing(self._row1, skin)
@@ -203,14 +212,19 @@ function PromoOffer.refresh(self)
 		self._row2.body:set_text("From the Halloween flag set.")
 		show_thing(self._row2, flag)
 		self._row2.disc:set_visible(true)
-		self._time:set_text(time_left(ev.to))
+		self._time:set_text(if started then time_left(ev.to) else time_left(ev.from, "Starts in"))
 		self._time:set_visible(true)
 		local s = self.ctx.session
 		local worn = s ~= nil
 			and type(s.inventory) == "table"
 			and type(s.inventory.equipped) == "table"
 			and s.inventory.equipped.skin == ev.skin
-		if claimed then
+		if not started then
+			local rsvp = type(ev.rsvp_id) == "string" and ev.rsvp_id ~= ""
+			self._buy:set_text(if self._rsvp_done then "YOU'LL BE NOTIFIED" elseif rsvp then "NOTIFY ME" else "STARTS SOON")
+			self._buy:set_disabled(not rsvp or self._rsvp_done == true)
+			self._note:set_text("Come back when it starts: the gifts arrive as soon as you join.")
+		elseif claimed then
 			self._buy:set_text(if worn then "SKIN EQUIPPED" else "EQUIP SKIN")
 			self._buy:set_disabled(worn)
 			self._note:set_text("Both are in your Locker.")
@@ -258,6 +272,25 @@ function PromoOffer._act(self)
 	local s = self.ctx.session
 	if self.kind == "event" then
 		local ev = Promos.EVENT
+		local promo = self:_promo()
+		local started = if promo.event ~= nil then promo.event.on == true else Promos.event_on(os.time())
+		if not started then
+			-- Roblox's RSVP prompt for the experience event (a notification when it starts)
+			if IS_ROBLOX and type(ev.rsvp_id) == "string" and ev.rsvp_id ~= "" then
+				task.spawn(function()
+					local ok, status = pcall(function()
+						return (game:GetService("SocialService") :: any):PromptRsvpToEventAsync(ev.rsvp_id)
+					end)
+					if ok and tostring(status) == "Enum.RsvpStatus.Going" then
+						self._rsvp_done = true
+					end
+					if self.is_open then
+						self:refresh()
+					end
+				end)
+			end
+			return
+		end
 		if s ~= nil and type(s.equip) == "function" then
 			s:equip("skin", ev.skin)
 			self.ctx:sfx("confirm")
@@ -284,7 +317,18 @@ function PromoOffer._act(self)
 	end)
 end
 
-function PromoOffer._process(self, _dt: number)
+function PromoOffer._process(self, dt: number)
+	-- (the countdown ticks while the window is open)
+	if self.is_open and self.kind == "event" then
+		self._tick_t = (self._tick_t or 0) + dt
+		if self._tick_t >= 1.0 then
+			self._tick_t = 0
+			local ev = Promos.EVENT
+			local promo = self:_promo()
+			local started = if promo.event ~= nil then promo.event.on == true else Promos.event_on(os.time())
+			self._time:set_text(if started then time_left(ev.to) else time_left(ev.from, "Starts in"))
+		end
+	end
 	if self._waiting ~= nil and os.clock() - self._waiting > PromoOffer.WAIT_S then
 		self._waiting = nil
 		if self.is_open then

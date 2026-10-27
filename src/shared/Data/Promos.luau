@@ -5,9 +5,11 @@
 --                 like a boost (server/Rewards: the "group" line). The server asks Roblox whether the
 --                 player is in the group (server/Promos), on joining and when the client asks again
 --                 after Roblox's join prompt.
---   Event         while EVENT runs (from .. to, Unix seconds UTC), every player who joins gets its
---                 items for good (server/Purchases.event_gift, once per event); outside it the card
---                 is hidden.
+--   Event         announced from `announce` (the card shows: STARTS IN, and its window offers Roblox's
+--                 RSVP prompt for the experience event `rsvp_id`, SocialService:PromptRsvpToEventAsync);
+--                 while it runs (from .. to, Unix seconds UTC) every player who joins, or is already
+--                 here when it starts, gets its items for good (server/Purchases.event_gift, once per
+--                 event). After `to` the card is gone.
 local Promos = {}
 
 Promos.GROUP_ID = 818671112
@@ -18,9 +20,14 @@ Promos.GROUP_STARS_BONUS = 0.10
 Promos.EVENT = {
 	key = "halloween_2026",
 	name = "Halloween Event",
-	-- 2026-10-27 00:00 .. 2026-11-03 00:00 UTC (the Halloween flag set's sale ends then too)
-	from = 1793059200,
-	to = 1793664000,
+	-- the card from 2026-10-27; the event 2026-10-30 20:00 .. 2026-11-01 20:00 German time (CET, UTC+1),
+	-- as the Roblox experience event on the Creator Dashboard
+	announce = 1793059200,
+	from = 1793386800,
+	to = 1793559600,
+	-- the Roblox experience event's id (Creator Dashboard -> Events: the number in its link); "" = no
+	-- RSVP button
+	rsvp_id = "",
 	skin = "ev_jack_o_lantern",
 	flag = "phantom",
 }
@@ -29,6 +36,12 @@ Promos.EVENT = {
 function Promos.event_on(t: number): boolean
 	local e = Promos.EVENT
 	return e ~= nil and t >= e.from and t < e.to
+end
+
+--- Is the event's card shown at unix time `t` (announced, not over)?
+function Promos.event_shown(t: number): boolean
+	local e = Promos.EVENT
+	return e ~= nil and t >= (e.announce or e.from) and t < e.to
 end
 
 --- What a match's Stars gain (`total` before 2x Stars) for a group member: whole QUANTUMs, at least one.
