@@ -2,7 +2,7 @@
 -- BloxFront's free cards on the title screen (Data/Promos; 2026-10-27), side by side under General's
 -- button: "group" (an indigo card, +10% and a star, a green FREE tab: join the group for +10% Stars)
 -- and "event" (an orange-to-purple card with the event's skin, FREE SKIN, while the event runs).
--- pressed() -> UIRoot opens PromoOffer. The tab says ACTIVE / CLAIMED once the server says so.
+-- pressed() -> UIRoot opens PromoOffer.
 --
 --   PromoCard.new(ctx, kind)   :set_scale(k)   :size_px()   :refresh()   .pressed (Signal)
 local UITheme = require("./UITheme")
@@ -77,7 +77,6 @@ function PromoCard.new(c: any, kind: string)
 	self._k = 1.0
 	self._t = math.random() * 2
 	self._shine_t = if kind == "event" then 1.5 else 0.0
-	self._state = nil
 	self:set_mouse_filter(W.MOUSE_IGNORE)
 	if IS_ROBLOX then
 		self:_build()
@@ -270,36 +269,16 @@ function PromoCard.size_px(self): Vector2
 	return PromoCard.SIZE * self._k
 end
 
---- The event's card shows while it runs (the server's word, else this device's clock); the tab says
---- whether the promo is already the player's.
+--- The event's card shows from its announcement to its end (the server's word, else this device's
+--- clock). The tab always says FREE: whether the promo is the player's already is in the window
+--- (2026-10-27: Roman).
 function PromoCard.refresh(self)
-	local s = self.ctx.session
-	local promo = if s ~= nil then s.promo else nil
-	local done = false
-	local soon = false
-	if self.kind == "event" then
-		local t = os.time()
-		local shown = Promos.event_shown(t)
-		soon = not Promos.event_on(t)
-		if promo ~= nil and promo.event ~= nil then
-			shown = true
-			soon = promo.event.on ~= true
-			done = promo.event.claimed == true
-		end
-		self:set_visible(shown)
-	else
-		done = promo ~= nil and promo.group == true
-	end
-	local state = if done then "done" elseif soon then "soon" else "free"
-	if self._tab_text == nil or state == self._state then
+	if self.kind ~= "event" then
 		return
 	end
-	self._state = state
-	self._tab_text.Text = if state == "done"
-		then (if self.kind == "event" then "CLAIMED" else "ACTIVE")
-		elseif state == "soon" then "SOON"
-		else "FREE"
-	self._tab.Size = UDim2.fromOffset(if state == "done" then 64 else 54, 20)
+	local s = self.ctx.session
+	local promo = if s ~= nil then s.promo else nil
+	self:set_visible(Promos.event_shown(os.time()) or (promo ~= nil and promo.event ~= nil))
 end
 
 function PromoCard._process(self, dt: number)

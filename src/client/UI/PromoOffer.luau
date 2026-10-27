@@ -25,8 +25,6 @@ local PromoOffer = W.class(W.Control)
 
 PromoOffer.W = 340
 PromoOffer.COMPACT_W = 280
---- After Roblox's join prompt, the server's word is waited for this long before the button comes back.
-PromoOffer.WAIT_S = 12.0
 
 local ORANGE = Color3.fromRGB(255, 150, 60)
 local INDIGO_HI = Color3.fromRGB(165, 159, 255)
@@ -38,7 +36,6 @@ function PromoOffer.new(c: any)
 	self.closed = Signal.new()
 	self.is_open = false
 	self.kind = "group"
-	self._waiting = nil :: number?
 	self:set_anchors_and_offsets_preset(W.PRESET_FULL_RECT)
 	self:set_mouse_filter(W.MOUSE_STOP)
 	self:set_visible(false)
@@ -161,9 +158,6 @@ function PromoOffer.bind(self, s: any)
 	self.session = s
 	if s ~= nil and s.promo_changed ~= nil then
 		self:_connect(s.promo_changed:Connect(function(promo: any)
-			if promo ~= nil and promo.group == true then
-				self._waiting = nil
-			end
 			if self.is_open then
 				self:refresh()
 			end
@@ -221,9 +215,14 @@ function PromoOffer.refresh(self)
 			and s.inventory.equipped.skin == ev.skin
 		if not started then
 			local rsvp = type(ev.rsvp_id) == "string" and ev.rsvp_id ~= ""
-			self._buy:set_text(if self._rsvp_done then "YOU'LL BE NOTIFIED" elseif rsvp then "NOTIFY ME" else "STARTS SOON")
-			self._buy:set_disabled(not rsvp or self._rsvp_done == true)
-			self._note:set_text("Come back when it starts: the gifts arrive as soon as you join.")
+			-- (always pressable: a prompt closed by accident can be opened again; 2026-10-27: Roman)
+			self._buy:set_text(if self._rsvp_done then "NOTIFIED ✓" elseif rsvp then "NOTIFY ME" else "STARTS SOON")
+			self._buy:set_disabled(not rsvp)
+			self._note:set_text(
+				if self._rsvp_done
+					then "You'll get a notification when it starts. Tap again to change it."
+					else "Come back when it starts: the gifts arrive as soon as you join."
+			)
 		elseif claimed then
 			self._buy:set_text(if worn then "SKIN EQUIPPED" else "EQUIP SKIN")
 			self._buy:set_disabled(worn)
@@ -253,10 +252,6 @@ function PromoOffer.refresh(self)
 			self._buy:set_text("BOOST ACTIVE")
 			self._buy:set_disabled(true)
 			self._note:set_text("Thanks for joining! Every match pays +" .. pct .. "% Stars.")
-		elseif self._waiting ~= nil then
-			self._buy:set_text("CHECKING…")
-			self._buy:set_disabled(true)
-			self._note:set_text("")
 		else
 			self._buy:set_text("JOIN GROUP")
 			self._buy:set_disabled(false)
@@ -281,8 +276,8 @@ function PromoOffer._act(self)
 					local ok, status = pcall(function()
 						return (game:GetService("SocialService") :: any):PromptRsvpToEventAsync(ev.rsvp_id)
 					end)
-					if ok and tostring(status) == "Enum.RsvpStatus.Going" then
-						self._rsvp_done = true
+					if ok then
+						self._rsvp_done = tostring(status) == "Enum.RsvpStatus.Going"
 					end
 					if self.is_open then
 						self:refresh()
@@ -302,15 +297,16 @@ function PromoOffer._act(self)
 		end
 		return
 	end
-	if self:_promo().group == true or self._waiting ~= nil or not IS_ROBLOX then
+	-- (while Roblox's prompt is up a second press does nothing; closed, the button works again)
+	if self:_promo().group == true or self._prompting or not IS_ROBLOX then
 		return
 	end
-	self._waiting = os.clock()
-	self:refresh()
+	self._prompting = true
 	task.spawn(function()
 		pcall(function()
 			game:GetService("GroupService"):PromptJoinAsync(Promos.GROUP_ID)
 		end)
+		self._prompting = nil
 		if s ~= nil and type(s.promo_check) == "function" then
 			s:promo_check()
 		end
@@ -329,12 +325,29 @@ function PromoOffer._process(self, dt: number)
 			self._time:set_text(if started then time_left(ev.to) else time_left(ev.from, "Starts in"))
 		end
 	end
-	if self._waiting ~= nil and os.clock() - self._waiting > PromoOffer.WAIT_S then
-		self._waiting = nil
-		if self.is_open then
-			self:refresh()
-		end
+end
+
+--- Has the player said they're going to the Roblox event (SocialService:GetEventRsvpStatusAsync)? Asked
+--- each time the event's window opens, before the event.
+function PromoOffer._fetch_rsvp(self)
+	local ev = Promos.EVENT
+	if self.kind ~= "event" or not IS_ROBLOX or type(ev.rsvp_id) ~= "string" or ev.rsvp_id == "" then
+		return
 	end
+	if Promos.event_on(os.time()) then
+		return
+	end
+	task.spawn(function()
+		local ok, status = pcall(function()
+			return (game:GetService("SocialService") :: any):GetEventRsvpStatusAsync(ev.rsvp_id)
+		end)
+		if ok then
+			self._rsvp_done = tostring(status) == "Enum.RsvpStatus.Going"
+			if self.is_open then
+				self:refresh()
+			end
+		end
+	end)
 end
 
 function PromoOffer.open(self, kind: string?)
@@ -343,6 +356,7 @@ function PromoOffer.open(self, kind: string?)
 	end
 	self.kind = if kind == "event" then "event" else "group"
 	self.is_open = true
+	self:_fetch_rsvp()
 	self:refresh()
 	self:set_visible(true)
 	self:apply_layout()

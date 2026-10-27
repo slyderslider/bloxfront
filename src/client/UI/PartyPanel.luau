@@ -417,7 +417,8 @@ function PartyPanel.apply_layout(self)
 	else
 		-- desktop: on the right, halfway down (BloxFront: the title's left column holds the menu)
 		p:set_visible(true)
-		local xr = 16.0 + ctx.insets.z
+		-- (right_inset: TitleScreen moves it left of the shop rail when the rail reaches down to it)
+		local xr = 16.0 + ctx.insets.z + (self.right_inset or 0)
 		local yb = 40.0 + ctx.insets.w
 		p.anchor_left, p.anchor_right, p.anchor_top, p.anchor_bottom = 1, 1, 1, 1
 		p.grow_horizontal = W.GROW_BEGIN

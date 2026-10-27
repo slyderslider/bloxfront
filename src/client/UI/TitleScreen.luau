@@ -1047,18 +1047,43 @@ function TitleScreen._place_crate_button(self, compact: boolean, head_top: numbe
 	local gtop = below + (if compact then 8.0 else 14.0)
 	gb:set_anchors(0, 0, 0, 0)
 	gb:set_offsets(right - gsz.X, gtop, right, gtop + gsz.Y)
-	-- BloxFront's free cards in a column left of the flag shop's button, from its top down (under the
-	-- rail they ran into the party panel; the event's only while it runs)
-	local px = right - shsz.X - (if compact then 10.0 else 16.0)
-	local py = shtop
+	-- BloxFront's free cards side by side right under the flag shop's button, the row as wide as it
+	-- (2026-10-27: Roman; the event's only while it runs)
+	local cgap = if compact then 6.0 else 10.0
+	local shown = {}
 	for _, card in self._promo_cards do
-		card:set_scale(if compact then PromoCard.PHONE_K else 1.0)
 		card:refresh()
 		if card.visible then
-			local csz = card:size_px()
-			card:set_anchors(0, 0, 0, 0)
-			card:set_offsets(px - csz.X, py, px, py + csz.Y)
-			py += csz.Y + (if compact then 10.0 else 14.0)
+			table.insert(shown, card)
+		end
+	end
+	local cw = (shsz.X - cgap * (math.max(#shown, 1) - 1)) / math.max(#shown, 1)
+	-- (one card alone keeps a card's size)
+	if #shown == 1 then
+		cw = PromoCard.SIZE.X * (if compact then PromoCard.PHONE_K else 1.0)
+	end
+	local ctop = shtop + shsz.Y + (if compact then 8.0 else 12.0)
+	local cx = right
+	local row_left = right
+	local row_bottom = ctop
+	for i = #shown, 1, -1 do
+		local card = shown[i]
+		card:set_scale(cw / PromoCard.SIZE.X)
+		local csz = card:size_px()
+		card:set_anchors(0, 0, 0, 0)
+		card:set_offsets(cx - csz.X, ctop, cx, ctop + csz.Y)
+		row_left = cx - csz.X
+		row_bottom = ctop + csz.Y
+		cx -= csz.X + cgap
+	end
+	-- desktop: the party panel (bottom right) moves left of the rail when the cards reach down to it
+	local party = self._party
+	party.right_inset = 0
+	if not compact and #shown > 0 and self.ctx.vp ~= nil then
+		local ph = party._panel:get_combined_minimum_size().Y
+		local ptop = self.ctx.vp.Y - 40.0 - self.ctx.insets.w - ph
+		if row_bottom + 8.0 > ptop then
+			party.right_inset = math.max(0, self.ctx.vp.X - row_left + 12.0 - 16.0 - self.ctx.insets.z)
 		end
 	end
 end
