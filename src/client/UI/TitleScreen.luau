@@ -1047,19 +1047,18 @@ function TitleScreen._place_crate_button(self, compact: boolean, head_top: numbe
 	local gtop = below + (if compact then 8.0 else 14.0)
 	gb:set_anchors(0, 0, 0, 0)
 	gb:set_offsets(right - gsz.X, gtop, right, gtop + gsz.Y)
-	-- BloxFront's free cards in a row under General's (right-aligned; the event's only while it runs)
-	local ptop = (if gb.visible then gtop + gsz.Y else gtop - (if compact then 8.0 else 14.0))
-		+ (if compact then 12.0 else 20.0)
-	local px = right
-	for i = #self._promo_cards, 1, -1 do
-		local card = self._promo_cards[i]
+	-- BloxFront's free cards in a column left of the flag shop's button, from its top down (under the
+	-- rail they ran into the party panel; the event's only while it runs)
+	local px = right - shsz.X - (if compact then 10.0 else 16.0)
+	local py = shtop
+	for _, card in self._promo_cards do
 		card:set_scale(if compact then PromoCard.PHONE_K else 1.0)
 		card:refresh()
 		if card.visible then
 			local csz = card:size_px()
 			card:set_anchors(0, 0, 0, 0)
-			card:set_offsets(px - csz.X, ptop, px, ptop + csz.Y)
-			px -= csz.X + (if compact then 8.0 else 12.0)
+			card:set_offsets(px - csz.X, py, px, py + csz.Y)
+			py += csz.Y + (if compact then 10.0 else 14.0)
 		end
 	end
 end
